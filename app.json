@@ -1,0 +1,58 @@
+{
+  "expo": {
+    "name": "SFVGA",
+    "slug": "sfvgaapp",
+    "scheme": "sfvga",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "backgroundColor": "#FFFDFA",
+    "ios": {
+      "bundleIdentifier": "org.sfvga.app",
+      "buildNumber": "1",
+      "supportsTablet": false,
+      "icon": "./assets/icon.png",
+      "config": {
+        "usesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "package": "org.sfvga.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#7B303A",
+        "foregroundImage": "./assets/icon.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-image",
+      "expo-font",
+      "expo-web-browser",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#FFFDFA"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "ff56e690-8cb0-44fb-a0d6-3f1343ae11c0"
+      }
+    }
+  }
+}

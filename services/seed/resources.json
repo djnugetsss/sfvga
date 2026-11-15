@@ -1,0 +1,44 @@
+[
+  {
+    "id": "membership",
+    "label": "Become a Member",
+    "url": "https://sfvga.org/membership",
+    "kind": "membership"
+  },
+  {
+    "id": "donation",
+    "label": "Donate / Support SFVGA",
+    "url": "https://sfvga.org/membership",
+    "kind": "donation"
+  },
+  {
+    "id": "bylaws",
+    "label": "Association By-Laws",
+    "url": "https://sfvga.org/s/BYLAWS.docx",
+    "kind": "bylaws"
+  },
+  {
+    "id": "minutes",
+    "label": "Board Meeting Minutes",
+    "url": "https://sfvga.org/board/meeting-minutes",
+    "kind": "minutes"
+  },
+  {
+    "id": "mission",
+    "label": "Mission & Purpose",
+    "url": "https://sfvga.org/mission",
+    "kind": "mission"
+  },
+  {
+    "id": "youth-hours",
+    "label": "View volunteer hours",
+    "url": "https://docs.google.com/spreadsheets/d/1ta7e9CjXyIITVmewgA1Ft4Ez7Js-UKHkbDdKLUV72nQ/edit?gid=0#gid=0",
+    "kind": "external"
+  },
+  {
+    "id": "youth-cpr",
+    "label": "CPR Training Pictures",
+    "url": "https://photos.app.goo.gl/6acBJLs3ZWgcmQgm8",
+    "kind": "external"
+  }
+]

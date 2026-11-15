@@ -1,0 +1,65 @@
+[
+  {
+    "id": "jaymeen-desai",
+    "name": "Jaymeen Desai",
+    "role": "President",
+    "roleOrder": 1,
+    "photo": "board/jaymeen-desai.jpg",
+    "email": null,
+    "bio": null
+  },
+  {
+    "id": "monika-patel",
+    "name": "Monika Patel",
+    "role": "Vice President",
+    "roleOrder": 2,
+    "photo": "board/monika-patel.jpg",
+    "email": null,
+    "bio": null
+  },
+  {
+    "id": "bhavin-shah",
+    "name": "Bhavin Shah",
+    "role": "Secretary",
+    "roleOrder": 3,
+    "photo": "board/bhavin-shah.jpg",
+    "email": null,
+    "bio": null
+  },
+  {
+    "id": "mayank-shah",
+    "name": "Mayank Shah",
+    "role": "Treasurer",
+    "roleOrder": 4,
+    "photo": "board/mayank-shah.jpg",
+    "email": null,
+    "bio": null
+  },
+  {
+    "id": "pinal-kantawala",
+    "name": "Pinal Kantawala",
+    "role": "Youth Champion",
+    "roleOrder": 5,
+    "photo": "board/pinal-kantawala.jpg",
+    "email": null,
+    "bio": null
+  },
+  {
+    "id": "ami-dave",
+    "name": "Ami Dave",
+    "role": "Director",
+    "roleOrder": 6,
+    "photo": "board/ami-dave.jpg",
+    "email": null,
+    "bio": null
+  },
+  {
+    "id": "bhakti-desai",
+    "name": "Bhakti Desai",
+    "role": "Director",
+    "roleOrder": 7,
+    "photo": "board/bhakti-desai.jpg",
+    "email": null,
+    "bio": null
+  }
+]
