@@ -29,7 +29,7 @@ export default function EventsScreen() {
             body={event.description}
           >
             <TextLink
-              label={`${EVENTS_COPY.viewDetails} →`}
+              label={EVENTS_COPY.viewDetails}
               onPress={() => router.push({ pathname: '/events/[id]', params: { id: event.slug } })}
               style={{ marginTop: theme.spacing.xs }}
             />
