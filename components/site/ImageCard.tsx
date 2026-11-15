@@ -4,7 +4,7 @@ import type { ReactNode } from 'react';
 import { Text, View } from 'react-native';
 
 import { IMAGE_BLURHASH } from '@/constants/images';
-import { fontFamilies, useTheme } from '@/theme';
+import { useTheme } from '@/theme';
 import type { FeatherIconName } from '@/types';
 import { resolveImageSource } from '@/utils/imageSource';
 
@@ -58,7 +58,7 @@ export function ImageCard({ image, imageAlt, tag, title, meta, body, children }:
         <Text
           style={[
             theme.typography.h3,
-            { color: theme.colors.textPrimary, fontFamily: theme.fontsLoaded ? fontFamilies.semiBold : undefined },
+            { color: theme.colors.textPrimary },
           ]}
         >
           {title}

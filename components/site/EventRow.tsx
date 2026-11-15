@@ -5,7 +5,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { MotionPressable } from '@/components/ui/MotionPressable';
 import { IMAGE_BLURHASH } from '@/constants/images';
 import type { EventItem } from '@/types';
-import { fontFamilies, useTheme } from '@/theme';
+import { useTheme } from '@/theme';
 import { resolveImageSource } from '@/utils/imageSource';
 
 /** Compact event row: 84×76 thumbnail, title, date, chevron. */
@@ -42,7 +42,7 @@ export function EventRow({ event, onPress }: { event: EventItem; onPress: () => 
             numberOfLines={2}
             style={[
               theme.typography.h3,
-              { color: theme.colors.textPrimary, fontFamily: theme.fontsLoaded ? fontFamilies.semiBold : undefined },
+              { color: theme.colors.textPrimary },
             ]}
           >
             {event.title}

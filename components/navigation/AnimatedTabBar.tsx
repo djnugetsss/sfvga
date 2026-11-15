@@ -81,7 +81,7 @@ function TabItem({
     [press, reduceMotion, theme.motion],
   );
 
-  const color = focused ? theme.colors.primary : theme.colors.accent;
+  const color = focused ? theme.colors.primary : theme.colors.textMuted;
 
   return (
     <Pressable

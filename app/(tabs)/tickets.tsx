@@ -11,7 +11,7 @@ import { SegmentedControl } from '@/components/ui/SegmentedControl';
 import { TextLink } from '@/components/ui/TextLink';
 import { TICKETS_COPY } from '@/constants/content';
 import { useMyTickets } from '@/hooks/useMyTickets';
-import { fontFamilies, useTheme } from '@/theme';
+import { useTheme } from '@/theme';
 
 type Filter = 'upcoming' | 'past';
 
@@ -39,7 +39,7 @@ export default function TicketsScreen() {
           ) : (
             groups.map((group) => (
               <View key={group.eventId} style={{ marginBottom: theme.spacing.lg }}>
-                <Text style={[theme.typography.h3, { color: theme.colors.textPrimary, fontFamily: theme.fontsLoaded ? fontFamilies.semiBold : undefined }]}>
+                <Text style={[theme.typography.h3, { color: theme.colors.textPrimary }]}>
                   {group.eventTitle}
                 </Text>
                 {group.eventDateLabel ? (

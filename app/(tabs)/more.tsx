@@ -46,7 +46,7 @@ export default function MoreScreen() {
   const group = (title: string, items: typeof minutes) =>
     items.length === 0 ? null : (
       <View style={{ marginTop: theme.spacing.md }}>
-        <Text style={[theme.typography.h3, { color: theme.colors.textPrimary, fontFamily: semi }]}>{title}</Text>
+        <Text style={[theme.typography.h3, { color: theme.colors.textPrimary }]}>{title}</Text>
         {items.map((r) => (
           <TextLink key={r.id} label={r.label} icon="external-link" onPress={() => openLink(r.url)} />
         ))}
@@ -96,7 +96,7 @@ export default function MoreScreen() {
         ))}
         {points.length > 0 ? (
           <View style={{ marginTop: theme.spacing.sm }}>
-            <Text style={[theme.typography.h3, { color: theme.colors.textPrimary, fontFamily: semi, marginBottom: theme.spacing.sm }]}>
+            <Text style={[theme.typography.h3, { color: theme.colors.textPrimary, marginBottom: theme.spacing.sm }]}>
               {copy.mission.pointsTitle}
             </Text>
             <BulletList items={points.map((p) => p.text)} />
@@ -115,7 +115,7 @@ export default function MoreScreen() {
           </InfoCard>
         ))}
         {committeeRoles.length > 0 ? (
-          <Text style={[theme.typography.h3, { color: theme.colors.textPrimary, fontFamily: semi, marginVertical: theme.spacing.sm }]}>
+          <Text style={[theme.typography.h3, { color: theme.colors.textPrimary, marginVertical: theme.spacing.sm }]}>
             {copy.roles.committeeTitle}
           </Text>
         ) : null}

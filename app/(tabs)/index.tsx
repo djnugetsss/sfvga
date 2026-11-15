@@ -15,7 +15,7 @@ import { HOME_COPY, NOTES_COPY } from '@/constants/content';
 import { HOME_WELCOME_IMAGE_URL } from '@/constants/assets';
 import { IMAGE_BLURHASH } from '@/constants/images';
 import { useAnnouncements, useFeaturedEvent } from '@/services';
-import { fontFamilies, useTheme } from '@/theme';
+import { useTheme } from '@/theme';
 import { resolveImageSource } from '@/utils/imageSource';
 
 export default function HomeScreen() {
@@ -25,7 +25,6 @@ export default function HomeScreen() {
   const { data: notes } = useAnnouncements();
   const heroSource = event ? resolveImageSource(event.heroImage) : null;
 
-  const semi = theme.fontsLoaded ? fontFamilies.semiBold : undefined;
 
   return (
     <ScreenScaffold>
@@ -49,7 +48,7 @@ export default function HomeScreen() {
         ) : null}
         {event ? (
           <View>
-            <Text style={[theme.typography.h2, { color: theme.colors.textPrimary, fontFamily: semi }]}>{event.title}</Text>
+            <Text style={[theme.typography.h2, { color: theme.colors.textPrimary }]}>{event.title}</Text>
             {event.teaser ? (
               <Text style={[theme.typography.body, { color: theme.colors.textSecondary, marginTop: theme.spacing.sm }]}>
                 {event.teaser}
@@ -89,7 +88,7 @@ export default function HomeScreen() {
 
       <Section>
         <SectionHeader eyebrow={HOME_COPY.updates.eyebrow} />
-        <Text style={[theme.typography.h3, { color: theme.colors.textPrimary, fontFamily: semi }]}>{HOME_COPY.updates.title}</Text>
+        <Text style={[theme.typography.h3, { color: theme.colors.textPrimary }]}>{HOME_COPY.updates.title}</Text>
         <Text style={[theme.typography.body, { color: theme.colors.textSecondary, marginTop: theme.spacing.xs }]}>
           {HOME_COPY.updates.body}
         </Text>

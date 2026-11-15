@@ -110,7 +110,7 @@ export default function RenewScreen() {
         ) : (
           <View>
             <InfoCard icon="check-circle" title={copy.done.title} body={status === 'sent' ? copy.done.body : copy.done.noMailApp}>
-              <Text style={[theme.typography.h3, { color: theme.colors.textPrimary, fontFamily: semi, marginTop: theme.spacing.md }]}>
+              <Text style={[theme.typography.h3, { color: theme.colors.textPrimary, marginTop: theme.spacing.md }]}>
                 {copy.done.zelleTitle}
               </Text>
               <Text style={[theme.typography.body, { color: theme.colors.textSecondary, marginTop: theme.spacing.xs }]}>

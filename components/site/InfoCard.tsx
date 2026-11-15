@@ -2,7 +2,7 @@ import Feather from '@expo/vector-icons/Feather';
 import type { ReactNode } from 'react';
 import { Text, View } from 'react-native';
 
-import { fontFamilies, useTheme } from '@/theme';
+import { useTheme } from '@/theme';
 import type { FeatherIconName } from '@/types';
 
 type InfoCardProps = {
@@ -33,7 +33,7 @@ export function InfoCard({ icon, title, body, children }: InfoCardProps) {
       <Text
         style={[
           theme.typography.h3,
-          { color: theme.colors.textPrimary, fontFamily: theme.fontsLoaded ? fontFamilies.semiBold : undefined },
+          { color: theme.colors.textPrimary },
         ]}
       >
         {title}

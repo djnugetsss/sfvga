@@ -5,10 +5,8 @@ import { Platform, type TextStyle, type ViewStyle } from 'react-native';
  * the app. No raw hex, font name, spacing number, or duration may appear
  * outside this file.
  *
- * The look is the Base44 web app's: a warm cream page, deep-teal text, a
- * crimson primary, a teal secondary and a saffron-orange accent, set in
- * Poppins with nearly square corners. The values below are that app's HSL
- * variables (`src/index.css`) converted to hex.
+ * Aesthetic brief: premium editorial. Warm neutrals carry ~90% of every
+ * screen; the marigold accent behaves like jewelry — small, deliberate, rare.
  *
  * Structured for a future dark theme: `palette` holds the raw ramps, and each
  * theme (`lightColors`, and later `darkColors`) is a *semantic* mapping onto
@@ -20,34 +18,28 @@ import { Platform, type TextStyle, type ViewStyle } from 'react-native';
  * ------------------------------------------------------------------ */
 
 const palette = {
-  /** --background: 33 99% 99% */
-  cream: '#FFFDFA',
-  /** --card / --muted: 42 60% 98% */
-  card: '#FDFBF7',
-  /** --foreground: 196 73% 15% — a deep teal-black. */
-  ink: '#0A3342',
-  /** foreground at ~80% over the page — body copy. */
-  slate: '#3B5B67',
-  /** --muted-foreground: 196 25% 40% — meta text; 5:1 on the page. */
-  mist: '#4D7280',
-  /** --border: 33 35% 88% */
-  linen: '#EBE1D6',
+  ivory: '#FAF6EF',
+  white: '#FFFFFF',
+  ink: '#17130F',
+  stone: '#5A5147',
+  ash: '#8C8175',
+  linen: '#EAE2D6',
 
-  /** --primary: 350 58% 40% — crimson. */
-  crimson: '#A12B3F',
-  /** --primary-foreground / --secondary-foreground: 48 80% 98% */
-  paper: '#FEFCF6',
-  /** --secondary: 186 82% 30% — teal. */
-  teal: '#0E7F8B',
-  /** --accent: 30 80% 50% — saffron orange. */
-  saffron: '#E68019',
+  marigold: '#C0912F',
+  sienna: '#6E4A34',
+
+  /**
+   * Kumkum — the deep festive red of vermilion powder. Chosen at the darker,
+   * browner end of the range so it reads as pigment rather than as an alert
+   * colour, and so it sits beside the sienna and marigold without clashing.
+   */
+  kumkum: '#A32C26',
 
   jade: '#3C7A5A',
-  /** --destructive: 0 72% 45% */
-  clay: '#C52020',
+  clay: '#B33A2F',
 
-  /** Shadow base — the page's ink, never pure #000. */
-  shadow: '#0A3342',
+  /** Shadow base — a warm near-black, never pure #000 (which reads cheap). */
+  shadow: '#3A2E20',
 } as const;
 
 /* ------------------------------------------------------------------ *
@@ -56,47 +48,49 @@ const palette = {
 
 export const lightColors = {
   /** Dominant surfaces. */
-  background: palette.cream,
-  surface: palette.card,
-  surfaceElevated: palette.card,
+  background: palette.ivory,
+  surface: palette.white,
+  surfaceElevated: palette.white,
 
   /** Text ramp, high → low emphasis. */
   textPrimary: palette.ink,
-  textSecondary: palette.slate,
-  textMuted: palette.mist,
+  textSecondary: palette.stone,
+  textMuted: palette.ash,
 
   /** Hairlines and dividers. */
   border: palette.linen,
 
-  /** Crimson — the brand colour: eyebrows, filled buttons, the active tab. */
-  primary: palette.crimson,
-  primaryContrast: palette.paper,
-  /** Teal — secondary actions and prices. */
-  secondary: palette.teal,
-  secondaryContrast: palette.paper,
-  /** Saffron — links, bullets and inactive tabs. */
-  accent: palette.saffron,
-  accentContrast: palette.ink,
+  /** Accent — key actions and small details only. */
+  primary: palette.marigold,
+  primaryContrast: palette.white,
+  secondary: palette.sienna,
+  secondaryContrast: palette.white,
+  /** Links and bullets — the same marigold as `primary`. */
+  accent: palette.marigold,
+  accentContrast: palette.white,
 
   /** Semantic feedback. */
   success: palette.jade,
   error: palette.clay,
 
   /**
-   * Retained for the few motif components that still name it. In this look the
-   * brand red *is* `primary`, so there is no separate festive red to ration.
+   * Kumkum — the rare accent.
+   *
+   * BUDGET RULE: kumkum may appear **at most once per screen**, and only for
+   * a single genuinely special emphasis. Never body text, never large fills.
    */
-  kumkum: palette.crimson,
-  kumkumMuted: 'rgba(161, 43, 63, 0.12)',
+  kumkum: palette.kumkum,
+  /** Kumkum at wash strength, for a glow or a single tinted ring. */
+  kumkumMuted: 'rgba(163, 44, 38, 0.12)',
 
   /** Non-content utility. */
   shadow: palette.shadow,
-  /** Tint behind icon circles and the active tab. Primary at 10%. */
-  accentWash: 'rgba(161, 43, 63, 0.10)',
+  /** Tint used behind pressed/active chrome. Accent at low opacity. */
+  accentWash: 'rgba(192, 145, 47, 0.10)',
   /** Scrim for the translucent tab bar and header over content. */
-  chrome: 'rgba(255, 253, 250, 0.94)',
-  /** The diya-dot texture: primary at 8%. */
-  pattern: 'rgba(161, 43, 63, 0.08)',
+  chrome: 'rgba(250, 246, 239, 0.94)',
+  /** The diya-dot texture: accent at 8%. */
+  pattern: 'rgba(192, 145, 47, 0.08)',
 } as const;
 
 export type Colors = typeof lightColors;
@@ -109,15 +103,19 @@ export type Colors = typeof lightColors;
  * Font family keys as registered with expo-font. `ThemeProvider` swaps these
  * for `undefined` (→ system font) until the webfonts have loaded, so first
  * paint is never blank text.
- *
- * One family throughout, as on the web app: headings, display and body are all
- * Poppins, told apart by weight and size.
  */
 export const fontFamilies = {
-  regular: 'Poppins_400Regular',
-  medium: 'Poppins_500Medium',
-  semiBold: 'Poppins_600SemiBold',
-  bold: 'Poppins_700Bold',
+  serifRegular: 'Fraunces_400Regular',
+  serifMedium: 'Fraunces_500Medium',
+  serifSemiBold: 'Fraunces_600SemiBold',
+  sansRegular: 'Inter_400Regular',
+  sansMedium: 'Inter_500Medium',
+  sansSemiBold: 'Inter_600SemiBold',
+  /** Weight aliases for inline emphasis in UI text — all Inter. */
+  regular: 'Inter_400Regular',
+  medium: 'Inter_500Medium',
+  semiBold: 'Inter_600SemiBold',
+  bold: 'Inter_600SemiBold',
 } as const;
 
 export type FontFamilyKey = keyof typeof fontFamilies;
@@ -132,8 +130,8 @@ export type TypeVariant = {
 };
 
 /**
- * The scale. Poppins everywhere; hierarchy comes from weight, size and the
- * tracked-out, bold, uppercase overline the web app opens every section with.
+ * The scale. Serif (Fraunces) for display + headings, sans (Inter) for
+ * everything a user actually reads at length.
  *
  * Note on `fontWeight`: when a custom family is loaded, the *file* carries the
  * weight and iOS ignores the numeric value. It is kept so the fallback system
@@ -151,60 +149,60 @@ export const typography: Record<
   TypeVariant
 > = {
   display: {
-    fontFamily: fontFamilies.medium,
-    fontSize: 34,
-    lineHeight: 42,
-    letterSpacing: -0.4,
-    fontWeight: '500',
+    fontFamily: fontFamilies.serifSemiBold,
+    fontSize: 40,
+    lineHeight: 46,
+    letterSpacing: -0.8,
+    fontWeight: '600',
   },
   h1: {
-    fontFamily: fontFamilies.medium,
+    fontFamily: fontFamilies.serifSemiBold,
     fontSize: 30,
-    lineHeight: 38,
+    lineHeight: 36,
+    letterSpacing: -0.5,
+    fontWeight: '600',
+  },
+  h2: {
+    fontFamily: fontFamilies.serifMedium,
+    fontSize: 24,
+    lineHeight: 30,
     letterSpacing: -0.3,
     fontWeight: '500',
   },
-  h2: {
-    fontFamily: fontFamilies.medium,
-    fontSize: 24,
-    lineHeight: 32,
-    letterSpacing: -0.2,
-    fontWeight: '500',
-  },
   h3: {
-    fontFamily: fontFamilies.medium,
-    fontSize: 18,
+    fontFamily: fontFamilies.serifRegular,
+    fontSize: 19,
     lineHeight: 26,
-    letterSpacing: 0,
-    fontWeight: '500',
+    letterSpacing: -0.1,
+    fontWeight: '400',
   },
   bodyLg: {
-    fontFamily: fontFamilies.regular,
-    fontSize: 16,
-    lineHeight: 26,
+    fontFamily: fontFamilies.sansRegular,
+    fontSize: 17,
+    lineHeight: 27,
     letterSpacing: 0,
     fontWeight: '400',
   },
   body: {
-    fontFamily: fontFamilies.regular,
-    fontSize: 14,
+    fontFamily: fontFamilies.sansRegular,
+    fontSize: 15,
     lineHeight: 23,
     letterSpacing: 0,
     fontWeight: '400',
   },
   caption: {
-    fontFamily: fontFamilies.regular,
+    fontFamily: fontFamilies.sansRegular,
     fontSize: 13,
-    lineHeight: 19,
+    lineHeight: 18,
     letterSpacing: 0.1,
     fontWeight: '400',
   },
   overline: {
-    fontFamily: fontFamilies.bold,
-    fontSize: 12,
-    lineHeight: 16,
-    letterSpacing: 2.4,
-    fontWeight: '700',
+    fontFamily: fontFamilies.sansMedium,
+    fontSize: 11,
+    lineHeight: 14,
+    letterSpacing: 1.6,
+    fontWeight: '500',
     textTransform: 'uppercase',
   },
 };
@@ -233,13 +231,10 @@ export type Spacing = typeof spacing;
  * ------------------------------------------------------------------ */
 
 export const radii = {
-  /** Cards and photographs — the web app's `rounded-lg` is only 2px. */
-  sm: 2,
-  /** Inputs. */
-  md: 4,
-  lg: 4,
-  xl: 8,
-  /** Pills: buttons and avatars. */
+  sm: 8,
+  md: 12,
+  lg: 20,
+  xl: 28,
   full: 999,
 } as const;
 
@@ -287,10 +282,10 @@ export type Shadows = typeof shadows;
  * than as clip-art stickers. Nothing here is ever used as a fill for an area.
  */
 export const motif = {
-  /** Default linework: crimson, quiet enough to sit under content. */
-  stroke: 'rgba(161, 43, 63, 0.45)',
+  /** Default linework: gold, quiet enough to sit under content. */
+  stroke: 'rgba(192, 145, 47, 0.45)',
   /** For the one mark on a screen that is meant to be looked at. */
-  strokeStrong: 'rgba(161, 43, 63, 0.85)',
+  strokeStrong: 'rgba(192, 145, 47, 0.85)',
   /** Opacity for the faintest tier — dividers, watermarks. */
   hairline: 0.28,
   /** Default stroke width, in px. Thin is the whole point. */
