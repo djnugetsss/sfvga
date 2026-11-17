@@ -1,0 +1,15 @@
+{
+  "firestore": { "rules": "firestore.rules", "indexes": "firestore.indexes.json" },
+  "storage": { "rules": "storage.rules" },
+  "functions": [{ "source": ".payment-test/functions", "codebase": "payment-test" }],
+  "emulators": {
+    "auth": { "port": 9198 },
+    "firestore": { "port": 8180 },
+    "functions": { "port": 5101 },
+    "storage": { "port": 9298 },
+    "hub": { "port": 4502 },
+    "logging": { "port": 4600 },
+    "ui": { "enabled": true, "port": 4100 },
+    "singleProjectMode": true
+  }
+}

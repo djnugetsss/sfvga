@@ -1,0 +1,87 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isSuperAdmin() {
+      return isSignedIn() &&
+        (request.auth.token.get('superAdmin', false) == true ||
+          (request.auth.token.get('role', '') == 'admin' && request.auth.token.get('adminLevel', '') == 'super'));
+    }
+
+    function hasLegacyPermission(permission) {
+      return isSignedIn() && request.auth.token.get('role', '') == 'admin' &&
+        !firestore.exists(/databases/(default)/documents/organizationAdminGrants/$(request.auth.uid)) &&
+        ((request.auth.token.get('adminLevel', '') == 'org' && permission == 'events.edit') ||
+         (request.auth.token.get('adminLevel', '') == 'content' && permission == 'gallery.manage'));
+    }
+
+    function hasOrganizationPermission(permission) {
+      return isSuperAdmin() || hasLegacyPermission(permission) || (isSignedIn() &&
+        firestore.exists(/databases/(default)/documents/organizationAdminGrants/$(request.auth.uid)) &&
+        firestore.exists(/databases/(default)/documents/adminRoleDefinitions/$(firestore.get(/databases/(default)/documents/organizationAdminGrants/$(request.auth.uid)).data.roleId)) &&
+        firestore.get(/databases/(default)/documents/adminRoleDefinitions/$(firestore.get(/databases/(default)/documents/organizationAdminGrants/$(request.auth.uid)).data.roleId)).data.active == true &&
+        permission in firestore.get(/databases/(default)/documents/adminRoleDefinitions/$(firestore.get(/databases/(default)/documents/organizationAdminGrants/$(request.auth.uid)).data.roleId)).data.permissions);
+    }
+
+    function hasEventPermission(eventId, permission) {
+      return hasOrganizationPermission(permission) || (isSignedIn() &&
+        firestore.exists(/databases/(default)/documents/events/$(eventId)/roles/$(request.auth.uid)) &&
+        firestore.exists(/databases/(default)/documents/events/$(eventId)/roleDefinitions/$(firestore.get(/databases/(default)/documents/events/$(eventId)/roles/$(request.auth.uid)).data.roleDefinitionId)) &&
+        !('revokedAt' in firestore.get(/databases/(default)/documents/events/$(eventId)/roles/$(request.auth.uid)).data) &&
+        request.time >= firestore.get(/databases/(default)/documents/events/$(eventId)/roles/$(request.auth.uid)).data.activatesAt &&
+        request.time <= firestore.get(/databases/(default)/documents/events/$(eventId)/roles/$(request.auth.uid)).data.expiresAt &&
+        permission in firestore.get(/databases/(default)/documents/events/$(eventId)/roleDefinitions/$(firestore.get(/databases/(default)/documents/events/$(eventId)/roles/$(request.auth.uid)).data.roleDefinitionId)).data.permissions);
+    }
+
+    function isOwner(uid) {
+      return request.auth.uid == uid;
+    }
+
+    function isImageUnder(maxBytes) {
+      return request.resource.size <= maxBytes &&
+        request.resource.contentType.matches('image/(jpeg|png|webp)');
+    }
+
+    match /users/{uid}/profile/{fileName} {
+      allow read: if true;
+      allow create, update: if isSignedIn() && isOwner(uid) && isImageUnder(5 * 1024 * 1024);
+      allow delete: if isSignedIn() && isOwner(uid);
+    }
+
+    match /events/{eventId}/banner/{fileName} {
+      allow read: if true;
+      allow create, update: if hasEventPermission(eventId, 'events.edit') && isImageUnder(10 * 1024 * 1024);
+      allow delete: if hasEventPermission(eventId, 'events.edit');
+    }
+
+    match /events/{eventId}/flyer/{fileName} {
+      allow read: if true;
+      allow create, update: if hasEventPermission(eventId, 'events.edit') && isImageUnder(10 * 1024 * 1024);
+      allow delete: if hasEventPermission(eventId, 'events.edit');
+    }
+
+    match /events/{eventId}/documents/{fileName} {
+      allow read: if isSignedIn();
+      allow create, update: if hasEventPermission(eventId, 'events.edit') &&
+        request.resource.size <= 10 * 1024 * 1024 &&
+        request.resource.contentType == 'application/pdf';
+      allow delete: if hasEventPermission(eventId, 'events.edit');
+    }
+
+    match /documentLibrary/{fileName} {
+      allow read: if isSignedIn();
+      allow write: if false; // Document uploads are not implemented yet.
+    }
+
+    match /gallery/{albumId}/{fileName} {
+      allow read: if isSignedIn();
+      allow create: if false; // Gallery uploads are not implemented yet.
+      allow update: if hasOrganizationPermission('gallery.manage') && isImageUnder(10 * 1024 * 1024);
+      allow delete: if hasOrganizationPermission('gallery.manage');
+    }
+  }
+}

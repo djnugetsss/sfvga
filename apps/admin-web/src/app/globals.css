@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  background: #faf7ef;
+}
+
+body {
+  @apply bg-canvas text-ink;
+  font-feature-settings:
+    'ss01' on,
+    'cv02' on;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+.font-editorial {
+  font-family: Georgia, 'Times New Roman', serif;
+}
+
+button,
+a,
+input,
+textarea,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+a {
+  transition-property: color, background-color, border-color, box-shadow, opacity, transform;
+  transition-duration: 180ms;
+  transition-timing-function: ease-out;
+}
+
+button:active,
+a:active {
+  transform: scale(0.985);
+}
+
+::selection {
+  background: rgba(199, 154, 43, 0.28);
+}
+
+:focus-visible {
+  outline: 2px solid #74363c;
+  outline-offset: 2px;
+}
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid #74363c;
+  outline-offset: 2px;
+}
+
+/* The searchable select's outer shell owns its focus treatment. Avoid rendering a
+   second browser outline around the input nested inside that shell. */
+.searchable-select-input,
+.searchable-select-input:focus,
+.searchable-select-input:focus-visible {
+  border: 0;
+  outline: none;
+  box-shadow: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

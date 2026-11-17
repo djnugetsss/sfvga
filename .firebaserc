@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "REPLACE_WITH_MERGE_PREVIEW_FIREBASE_PROJECT_ID",
+    "preview": "REPLACE_WITH_MERGE_PREVIEW_FIREBASE_PROJECT_ID"
+  }
+}
