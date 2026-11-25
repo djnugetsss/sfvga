@@ -55,9 +55,11 @@ function EventDetailSkeleton() {
   const { colors, spacing } = useTheme();
   return (
     <ScrollView contentContainerStyle={{ paddingBottom: spacing.xl }}>
-      <Skeleton height={200} radius={14} style={{ margin: spacing.md, marginBottom: 12, width: 'auto' }} />
-      <View style={{ padding: spacing.md, width: '100%', maxWidth: 940, alignSelf: 'center' }}>
+      <Skeleton height={260} radius={0} style={{ marginBottom: 0 }} />
+      <View style={{ padding: spacing.md, paddingTop: spacing.lg, width: '100%', maxWidth: 940, alignSelf: 'center' }}>
+        <Skeleton height={15} width="40%" radius={5} style={{ marginBottom: spacing.sm }} />
         <Skeleton height={34} width="82%" radius={6} style={{ marginBottom: spacing.sm }} />
+        <Skeleton height={2} width={42} radius={0} style={{ marginBottom: spacing.md }} />
         <Skeleton height={20} width="42%" radius={6} style={{ marginBottom: spacing.md }} />
         <Skeleton height={48} radius={12} style={{ marginBottom: spacing.lg }} />
         <Skeleton height={18} width="94%" radius={5} style={{ marginBottom: spacing.sm }} />
@@ -234,13 +236,15 @@ export default function EventDetailScreen() {
           </View>
         </View>
 
-        <View style={{ padding: spacing.md, width: '100%', maxWidth: 940, alignSelf: 'center' }}>
+        <View style={{ padding: spacing.md, paddingTop: spacing.lg, width: '100%', maxWidth: 940, alignSelf: 'center', marginTop: -20, borderTopLeftRadius: 20, borderTopRightRadius: 20, backgroundColor: colors.background }}>
+          <Text style={[typography.eyebrow, { color: colors.accentStrong, textTransform: 'uppercase', letterSpacing: 1.3, marginBottom: spacing.sm }]}>SFVGA gathering</Text>
           <Text
-            style={[typography.displayLarge, { color: colors.brand }]}
+            style={[typography.displayLarge, { color: colors.textPrimary, fontSize: 33, lineHeight: 41 }]}
             {...textAccessibilityProps}
           >
             {event.title}
           </Text>
+          <View style={{ width: 42, height: 2, backgroundColor: colors.accent, marginTop: spacing.md, marginBottom: spacing.xs }} />
 
           {start && end ? (
             <View style={{ marginTop: spacing.sm }}>
@@ -461,11 +465,11 @@ export default function EventDetailScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1 },
   flyerModal: { flex: 1 },
-  heroFrame: { height: 200, overflow: 'hidden', margin: 16, marginBottom: 12, borderRadius: 14 },
-  heroImage: { width: '100%', height: 200 },
+  heroFrame: { height: 260, overflow: 'hidden' },
+  heroImage: { width: '100%', height: 260 },
   heroFallback: {
     width: '100%',
-    height: 200,
+    height: 260,
     alignItems: 'center',
     justifyContent: 'center',
     gap: 14,
