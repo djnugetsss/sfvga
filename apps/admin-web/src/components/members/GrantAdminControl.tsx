@@ -164,10 +164,10 @@ export function GrantAdminControl({
         ) : null}
       </div>
       {isOwnSuperAdminAccess ? (
-        <p className="mt-1 text-xs text-muted">Another Super Admin must change your access.</p>
+        <p className="mt-1 text-sm text-muted">Another Super Admin must change your access.</p>
       ) : null}
-      {message ? <p className="mt-1 text-xs text-success">{message}</p> : null}
-      {error ? <p className="mt-1 text-xs text-error">{error}</p> : null}
+      {message ? <p className="mt-1 text-sm text-success">{message}</p> : null}
+      {error ? <p className="mt-1 text-sm text-error">{error}</p> : null}
       <ConfirmDialog
         open={confirmRevoke}
         title="Revoke admin access?"

@@ -96,7 +96,7 @@ export default function AdminSessionPage() {
       <div className="w-full max-w-md rounded-2xl bg-white p-8 text-center shadow-sm">
         <h1 className="text-2xl font-bold text-deepBlue">SFVGA Admin</h1>
         <p className="mt-3 text-sm text-warmGray400">{message}</p>
-        <p className="mt-6 text-xs text-warmGray400">
+        <p className="mt-6 text-sm text-warmGray400">
           Admin access opens securely from Profile in the SFVGA member app.
         </p>
       </div>

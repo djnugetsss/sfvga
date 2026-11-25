@@ -77,7 +77,7 @@ export function SearchableSelect({
         <span className={selected ? 'min-w-0' : 'text-muted/65'}>
           <span className="block truncate">{selected?.label ?? placeholder}</span>
           {selected?.description ? (
-            <span className="mt-0.5 block truncate text-xs text-muted">{selected.description}</span>
+            <span className="mt-0.5 block truncate text-sm text-muted">{selected.description}</span>
           ) : null}
         </span>
         <svg
@@ -140,7 +140,7 @@ export function SearchableSelect({
                       {option.label}
                     </span>
                     {option.description ? (
-                      <span className="mt-0.5 block truncate text-xs text-muted">
+                      <span className="mt-0.5 block truncate text-sm text-muted">
                         {option.description}
                       </span>
                     ) : null}

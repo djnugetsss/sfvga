@@ -46,7 +46,7 @@ export function RegistrationTicketList({
       <li key={ticket.id} className="flex flex-wrap items-center justify-between gap-3 px-4 py-3">
         <div className="min-w-0">
           <p className="font-medium text-deepBlue">{ticket.attendeeName}</p>
-          <p className="text-xs text-warmGray400">
+          <p className="text-sm text-warmGray400">
             Ticket {ticket.id.slice(0, 8)}…{isCurrent ? '' : ' · Previous QR (inactive)'}
           </p>
           {eligible && isCurrent && !isRevoked ? (
@@ -81,7 +81,7 @@ export function RegistrationTicketList({
           <summary className="cursor-pointer px-4 py-3 text-sm font-medium text-deepBlue">
             Previous tickets ({previousTickets.length})
           </summary>
-          <p className="px-4 pb-2 text-xs text-warmGray400">
+          <p className="px-4 pb-2 text-sm text-warmGray400">
             These QR codes were replaced and cannot be used for check-in.
           </p>
           <ul className="divide-y divide-warmGray400/10 border-t border-warmGray400/15">

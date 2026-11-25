@@ -74,7 +74,7 @@ export default function MembersPage() {
                   <td className="px-4 py-4 font-semibold text-ink">{member.displayName}</td>
                   <td className="px-4 py-4 text-muted">
                     <p>{member.phone}</p>
-                    {member.email ? <p className="text-xs">{member.email}</p> : null}
+                    {member.email ? <p className="text-sm">{member.email}</p> : null}
                   </td>
                   <td className="px-4 py-4">
                     {member.isSuperAdmin ? (

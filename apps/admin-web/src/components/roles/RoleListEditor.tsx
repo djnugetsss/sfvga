@@ -298,10 +298,10 @@ export function RoleListEditor() {
                   </p>
                 </div>
                 {role.system ? (
-                  <span className="text-xs font-semibold text-accentStrong">Protected</span>
+                  <span className="text-sm font-semibold text-accentStrong">Protected</span>
                 ) : null}
               </div>
-              <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-warmGray400">
+              <p className="mt-4 text-sm font-semibold uppercase tracking-wide text-warmGray400">
                 {role.system
                   ? `Full access · ${role.permissions.length} listed permissions`
                   : `${role.permissions.length} permissions`}

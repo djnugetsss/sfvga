@@ -121,7 +121,7 @@ function MediaPickerField({
       ) : showPdfPlaceholder ? (
         <div className="mb-3 flex h-48 flex-col items-center justify-center gap-2 rounded-lg border border-warmGray400/20 bg-warmGray50 px-3 text-center text-sm text-deepBlue">
           <span className="font-medium">PDF on file</span>
-          <span className="text-xs text-warmGray400">
+          <span className="text-sm text-warmGray400">
             Saved — replace with an image to preview here
           </span>
         </div>
@@ -153,8 +153,8 @@ function MediaPickerField({
           </Button>
         ) : null}
       </div>
-      {hint && !error ? <span className="text-xs text-warmGray400">{hint}</span> : null}
-      {error ? <span className="text-xs text-error">{error}</span> : null}
+      {hint && !error ? <span className="text-sm text-warmGray400">{hint}</span> : null}
+      {error ? <span className="text-sm text-error">{error}</span> : null}
     </div>
   );
 }

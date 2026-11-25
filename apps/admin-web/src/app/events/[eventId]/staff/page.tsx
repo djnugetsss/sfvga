@@ -276,7 +276,7 @@ export default function EventStaffPage() {
                 >
                   <div>
                     <p className="font-medium text-deepBlue">{role.name}</p>
-                    <p className="text-xs text-warmGray400">
+                    <p className="text-sm text-warmGray400">
                       {role.permissions.length} event permissions
                     </p>
                   </div>

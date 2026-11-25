@@ -283,11 +283,11 @@ export function RegistrationTable({
                         <p className="font-medium text-deepBlue">
                           {reg.attendees.map((a) => a.name).join(', ')}
                         </p>
-                        <p className="text-xs text-warmGray400">
+                        <p className="text-sm text-warmGray400">
                           {reg.attendees.length} attendee{reg.attendees.length === 1 ? '' : 's'}
                         </p>
                         {summary ? (
-                          <p className="mt-1 text-xs text-warmGray400">{summary}</p>
+                          <p className="mt-1 text-sm text-warmGray400">{summary}</p>
                         ) : null}
                       </td>
                       <td className="whitespace-nowrap px-4 py-3 text-muted">
@@ -347,7 +347,7 @@ export function RegistrationTable({
                             className="mt-2 flex gap-3"
                             disabled={review.busy || confirming}
                           >
-                            <legend className="mb-1 text-xs font-semibold text-muted">Paid?</legend>
+                            <legend className="mb-1 text-sm font-semibold text-muted">Paid?</legend>
                             {[true, false].map((approved) => (
                               <label
                                 key={String(approved)}
@@ -393,7 +393,7 @@ export function RegistrationTable({
                     {showTickets && expanded ? (
                       <tr>
                         <td colSpan={7} className="bg-warmGray50/40 px-4 py-4">
-                          <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-warmGray400">
+                          <p className="mb-2 text-sm font-semibold uppercase tracking-wide text-warmGray400">
                             Tickets
                           </p>
                           <RegistrationTicketList

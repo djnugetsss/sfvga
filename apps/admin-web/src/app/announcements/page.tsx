@@ -72,7 +72,7 @@ export default function AnnouncementsPage() {
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                         <h2 className="text-base font-semibold text-brand">{announcement.title}</h2>
-                        <span className="text-xs text-muted">
+                        <span className="text-sm text-muted">
                           {created ? formatDateTime(created) : ''}
                         </span>
                       </div>

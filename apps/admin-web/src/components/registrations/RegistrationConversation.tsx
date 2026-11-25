@@ -181,7 +181,7 @@ export function RegistrationConversation({
             key={m.id}
             className={`max-w-[86%] rounded-2xl px-4 py-3 ${m.senderRole === 'system' ? 'self-center max-w-full border border-border bg-surfaceMuted/50' : m.senderRole === 'organizer' ? 'self-end rounded-br-sm bg-accentSoft' : 'self-start rounded-bl-sm bg-surfaceMuted'}`}
           >
-            <p className="mb-1 text-xs font-semibold text-muted">
+            <p className="mb-1 text-sm font-semibold text-muted">
               {m.senderRole === 'member'
                 ? 'Member'
                 : m.senderRole === 'system'
@@ -193,7 +193,7 @@ export function RegistrationConversation({
             <p className="whitespace-pre-wrap [overflow-wrap:anywhere] text-base leading-6 text-ink">
               {m.body}
             </p>
-            <p className="mt-2 text-xs text-muted">
+            <p className="mt-2 text-sm text-muted">
               {toDate(m.createdAt) ? formatDateTime(toDate(m.createdAt)!) : ''}
             </p>
           </div>
@@ -203,7 +203,7 @@ export function RegistrationConversation({
             <p className="whitespace-pre-wrap [overflow-wrap:anywhere] text-base leading-6 text-ink">
               {outgoing.body}
             </p>
-            <p className="mt-2 text-xs text-muted">{outgoing.sent ? 'Sent' : 'Sending…'}</p>
+            <p className="mt-2 text-sm text-muted">{outgoing.sent ? 'Sent' : 'Sending…'}</p>
           </div>
         ) : null}
       </div>
