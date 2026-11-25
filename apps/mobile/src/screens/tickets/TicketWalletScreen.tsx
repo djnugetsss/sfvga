@@ -194,7 +194,7 @@ export default function TicketWalletScreen() {
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={[styles.content, { paddingHorizontal: spacing.md, paddingTop: spacing.md }]}>
         <AnimatedScreen>
-          <ScreenHeader title="My tickets" />
+          <ScreenHeader eyebrow="Your events" title="My tickets" subtitle="Your valid tickets are ready here when registration is approved." />
           <View style={{ marginTop: spacing.md }}>
             <SegmentedControl<TicketFilter>
               value={filter}

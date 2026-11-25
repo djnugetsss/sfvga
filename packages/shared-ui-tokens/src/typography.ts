@@ -8,9 +8,9 @@ export const typography = {
   headingMedium: { fontSize: 20, fontWeight: '600' as const, lineHeight: 27, letterSpacing: -0.15 },
   bodyLarge: { fontSize: 17, fontWeight: '400' as const, lineHeight: 26 },
   bodyMedium: { fontSize: 16, fontWeight: '400' as const, lineHeight: 24 },
-  caption: { fontSize: 14, fontWeight: '400' as const, lineHeight: 20 },
-  label: { fontSize: 14, fontWeight: '600' as const, lineHeight: 20, letterSpacing: 0.15 },
-  eyebrow: { fontSize: 11, fontWeight: '600' as const, lineHeight: 16, letterSpacing: 1.1 },
+  caption: { fontSize: 15, fontWeight: '400' as const, lineHeight: 22 },
+  label: { fontSize: 15, fontWeight: '600' as const, lineHeight: 22, letterSpacing: 0.15 },
+  eyebrow: { fontSize: 12, fontWeight: '600' as const, lineHeight: 18, letterSpacing: 1.1 },
 } as const;
 
 export type TypographyToken = keyof typeof typography;

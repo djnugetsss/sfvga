@@ -97,7 +97,7 @@ export function MainTabs() {
         tabBarInactiveTintColor: colors.textSecondary,
         tabBarLabelPosition: 'below-icon',
         tabBarLabelStyle: {
-          fontSize: 12,
+          fontSize: 13,
           fontWeight: '600',
           marginBottom: 4,
         },

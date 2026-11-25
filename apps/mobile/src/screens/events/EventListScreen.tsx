@@ -30,7 +30,7 @@ export default function EventListScreen() {
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={[styles.content, { paddingHorizontal: spacing.md, paddingTop: spacing.md }]}>
         <View>
-          <ScreenHeader title="Events" />
+          <ScreenHeader eyebrow="Gatherings" title="Events" subtitle="Find your next SFVGA gathering and see what is coming up." />
           <View style={{ marginTop: spacing.md }}>
             <SegmentedControl<EventFilter>
               value={filter}

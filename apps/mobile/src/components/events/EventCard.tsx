@@ -39,7 +39,7 @@ export const EventCard = React.memo(function EventCard({
 }: EventCardProps) {
   const { colors, typography, spacing, cardBorderRadius } = useTheme();
   const isLarge = variant === 'large';
-  const bannerHeight = 164;
+  const bannerHeight = isLarge ? 156 : 140;
   const bannerRadius = {
     borderTopLeftRadius: cardBorderRadius,
     borderTopRightRadius: cardBorderRadius,

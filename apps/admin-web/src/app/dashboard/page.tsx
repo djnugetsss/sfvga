@@ -30,7 +30,7 @@ export default function DashboardPage() {
   return (
     <RequireCapability capability="dashboard">
       <div>
-        <PageHeader title="Dashboard" />
+        <PageHeader title="Dashboard" description="Your events, registrations, and the work that needs attention." />
 
         {eventsQuery.isError ? (
           <ErrorBanner message="Couldn't load events." onRetry={() => eventsQuery.refetch()} />
@@ -82,7 +82,7 @@ export default function DashboardPage() {
           </div>
         ) : (
           <>
-            <dl className="mb-8 grid grid-cols-2 gap-x-5 gap-y-5 border-y border-border py-5 text-sm sm:grid-cols-4">
+            <dl className="mb-8 grid grid-cols-2 gap-x-5 gap-y-5 border-y border-border py-6 text-base sm:grid-cols-4">
               {[
                 ['Total events', events.length],
                 ['Published', published],
@@ -102,7 +102,7 @@ export default function DashboardPage() {
             <div className="grid gap-6 lg:grid-cols-2">
               <section className="min-w-0">
                 <div className="mb-4 flex items-center justify-between">
-                  <h2 className="text-lg font-semibold text-brand">Upcoming events</h2>
+                  <h2 className="text-xl font-semibold text-brand">Upcoming events</h2>
                   <Link
                     href="/events"
                     className="inline-flex min-h-11 items-center text-sm font-medium text-brand"
@@ -142,11 +142,11 @@ export default function DashboardPage() {
                           <div className="min-w-0 flex-1">
                             <Link
                               href={`/events/${event.id}`}
-                              className="block break-words font-semibold text-brand hover:underline"
+                              className="block break-words text-base font-semibold text-brand hover:underline"
                             >
                               {event.title}
                             </Link>
-                            <p className="mt-1 text-sm text-muted">
+                            <p className="mt-1 text-base text-muted">
                               {start
                                 ? new Intl.DateTimeFormat('en-US', {
                                     timeZone: 'America/Los_Angeles',

@@ -253,7 +253,7 @@ export default function ProfileScreen() {
         contentContainerStyle={[styles.content, { padding: spacing.md, paddingBottom: spacing.xl }]}
       >
         <AnimatedScreen>
-          <ScreenHeader title="Profile" />
+          <ScreenHeader eyebrow="Your account" title="Profile" subtitle="Manage your details, family, and SFVGA information." />
         </AnimatedScreen>
 
         <AnimatedScreen delay={70}>
