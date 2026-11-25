@@ -27,7 +27,7 @@ const topics: { key: Topic; title: string; description: string; icon: AppIconNam
   { key: 'membership', title: 'Membership', description: 'Plans and how to join or renew', icon: 'card-outline' },
   { key: 'youth', title: 'Youth corner', description: 'Volunteer hours and activities', icon: 'sparkles-outline' },
   { key: 'resources', title: 'Resources & contact', description: 'By-laws, meeting records, and answers', icon: 'document-text-outline' },
-  { key: 'gallery', title: 'Community moments', description: 'Photos from SFVGA gatherings', icon: 'images-outline' },
+  { key: 'gallery', title: 'Community moments', description: 'Photos from our gatherings', icon: 'images-outline' },
 ];
 
 const boardPhotos: Record<string, number> = {
@@ -83,7 +83,7 @@ export default function CommunityHubScreen() {
       <ScreenHeader
         eyebrow="San Fernando Valley Gujarati Association"
         title="Our community"
-        subtitle="The people, traditions, and resources behind SFVGA."
+        subtitle="Meet the people behind SFVGA and find the information you need."
       />
       {topics.map((topic) => (
         <TouchableOpacity
@@ -93,8 +93,8 @@ export default function CommunityHubScreen() {
           onPress={() => navigation.navigate('CommunityDetail', { topic: topic.key })}
           activeOpacity={0.75}
         >
-          <Card style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.md, minHeight: 88 }}>
-            <View style={{ width: 44, height: 44, borderRadius: 22, backgroundColor: colors.brandSoft, alignItems: 'center', justifyContent: 'center' }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.md, minHeight: 82, paddingVertical: spacing.sm, borderBottomWidth: 1, borderBottomColor: colors.border }}>
+            <View style={{ width: 44, height: 44, borderRadius: 22, backgroundColor: colors.accentSoft, alignItems: 'center', justifyContent: 'center' }}>
               <AppIcon name={topic.icon} color={colors.brand} size={22} />
             </View>
             <View style={{ flex: 1 }}>
@@ -102,7 +102,7 @@ export default function CommunityHubScreen() {
               <Text style={[typography.caption, { color: colors.textSecondary, marginTop: 3 }]}>{topic.description}</Text>
             </View>
             <AppIcon name="chevron-forward" color={colors.textSecondary} size={20} />
-          </Card>
+          </View>
         </TouchableOpacity>
       ))}
     </ScrollView>

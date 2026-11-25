@@ -262,7 +262,10 @@ export default function HomeScreen() {
             </MotionPressable>
           </View>
           <Text style={[typography.displayLarge, { color: colors.brand, marginTop: spacing.sm }]}>
-            Hi, {firstName}
+            Welcome home, {firstName}.
+          </Text>
+          <Text style={[typography.bodyMedium, { color: colors.textSecondary, marginTop: spacing.xs, maxWidth: 520 }]}>
+            Gatherings, updates, and your SFVGA essentials in one place.
           </Text>
         </AnimatedScreen>
 
@@ -273,7 +276,7 @@ export default function HomeScreen() {
         ) : null}
 
         <AnimatedScreen delay={80} style={{ marginTop: spacing.md }}>
-          <SectionHeader title="Next event" />
+          <SectionHeader title="Next gathering" />
           <View style={{ marginTop: spacing.sm }}>{renderWhatsNext()}</View>
         </AnimatedScreen>
 
@@ -313,7 +316,7 @@ export default function HomeScreen() {
         </AnimatedScreen>
 
         <AnimatedScreen delay={220} style={{ marginTop: spacing.lg }}>
-          <SectionHeader title="Explore SFVGA" />
+          <SectionHeader title="Our community" />
           <MotionPressable
             onPress={() => navigation.navigate('Profile', { screen: 'CommunityHub' })}
             accessibilityRole="button"
@@ -323,7 +326,7 @@ export default function HomeScreen() {
             <Card style={{ minHeight: 88, flexDirection: 'row', alignItems: 'center', gap: spacing.md }}>
               <View style={{ flex: 1 }}>
                 <Text style={[typography.bodyMedium, { color: colors.textPrimary, fontWeight: '700' }]}>Meet your community</Text>
-                <Text style={[typography.caption, { color: colors.textSecondary, marginTop: 3 }]}>Our mission, board, membership, and youth programs</Text>
+                <Text style={[typography.caption, { color: colors.textSecondary, marginTop: 3 }]}>Meet the board, find membership information, and explore youth programs</Text>
               </View>
               <AppIcon name="arrow-forward" color={colors.brand} size={20} />
             </Card>
