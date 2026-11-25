@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import { Card } from '@/components/ui/Card';
-import Button from '@/components/ui/Button';
 import { useTheme } from '@/providers/ThemeProvider';
 import { AppIcon } from '@/components/ui/AppIcon';
 import { MotionPressable } from '@/components/ui/MotionPressable';
@@ -39,7 +38,7 @@ export const EventCard = React.memo(function EventCard({
 }: EventCardProps) {
   const { colors, typography, spacing, cardBorderRadius } = useTheme();
   const isLarge = variant === 'large';
-  const bannerHeight = isLarge ? 156 : 140;
+  const bannerHeight = isLarge ? 184 : 140;
   const bannerRadius = {
     borderTopLeftRadius: cardBorderRadius,
     borderTopRightRadius: cardBorderRadius,
@@ -69,11 +68,11 @@ export const EventCard = React.memo(function EventCard({
   const largeBody = (
     <>
       {largeBanner}
-      <View style={{ padding: spacing.md }}>
+      <View style={{ paddingHorizontal: spacing.md, paddingTop: spacing.md, paddingBottom: spacing.sm }}>
         {isLarge && countdownLabel ? (
           <View style={styles.countdownRow}>
-            <AppIcon name="time-outline" size={16} color={colors.brand} />
-            <Text style={[typography.label, { color: colors.brand }]}>{countdownLabel}</Text>
+            <AppIcon name="time-outline" size={16} color={colors.accentStrong} />
+            <Text style={[typography.label, { color: colors.accentStrong }]}>{countdownLabel}</Text>
           </View>
         ) : null}
 
@@ -89,7 +88,7 @@ export const EventCard = React.memo(function EventCard({
 
         {dateLabel ? (
           <View style={[styles.metaRow, { marginTop: spacing.md }]}>
-            <AppIcon name="calendar-outline" size={16} color={colors.brand} />
+            <AppIcon name="calendar-outline" size={16} color={colors.accentStrong} />
             <Text
               numberOfLines={1}
               style={[typography.bodyMedium, { color: colors.textSecondary, flex: 1 }]}
@@ -126,7 +125,7 @@ export const EventCard = React.memo(function EventCard({
       <View
         style={[styles.thumbnail, styles.placeholder, { backgroundColor: colors.surfaceMuted }]}
       >
-        <Text style={[typography.headingMedium, { color: colors.deepBlue }]}>SF</Text>
+        <Text style={[typography.headingMedium, { color: colors.accentStrong }]}>SFVGA</Text>
       </View>
     );
     return (
@@ -137,23 +136,18 @@ export const EventCard = React.memo(function EventCard({
         disabled={!onPress}
         pressedScale={0.985}
       >
-        <View
-          style={[
-            styles.mediumCard,
-            { marginBottom: spacing.xs, borderBottomColor: colors.border },
-          ]}
-        >
+        <View style={[styles.mediumCard, { marginBottom: spacing.sm, borderColor: colors.border, backgroundColor: colors.surface }]}>
           {thumbnail}
           <View style={styles.mediumCopy}>
             <Text
               numberOfLines={2}
-              style={[typography.headingMedium, { color: colors.textPrimary }]}
+              style={[typography.headingLarge, { color: colors.textPrimary, fontSize: 21, lineHeight: 27 }]}
             >
               {title}
             </Text>
             {dateLabel ? (
               <View style={[styles.compactMeta, { marginTop: spacing.sm }]}>
-                <AppIcon name="calendar-outline" size={15} color={colors.brand} />
+                <AppIcon name="calendar-outline" size={16} color={colors.accentStrong} />
                 <Text
                   numberOfLines={1}
                   style={[typography.caption, { color: colors.textSecondary, flex: 1 }]}
@@ -174,7 +168,7 @@ export const EventCard = React.memo(function EventCard({
               </View>
             ) : null}
           </View>
-          <AppIcon name="chevron-forward" size={17} color={colors.textSecondary} />
+          <AppIcon name="chevron-forward" size={20} color={colors.accentStrong} />
         </View>
       </MotionPressable>
     );
@@ -192,9 +186,15 @@ export const EventCard = React.memo(function EventCard({
         >
           {largeBody}
         </MotionPressable>
-        <View style={{ paddingHorizontal: spacing.md, paddingBottom: spacing.md }}>
-          <Button title={ctaLabel!} onPress={onCtaPress!} icon="arrow-forward" />
-        </View>
+        <MotionPressable
+          onPress={onCtaPress}
+          accessibilityRole="button"
+          accessibilityLabel={ctaLabel}
+          style={[styles.heroAction, { borderTopColor: colors.border }]}
+        >
+          <Text style={[typography.label, { color: colors.brand }]}>{ctaLabel}</Text>
+          <AppIcon name="arrow-forward" size={20} color={colors.brand} />
+        </MotionPressable>
       </Card>
     );
   }
@@ -222,15 +222,17 @@ const styles = StyleSheet.create({
   },
   metaRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
   mediumCard: {
-    paddingVertical: 12,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
-    borderBottomWidth: StyleSheet.hairlineWidth,
+    padding: 10,
+    borderWidth: 1,
+    borderRadius: 16,
   },
-  thumbnail: { width: 84, height: 76, borderRadius: 10 },
+  thumbnail: { width: 112, height: 112, borderRadius: 10 },
   placeholder: { alignItems: 'center', justifyContent: 'center' },
   largePlaceholder: { alignItems: 'center', justifyContent: 'center' },
   mediumCopy: { minWidth: 0, flex: 1 },
   compactMeta: { flexDirection: 'row', alignItems: 'center', gap: 6 },
+  heroAction: { minHeight: 54, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderTopWidth: 1, paddingHorizontal: 16 },
 });

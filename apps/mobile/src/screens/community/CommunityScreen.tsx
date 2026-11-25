@@ -26,7 +26,7 @@ const topics: { key: Topic; title: string; description: string; icon: AppIconNam
   { key: 'board', title: 'Board & leadership', description: 'Meet the people serving our community', icon: 'people-outline' },
   { key: 'membership', title: 'Membership', description: 'Plans and how to join or renew', icon: 'card-outline' },
   { key: 'youth', title: 'Youth corner', description: 'Volunteer hours and activities', icon: 'sparkles-outline' },
-  { key: 'resources', title: 'Resources & contact', description: 'By-laws, meeting records, and answers', icon: 'document-text-outline' },
+  { key: 'resources', title: 'More about SFVGA', description: 'Membership, giving, documents, and contact', icon: 'document-text-outline' },
   { key: 'gallery', title: 'Community moments', description: 'Photos from our gatherings', icon: 'images-outline' },
 ];
 
@@ -146,15 +146,17 @@ export function CommunityDetailScreen() {
           <Text style={[typography.bodyMedium, { color: colors.textSecondary }]}>
             SFVGA is guided by volunteers who serve the association and its members.
           </Text>
-          {board.map((person) => (
-            <Card key={person.id} style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.md }}>
-              <Image source={boardPhotos[person.id]} accessibilityLabel={person.name} style={{ width: 62, height: 62, borderRadius: 31 }} />
-              <View style={{ flex: 1 }}>
-                <Text style={[typography.bodyMedium, { color: colors.textPrimary, fontWeight: '700' }]}>{person.name}</Text>
-                <Text style={[typography.caption, { color: colors.textSecondary }]}>{person.role}</Text>
+          <View style={{ borderTopWidth: 1, borderTopColor: colors.border }}>
+            {board.map((person) => (
+              <View key={person.id} style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingVertical: spacing.md, borderBottomWidth: 1, borderBottomColor: colors.border }}>
+                <Image source={boardPhotos[person.id]} accessibilityLabel={person.name} style={{ width: 58, height: 58, borderRadius: 29 }} />
+                <View style={{ flex: 1 }}>
+                  <Text style={[typography.eyebrow, { color: colors.accentStrong, textTransform: 'uppercase' }]}>{person.role}</Text>
+                  <Text style={[typography.headingLarge, { color: colors.textPrimary, fontSize: 21, lineHeight: 29 }]}>{person.name}</Text>
+                </View>
               </View>
-            </Card>
-          ))}
+            ))}
+          </View>
           <Card>
             <SectionHeader title="Extended leadership" />
             {leadership.map((person) => (
@@ -206,8 +208,14 @@ export function CommunityDetailScreen() {
 
       {topic.key === 'youth' ? (
         <>
+          <Image
+            source={require('../../../assets/partner/youthvolunteer.jpg')}
+            accessibilityLabel="SFVGA youth volunteers at a community gathering"
+            resizeMode="cover"
+            style={{ width: '100%', height: 205, borderRadius: 16 }}
+          />
           <Card>
-            <SectionHeader title="Youth corner" />
+            <SectionHeader title="Our next generation" />
             <Text style={[typography.bodyMedium, { color: colors.textSecondary, marginTop: spacing.sm }]}>
               SFVGA youth activities build leadership, community service, and life skills.
             </Text>
@@ -225,6 +233,12 @@ export function CommunityDetailScreen() {
 
       {topic.key === 'resources' ? (
         <>
+          <Text style={[typography.bodyMedium, { color: colors.textSecondary }]}>Everything SFVGA offers, from membership to the records that guide the association.</Text>
+          <Card>
+            <SectionHeader title="Membership and giving" />
+            <OpenLink label="Become a member" url={resources.find((item) => item.id === 'membership')?.url ?? 'https://sfvga.org/membership'} />
+            <OpenLink label="Support SFVGA" url={resources.find((item) => item.id === 'donation')?.url ?? 'https://sfvga.org/membership'} />
+          </Card>
           <Card>
             <SectionHeader title="Contact the board" />
             <OpenLink label="Email sfvgabod@gmail.com" url="mailto:sfvgabod@gmail.com" />

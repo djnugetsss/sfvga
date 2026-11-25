@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   RefreshControl,
   Platform,
+  Image,
 } from 'react-native';
 import { useNavigation, type CompositeNavigationProp } from '@react-navigation/native';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
@@ -31,7 +32,6 @@ import { SectionHeader } from '@/components/ui/SectionHeader';
 import { AnimatedScreen } from '@/components/ui/AnimatedScreen';
 import { MotionPressable } from '@/components/ui/MotionPressable';
 import { AppIcon } from '@/components/ui/AppIcon';
-import { Card } from '@/components/ui/Card';
 import { toDate, formatEventDate, eventCountdownLabel, formatRelative } from '@/utils/dateFormat';
 import type { MainTabParamList } from '@/navigation/MainTabs';
 import type { RootStackParamList } from '@/navigation/RootNavigator';
@@ -261,13 +261,21 @@ export default function HomeScreen() {
               ) : null}
             </MotionPressable>
           </View>
-          <Text style={[typography.displayLarge, { color: colors.brand, marginTop: spacing.sm }]}>
+          <Text style={[typography.displayLarge, { color: colors.textPrimary, marginTop: spacing.md, fontSize: 32, lineHeight: 40 }]}>
             Welcome home, {firstName}.
           </Text>
           <Text style={[typography.bodyMedium, { color: colors.textSecondary, marginTop: spacing.xs, maxWidth: 520 }]}>
-            Gatherings, updates, and your SFVGA essentials in one place.
+            A place for the gatherings, people, and traditions that bring our community together.
           </Text>
+          <View style={[styles.goldRule, { backgroundColor: colors.accent }]} />
         </AnimatedScreen>
+
+        <Image
+          source={require('../../../assets/partner/sfvgabanner.jpg')}
+          resizeMode="cover"
+          accessibilityLabel="SFVGA community gathering"
+          style={[styles.communityBanner, { backgroundColor: colors.surfaceMuted }]}
+        />
 
         {hasError ? (
           <View style={{ marginTop: spacing.md }}>
@@ -275,7 +283,7 @@ export default function HomeScreen() {
           </View>
         ) : null}
 
-        <AnimatedScreen delay={80} style={{ marginTop: spacing.md }}>
+        <AnimatedScreen delay={80} style={{ marginTop: spacing.lg }}>
           <SectionHeader title="Next gathering" />
           <View style={{ marginTop: spacing.sm }}>{renderWhatsNext()}</View>
         </AnimatedScreen>
@@ -316,20 +324,38 @@ export default function HomeScreen() {
         </AnimatedScreen>
 
         <AnimatedScreen delay={220} style={{ marginTop: spacing.lg }}>
-          <SectionHeader title="Our community" />
+          <Text style={[typography.eyebrow, { color: colors.accentStrong, textTransform: 'uppercase', letterSpacing: 1.2 }]}>Beyond the calendar</Text>
+          <Text style={[typography.headingLarge, { color: colors.textPrimary, marginTop: spacing.xs, marginBottom: spacing.sm }]}>Explore SFVGA</Text>
+          <View style={[styles.exploreList, { borderColor: colors.border }]}>
+            {([
+              { topic: 'board', title: 'Meet the board', subtitle: 'The volunteers leading SFVGA', icon: 'people-outline' },
+              { topic: 'youth', title: 'Our next generation', subtitle: 'Youth programs and volunteer hours', icon: 'sparkles-outline' },
+              { topic: 'resources', title: 'More about SFVGA', subtitle: 'Membership, giving, and resources', icon: 'heart-outline' },
+            ] as const).map((item, index) => (
+              <MotionPressable
+                key={item.topic}
+                onPress={() => navigation.navigate('Profile', { screen: 'CommunityDetail', params: { topic: item.topic } })}
+                accessibilityRole="button"
+                accessibilityLabel={item.title}
+                style={[styles.exploreRow, { borderTopWidth: index ? 1 : 0, borderColor: colors.border }]}
+              >
+                <View style={[styles.exploreIcon, { backgroundColor: colors.accentSoft }]}><AppIcon name={item.icon} color={colors.accentStrong} size={23} /></View>
+                <View style={{ flex: 1 }}>
+                  <Text style={[typography.headingLarge, { color: colors.textPrimary, fontSize: 20, lineHeight: 26 }]}>{item.title}</Text>
+                  <Text style={[typography.caption, { color: colors.textSecondary }]}>{item.subtitle}</Text>
+                </View>
+                <AppIcon name="arrow-forward" color={colors.brand} size={20} />
+              </MotionPressable>
+            ))}
+          </View>
           <MotionPressable
             onPress={() => navigation.navigate('Profile', { screen: 'CommunityHub' })}
             accessibilityRole="button"
-            accessibilityLabel="Learn about SFVGA"
-            style={{ marginTop: spacing.sm }}
+            accessibilityLabel="View all community information"
+            style={styles.allCommunityLink}
           >
-            <Card style={{ minHeight: 88, flexDirection: 'row', alignItems: 'center', gap: spacing.md }}>
-              <View style={{ flex: 1 }}>
-                <Text style={[typography.bodyMedium, { color: colors.textPrimary, fontWeight: '700' }]}>Meet your community</Text>
-                <Text style={[typography.caption, { color: colors.textSecondary, marginTop: 3 }]}>Meet the board, find membership information, and explore youth programs</Text>
-              </View>
-              <AppIcon name="arrow-forward" color={colors.brand} size={20} />
-            </Card>
+            <Text style={[typography.label, { color: colors.brand }]}>All community information</Text>
+            <AppIcon name="arrow-forward" color={colors.brand} size={18} />
           </MotionPressable>
         </AnimatedScreen>
       </ScrollView>
@@ -366,4 +392,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   notificationBadgeText: { fontSize: 10, fontWeight: '800' },
+  goldRule: { width: 42, height: 2, marginTop: 18 },
+  communityBanner: { width: '100%', height: 160, borderRadius: 16, marginTop: 22 },
+  exploreList: { borderWidth: 1, borderRadius: 16, overflow: 'hidden' },
+  exploreRow: { minHeight: 90, flexDirection: 'row', alignItems: 'center', gap: 13, paddingHorizontal: 14, paddingVertical: 12 },
+  exploreIcon: { width: 48, height: 48, borderRadius: 24, alignItems: 'center', justifyContent: 'center' },
+  allCommunityLink: { minHeight: 48, flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-start', gap: 7, marginTop: 8 },
 });

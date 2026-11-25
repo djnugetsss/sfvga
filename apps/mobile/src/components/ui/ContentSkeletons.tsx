@@ -9,8 +9,8 @@ export function EventCardSkeleton({ variant = 'medium' }: { variant?: 'large' | 
   const { colors, spacing } = useTheme();
   if (variant === 'medium') {
     return (
-      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 12, marginBottom: spacing.xs, borderBottomWidth: 1, borderBottomColor: colors.border }}>
-        <Skeleton width={84} height={76} radius={10} style={{ marginBottom: 0 }} />
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12, padding: 10, marginBottom: spacing.sm, borderWidth: 1, borderRadius: 16, borderColor: colors.border, backgroundColor: colors.surface }}>
+        <Skeleton width={112} height={112} radius={10} style={{ marginBottom: 0 }} />
         <View style={{ flex: 1, gap: 8 }}>
           <Skeleton width="75%" height={20} radius={6} style={{ marginBottom: 0 }} />
           <Skeleton width="55%" height={15} radius={5} style={{ marginBottom: 0 }} />
@@ -22,15 +22,15 @@ export function EventCardSkeleton({ variant = 'medium' }: { variant?: 'large' | 
   }
   return (
     <Card style={{ marginBottom: spacing.md, padding: 0, overflow: 'hidden' }}>
-      <Skeleton height={164} radius={0} style={{ marginBottom: 0 }} />
+      <Skeleton height={184} radius={0} style={{ marginBottom: 0 }} />
       <View style={{ padding: spacing.md, gap: spacing.sm }}>
         <Skeleton width="32%" height={17} radius={6} style={{ marginBottom: 0 }} />
         <Skeleton width="76%" height={26} radius={6} style={{ marginBottom: 0 }} />
         <Skeleton width="55%" height={18} radius={6} style={{ marginTop: spacing.xs, marginBottom: 0 }} />
         <Skeleton width="68%" height={18} radius={6} style={{ marginBottom: 0 }} />
       </View>
-      <View style={{ paddingHorizontal: spacing.md, paddingBottom: spacing.md }}>
-        <Skeleton height={48} radius={12} style={{ marginBottom: 0 }} />
+      <View style={{ paddingHorizontal: spacing.md, height: 54, borderTopWidth: 1, borderTopColor: colors.border, justifyContent: 'center' }}>
+        <Skeleton width="40%" height={20} radius={5} style={{ marginBottom: 0 }} />
       </View>
     </Card>
   );

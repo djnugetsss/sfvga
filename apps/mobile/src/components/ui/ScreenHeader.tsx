@@ -23,19 +23,15 @@ export function ScreenHeader({ eyebrow, title, subtitle, action }: ScreenHeaderP
     <View style={styles.row}>
       <View style={styles.copy}>
         {eyebrow ? (
-          <Text
-            style={[
-              typography.eyebrow,
-              { color: colors.textSecondary, textTransform: 'uppercase' },
-            ]}
-          >
-            {eyebrow}
-          </Text>
+          <View style={{ marginBottom: spacing.sm }}>
+            <Text style={[typography.eyebrow, { color: colors.textSecondary, textTransform: 'uppercase', letterSpacing: 1.5 }]}>{eyebrow}</Text>
+            <View style={{ width: 34, height: 2, backgroundColor: colors.accent, marginTop: spacing.xs }} />
+          </View>
         ) : null}
         <Text
           style={[
             typography.displayLarge,
-            { color: colors.brand, marginTop: eyebrow ? spacing.xs : 0 },
+            { color: colors.textPrimary, marginTop: eyebrow ? spacing.xs : 0 },
           ]}
         >
           {title}

@@ -7,19 +7,14 @@ import {
   cardBorderRadius,
   buttonBorderRadius,
 } from '@sfvga/shared-ui-tokens';
-import { Platform } from 'react-native';
 
-const editorialFont = Platform.select({
-  ios: 'Georgia',
-  android: 'serif',
-  web: 'Georgia, Times New Roman, serif',
-  default: 'serif',
-});
+// The partner app's editorial typeface is bundled, so it is consistent on web and phones.
+const editorialFont = 'Fraunces-SemiBold';
 
 export const typography = {
   ...tokenTypography,
-  displayLarge: { ...tokenTypography.displayLarge, fontFamily: editorialFont },
-  headingLarge: { ...tokenTypography.headingLarge, fontFamily: editorialFont },
+  displayLarge: { ...tokenTypography.displayLarge, fontFamily: editorialFont, fontWeight: '400' as const },
+  headingLarge: { ...tokenTypography.headingLarge, fontFamily: editorialFont, fontWeight: '400' as const },
   headingMedium: { ...tokenTypography.headingMedium },
 };
 export { fontFamily, minTapTarget, primaryButtonHeight, cardBorderRadius, buttonBorderRadius };

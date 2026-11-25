@@ -26,6 +26,8 @@ export default function App() {
     'Inter-Medium': Inter_500Medium,
     'Inter-SemiBold': Inter_600SemiBold,
     'Inter-Bold': Inter_700Bold,
+    'Fraunces-Regular': require('../assets/fonts/Fraunces_400Regular.ttf'),
+    'Fraunces-SemiBold': require('../assets/fonts/Fraunces_600SemiBold.ttf'),
   });
 
   useEffect(() => {

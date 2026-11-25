@@ -69,7 +69,7 @@ function AnimatedTabIcon({
     <Animated.View
       style={[
         styles.iconBubble,
-        { backgroundColor: focused ? colors.brandSoft : 'transparent' },
+        { backgroundColor: focused ? colors.accentSoft : 'transparent' },
         animatedStyle,
       ]}
     >
@@ -93,7 +93,7 @@ export function MainTabs() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarActiveTintColor: colors.brand,
+        tabBarActiveTintColor: colors.accentStrong,
         tabBarInactiveTintColor: colors.textSecondary,
         tabBarLabelPosition: 'below-icon',
         tabBarLabelStyle: {
