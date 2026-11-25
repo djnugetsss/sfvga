@@ -281,15 +281,16 @@ export default function EventDetailScreen() {
             />
           ) : null}
 
-          <PaymentInstructions event={event} />
-
           {event.description ? (
-            <Text
-              style={[typography.bodyLarge, { color: colors.textPrimary, marginTop: spacing.lg }]}
-            >
-              {event.description}
-            </Text>
+            <View style={{ marginTop: spacing.lg }}>
+              <Text style={[typography.headingMedium, { color: colors.textPrimary, marginBottom: spacing.sm }]}>About this event</Text>
+              <Text style={[typography.bodyLarge, { color: colors.textPrimary }]} {...textAccessibilityProps}>
+                {event.description}
+              </Text>
+            </View>
           ) : null}
+
+          <PaymentInstructions event={event} />
 
           <Card style={{ marginTop: spacing.lg }}>
             <View style={styles.cardHeading}>

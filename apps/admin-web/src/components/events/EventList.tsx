@@ -95,7 +95,38 @@ export function EventList({
   canMessage = () => false,
 }: EventListProps) {
   return (
-    <div className="overflow-x-auto rounded-xl border border-border bg-surface">
+    <>
+      <ul className="divide-y divide-border rounded-xl border border-border bg-surface md:hidden">
+        {events.map((event) => {
+          const start = toDate(event.startAt);
+          const busy = busyId === event.id;
+          return (
+            <li key={event.id} className="flex min-h-24 items-center gap-3 px-4 py-4">
+              <div className="min-w-0 flex-1">
+                <Link href={`/events/${event.id}`} className="block break-words text-base font-semibold leading-6 text-ink hover:text-brand">
+                  {event.title}
+                </Link>
+                <p className="mt-1 text-sm leading-5 text-muted">{start ? formatDateTime(start) : 'Date to be announced'}</p>
+                <div className="mt-2"><Badge tone={STATUS_TONE[event.status]}>{event.status}</Badge></div>
+              </div>
+              <ActionMenu
+                label={`Actions for ${event.title}`}
+                disabled={busy}
+                items={eventMenuItems(event, { onTogglePublish, onDuplicate, onDelete }, busy, {
+                  edit: canEdit(event.id),
+                  publish: canPublish(event.id),
+                  delete: canDelete(event.id),
+                  registrations: canManageRegistrations(event.id),
+                  staff: canManageStaff(event.id),
+                  messages: canMessage(event.id),
+                })}
+              />
+            </li>
+          );
+        })}
+      </ul>
+  return (
+    <div className="hidden overflow-x-auto rounded-xl border border-border bg-surface md:block">
       <table className="w-full text-left text-sm">
         <thead className="border-b border-border bg-surfaceMuted/55 text-muted">
           <tr>
@@ -145,5 +176,6 @@ export function EventList({
         </tbody>
       </table>
     </div>
+    </>
   );
 }

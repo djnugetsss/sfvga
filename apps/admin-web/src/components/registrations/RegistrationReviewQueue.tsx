@@ -90,7 +90,7 @@ export function RegistrationReviewQueue({ events }: { events: Event[] }) {
   if (!allowed.length) return null;
   return (
     <Card className={queue.length || unread.length ? 'border-l-4 border-l-accent' : ''}>
-      <h2 className="text-lg font-semibold text-brand">Registrations needing attention</h2>
+      <h2 className="text-lg font-semibold text-brand">Needs your attention</h2>
       {!loading && (queue.length > 0 || unread.length > 0) ? (
         <div
           className="mt-4 flex items-start gap-3 rounded-xl border border-accent/30 bg-accentSoft px-4 py-3 text-accentStrong"
@@ -102,7 +102,7 @@ export function RegistrationReviewQueue({ events }: { events: Event[] }) {
           >
             !
           </span>
-          <p className="self-center text-sm leading-6 sm:text-base">
+          <p className="self-center text-base leading-6">
             <strong>
               {queue.length} registration{queue.length === 1 ? '' : 's'} to check
             </strong>
@@ -130,8 +130,8 @@ export function RegistrationReviewQueue({ events }: { events: Event[] }) {
             <strong className="mt-1 block text-2xl leading-none">
               {value === 'payments' ? queue.length : unread.length}
             </strong>
-            <span className="mt-1 block text-xs text-muted">
-              {value === 'payments' ? 'Registrations to check' : 'Unread replies'}
+            <span className="mt-1 block text-sm text-muted">
+              {value === 'payments' ? 'Payments to review' : 'Unread messages'}
             </span>
           </button>
         ))}
@@ -145,7 +145,7 @@ export function RegistrationReviewQueue({ events }: { events: Event[] }) {
           <Skeleton className="h-16 w-full" />
         </div>
       ) : !rows.length && !Object.keys(errors).length ? (
-        <p className="py-6 text-sm text-muted">
+        <p className="py-6 text-base text-muted">
           {filter === 'payments'
             ? 'You’re all caught up. No registrations need review.'
             : 'You’re all caught up. No unread registration messages.'}
@@ -159,7 +159,7 @@ export function RegistrationReviewQueue({ events }: { events: Event[] }) {
       {rows.length > 6 ? (
         <button
           type="button"
-          className="mt-3 min-h-12 w-full text-sm font-semibold underline underline-offset-4"
+          className="mt-3 min-h-12 w-full text-base font-semibold underline underline-offset-4"
           onClick={() => setShowAll(!showAll)}
         >
           {showAll ? 'Show fewer' : `Show all ${rows.length}`}

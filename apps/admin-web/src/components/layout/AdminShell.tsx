@@ -64,8 +64,8 @@ function NavIcon({ name }: { name: NavItem['icon'] }) {
   return (
     <svg
       viewBox="0 0 24 24"
-      width="21"
-      height="21"
+      width="23"
+      height="23"
       fill="none"
       stroke="currentColor"
       strokeWidth="1.8"
@@ -115,10 +115,10 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             SF
           </div>
           <div>
-            <p className="font-editorial text-sm font-bold text-ink sm:text-base">
+            <p className="font-editorial text-base font-bold text-ink sm:text-lg">
               SFVGA Administration
             </p>
-            <p className="text-[11px] font-medium text-muted">Access: {adminAccessLabel(access)}</p>
+            <p className="text-xs font-medium text-muted">Access: {adminAccessLabel(access)}</p>
           </div>
         </div>
         <div className="ml-3 flex shrink-0 items-center gap-2 sm:gap-4">
@@ -128,7 +128,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
           </span>
           <button
             onClick={() => void handleSignOut()}
-            className="min-h-11 rounded-full border border-border bg-surface px-3 text-xs font-semibold text-brand shadow-sm hover:bg-brandSoft sm:px-4 sm:text-sm"
+            className="min-h-11 rounded-full border border-border bg-surface px-3 text-sm font-semibold text-brand shadow-sm hover:bg-brandSoft sm:px-4 sm:text-sm"
           >
             Sign out
           </button>
@@ -151,7 +151,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
               href={item.href}
               aria-current={active ? 'page' : undefined}
               aria-label={item.label}
-              className={`flex min-h-[74px] min-w-0 flex-1 flex-col items-center justify-center gap-1 rounded-2xl px-0.5 text-[11px] font-semibold ${
+              className={`flex min-h-[74px] min-w-0 flex-1 flex-col items-center justify-center gap-1 rounded-2xl px-0.5 text-xs font-semibold ${
                 active ? 'text-brand' : 'text-muted'
               }`}
             >

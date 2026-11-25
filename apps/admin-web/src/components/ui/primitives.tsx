@@ -30,7 +30,7 @@ export function PageHeader({
           {title}
         </h1>
         {description ? (
-          <p className="mt-1 max-w-2xl text-sm leading-6 text-muted">{description}</p>
+          <p className="mt-1 max-w-2xl text-base leading-6 text-muted">{description}</p>
         ) : null}
       </div>
       {actions ? <div className="flex flex-wrap items-center gap-3">{actions}</div> : null}
@@ -53,7 +53,7 @@ export function Field({
 }) {
   return (
     <label htmlFor={htmlFor} className="flex flex-col gap-2">
-      <span className="text-sm font-semibold text-ink">{label}</span>
+      <span className="text-base font-semibold text-ink">{label}</span>
       {children}
       {hint && !error ? <span className="text-sm leading-5 text-warmGray400">{hint}</span> : null}
       {error ? <span className="text-sm leading-5 text-error">{error}</span> : null}
@@ -102,7 +102,7 @@ export function Badge({
 }) {
   return (
     <span
-      className={`inline-flex rounded-full border px-3 py-1 text-xs font-semibold capitalize ${BADGE_TONES[tone]}`}
+      className={`inline-flex rounded-full border px-3 py-1 text-sm font-semibold capitalize ${BADGE_TONES[tone]}`}
     >
       {children}
     </span>
@@ -112,7 +112,7 @@ export function Badge({
 export function EmptyState({ message }: { message: string }) {
   return (
     <div className="border-y border-border px-6 py-8 text-center">
-      <p className="text-sm leading-6 text-muted">{message}</p>
+      <p className="text-base leading-6 text-muted">{message}</p>
     </div>
   );
 }
@@ -147,7 +147,7 @@ export function Skeleton({ className = '' }: { className?: string }) {
 export function ErrorBanner({ message, onRetry }: { message: string; onRetry?: () => void }) {
   return (
     <div
-      className="mb-5 flex items-center justify-between gap-4 rounded-2xl border border-error/15 bg-errorSoft p-4 text-sm text-error"
+      className="mb-5 flex items-center justify-between gap-4 rounded-2xl border border-error/15 bg-errorSoft p-4 text-base text-error"
       role="alert"
     >
       <span>{message}</span>

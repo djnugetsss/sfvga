@@ -104,7 +104,7 @@ export default function EventsPage() {
               type="button"
               aria-pressed={filter === period}
               onClick={() => setFilter(period)}
-              className={`min-h-12 rounded-xl border px-5 text-sm font-semibold transition-colors ${filter === period ? 'border-brand/25 bg-brandSoft text-brand' : 'border-border bg-surface text-muted hover:text-ink'}`}
+              className={`min-h-12 rounded-xl border px-5 text-base font-semibold transition-colors ${filter === period ? 'border-brand/25 bg-brandSoft text-brand' : 'border-border bg-surface text-muted hover:text-ink'}`}
             >
               {period === 'upcoming' ? 'Upcoming' : 'Past'} (
               {period === 'upcoming' ? upcoming.length : past.length})

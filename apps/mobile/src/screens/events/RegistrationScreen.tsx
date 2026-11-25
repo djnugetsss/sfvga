@@ -580,17 +580,18 @@ export default function RegistrationScreen() {
         </AnimatedScreen>
 
         {total > 0 ? (
-          <Card style={{ marginTop: spacing.md, gap: spacing.sm }}>
+          <Card style={{ marginTop: spacing.md, gap: spacing.md }}>
             <Text style={[typography.headingMedium, { color: colors.textPrimary }]}>
-              One more step after payment
+              How payment works
             </Text>
-            <Text style={[typography.bodyLarge, { color: colors.textPrimary }]}>
-              Pay ${total.toFixed(2)}, then return to this page and select “I’ve paid — finish
-              registration.” Your registration is not complete until you do this.
-            </Text>
-            <Text style={[typography.bodyMedium, { color: colors.textSecondary }]}>
-              We’ll save your attendees before opening the payment page.
-            </Text>
+            <View style={{ flexDirection: 'row', gap: spacing.compact }}>
+              <Text style={[typography.label, { color: colors.brand, width: 24 }]}>1.</Text>
+              <Text style={[typography.bodyMedium, { color: colors.textPrimary, flex: 1 }]}>Continue below to save your attendees and open the payment page for ${total.toFixed(2)}.</Text>
+            </View>
+            <View style={{ flexDirection: 'row', gap: spacing.compact }}>
+              <Text style={[typography.label, { color: colors.brand, width: 24 }]}>2.</Text>
+              <Text style={[typography.bodyMedium, { color: colors.textPrimary, flex: 1 }]}>After paying, return here and finish registration. Payment alone does not provide tickets.</Text>
+            </View>
           </Card>
         ) : null}
         {stuckUnpaid ? (

@@ -11,7 +11,7 @@ const ADMIN_READY = 'sfvga-admin-ready';
 const ADMIN_SESSION = 'sfvga-admin-session';
 const MEMBER_ORIGIN = process.env.NEXT_PUBLIC_MEMBER_WEB_ORIGIN || 'https://sfvga-cabe6.web.app';
 const MEMBER_ORIGINS = Array.from(
-  new Set([MEMBER_ORIGIN, 'https://sfvga-cabe6.web.app', 'http://localhost:8081']),
+  new Set([MEMBER_ORIGIN, 'http://localhost:8081']),
 );
 
 type NativeBridgeWindow = Window & {
