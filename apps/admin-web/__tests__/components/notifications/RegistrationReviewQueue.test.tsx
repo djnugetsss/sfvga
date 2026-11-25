@@ -46,9 +46,9 @@ it('makes an actionable registration visible in the dashboard summary', async ()
   expect(screen.getByRole('link', { name: /Test Member/ }).getAttribute('href')).toBe(
     '/events/event-1/registrations#registration-registration-1',
   );
-  expect(screen.getByRole('button', { name: /Payments 1 Registrations to check/ })).toBeTruthy();
-  expect(screen.getByRole('button', { name: /Messages 1 Unread replies/ })).toBeTruthy();
-  fireEvent.click(screen.getByRole('button', { name: /Messages 1 Unread replies/ }));
+  expect(screen.getByRole('button', { name: /Payments 1 Payments to review/ })).toBeTruthy();
+  expect(screen.getByRole('button', { name: /Messages 1 Unread messages/ })).toBeTruthy();
+  fireEvent.click(screen.getByRole('button', { name: /Messages 1 Unread messages/ }));
   expect(screen.getByRole('link', { name: /Test Member/ }).getAttribute('href')).toBe(
     '/events/event-1/messages#registration-registration-1',
   );
