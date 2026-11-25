@@ -239,7 +239,7 @@ export default function EventDetailScreen() {
         <View style={{ padding: spacing.md, paddingTop: spacing.lg, width: '100%', maxWidth: 940, alignSelf: 'center', marginTop: -20, borderTopLeftRadius: 20, borderTopRightRadius: 20, backgroundColor: colors.background }}>
           <Text style={[typography.eyebrow, { color: colors.accentStrong, textTransform: 'uppercase', letterSpacing: 1.3, marginBottom: spacing.sm }]}>SFVGA gathering</Text>
           <Text
-            style={[typography.displayLarge, { color: colors.textPrimary, fontSize: 33, lineHeight: 41 }]}
+            style={[typography.displayLarge, { color: colors.brand, fontSize: 33, lineHeight: 41 }]}
             {...textAccessibilityProps}
           >
             {event.title}

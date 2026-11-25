@@ -261,7 +261,7 @@ export default function HomeScreen() {
               ) : null}
             </MotionPressable>
           </View>
-          <Text style={[typography.displayLarge, { color: colors.textPrimary, marginTop: spacing.md, fontSize: 32, lineHeight: 40 }]}>
+          <Text style={[typography.displayLarge, { color: colors.brand, marginTop: spacing.md, fontSize: 32, lineHeight: 40 }]}>
             Welcome home, {firstName}.
           </Text>
           <Text style={[typography.bodyMedium, { color: colors.textSecondary, marginTop: spacing.xs, maxWidth: 520 }]}>
@@ -324,7 +324,7 @@ export default function HomeScreen() {
         </AnimatedScreen>
 
         <AnimatedScreen delay={220} style={{ marginTop: spacing.lg }}>
-          <Text style={[typography.eyebrow, { color: colors.accentStrong, textTransform: 'uppercase', letterSpacing: 1.2 }]}>Beyond the calendar</Text>
+          <Text style={[typography.eyebrow, { color: colors.accentStrong, textTransform: 'uppercase', letterSpacing: 1.2 }]}>Our community</Text>
           <Text style={[typography.headingLarge, { color: colors.textPrimary, marginTop: spacing.xs, marginBottom: spacing.sm }]}>Explore SFVGA</Text>
           <View style={[styles.exploreList, { borderColor: colors.border }]}>
             {([
