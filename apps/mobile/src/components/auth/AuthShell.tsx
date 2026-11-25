@@ -67,7 +67,7 @@ export function AuthShell({ eyebrow, title, subtitle, children }: AuthShellProps
 
 const styles = StyleSheet.create({
   safe: { flex: 1 },
-  scroll: { flexGrow: 1, justifyContent: 'center', paddingVertical: 16 },
+  scroll: { width: '100%', flexGrow: 1, justifyContent: 'center', alignItems: 'center', paddingVertical: 16 },
   shell: {
     width: '100%',
     alignSelf: 'center',
