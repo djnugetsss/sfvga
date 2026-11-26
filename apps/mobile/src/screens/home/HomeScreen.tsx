@@ -284,6 +284,18 @@ export default function HomeScreen() {
           style={[styles.communityBanner, { backgroundColor: colors.surfaceMuted }]}
         />
 
+        <MotionPressable
+          accessibilityRole="button"
+          onPress={() => navigation.navigate('Profile', { screen: 'CommunityHub', initial: false })}
+          style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.md, minHeight: 64, paddingVertical: spacing.sm, borderBottomWidth: StyleSheet.hairlineWidth, borderColor: colors.border }}
+        >
+          <View style={{ flex: 1 }}>
+            <Text style={[typography.headingMedium, { color: colors.textPrimary }]}>Explore SFVGA</Text>
+            <Text style={[typography.caption, { color: colors.textSecondary }]}>Board, youth, membership and more</Text>
+          </View>
+          <AppIcon name="chevron-forward" size={20} color={colors.accentStrong} />
+        </MotionPressable>
+
         {hasError ? (
           <View style={{ marginTop: spacing.md }}>
             <InlineRetryBanner onRetry={onRefresh} />

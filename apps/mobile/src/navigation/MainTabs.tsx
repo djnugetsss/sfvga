@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import type { BottomTabBarButtonProps } from '@react-navigation/bottom-tabs';
 import type { NavigatorScreenParams } from '@react-navigation/native';
 import { StackActions } from '@react-navigation/native';
-import { Platform, StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Animated, {
   useAnimatedStyle,
@@ -13,7 +13,6 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useEffect } from 'react';
 import { CommunityMenu, CommunityTopic } from '@/screens/community/CommunityScreen';
-import Button from '@/components/ui/Button';
 import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import HomeScreen from '@/screens/home/HomeScreen';
 import { EventStack, type EventStackParamList } from './EventStack';
@@ -46,11 +45,6 @@ function YouthTab() { return <CommunityTopic topicKey="youth" />; }
 function MoreTab({ navigation }: BottomTabScreenProps<MainTabParamList, 'More'>) {
   return <CommunityMenu
     onTopic={topic => navigation.navigate('Profile', { screen: 'CommunityDetail', params: { topic } })}
-    actions={<View style={{ gap: 8 }}>
-      <Button title="My tickets" icon="ticket-outline" onPress={() => navigation.navigate('Tickets')} />
-      <Button variant="secondary" title="Messages" icon="chatbubbles-outline" onPress={() => navigation.navigate('Messages')} />
-      <Button variant="secondary" title="My profile" icon="person-outline" onPress={() => navigation.navigate('Profile', { screen: 'ProfileMain' })} />
-    </View>}
   />;
 }
 
@@ -120,7 +114,6 @@ export function MainTabs() {
         tabBarLabelPosition: 'below-icon',
         tabBarLabelStyle: {
           fontSize: 13,
-          textTransform: 'uppercase',
           fontWeight: '600',
           marginBottom: 4,
         },
@@ -133,7 +126,7 @@ export function MainTabs() {
           />
         ),
         tabBarButton: (props) => <TabButton {...props} />,
-        tabBarItemStyle: ['Profile', 'Messages', 'Tickets'].includes(route.name) ? { display: 'none' } : { marginVertical: 0 },
+        tabBarItemStyle: ['Board', 'Youth', 'More'].includes(route.name) ? { display: 'none' } : { marginVertical: 0 },
         tabBarStyle: {
           position: 'relative',
           height: 76 + insets.bottom,

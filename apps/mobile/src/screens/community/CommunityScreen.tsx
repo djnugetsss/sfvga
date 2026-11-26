@@ -80,16 +80,15 @@ export default function CommunityHubScreen() {
   return <CommunityMenu onTopic={topic => navigation.navigate('CommunityDetail', { topic })} />;
 }
 
-export function CommunityMenu({ onTopic, actions }: { onTopic: (topic: Topic) => void; actions?: React.ReactNode }) {
+export function CommunityMenu({ onTopic }: { onTopic: (topic: Topic) => void }) {
   const { colors, typography, spacing, page, content } = useCommunityStyles();
   return (
     <ScrollView style={page} contentContainerStyle={content}>
       <ScreenHeader
         eyebrow="San Fernando Valley Gujarati Association"
-        title={actions ? "More" : "Our community"}
+        title="Explore SFVGA"
         subtitle="Meet the people behind SFVGA and find the information you need."
       />
-      {actions}
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
         {topics.map(topic => (
           <TouchableOpacity
