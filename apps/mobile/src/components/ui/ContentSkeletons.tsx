@@ -9,15 +9,13 @@ export function EventCardSkeleton({ variant = 'medium' }: { variant?: 'large' | 
   const { colors, spacing } = useTheme();
   if (variant === 'medium') {
     return (
-      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12, padding: 10, marginBottom: spacing.sm, borderWidth: 1, borderRadius: 16, borderColor: colors.border, backgroundColor: colors.surface }}>
-        <Skeleton width={112} height={112} radius={10} style={{ marginBottom: 0 }} />
-        <View style={{ flex: 1, gap: 8 }}>
-          <Skeleton width="75%" height={20} radius={6} style={{ marginBottom: 0 }} />
-          <Skeleton width="55%" height={15} radius={5} style={{ marginBottom: 0 }} />
-          <Skeleton width="65%" height={15} radius={5} style={{ marginBottom: 0 }} />
+      <Card style={{ padding: 0, marginBottom: spacing.md, overflow: 'hidden' }}>
+        <Skeleton height={140} radius={0} style={{ marginBottom: 0 }} />
+        <View style={{ padding: spacing.md, gap: spacing.xs }}>
+          <Skeleton width="42%" height={18} radius={4} />
+          <Skeleton width="72%" height={27} radius={5} />
         </View>
-        <Skeleton width={16} height={16} radius={8} style={{ marginBottom: 0 }} />
-      </View>
+      </Card>
     );
   }
   return (

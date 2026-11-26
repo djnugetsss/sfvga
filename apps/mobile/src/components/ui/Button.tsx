@@ -36,7 +36,7 @@ export default function Button({
     colors,
     typography,
     primaryButtonHeight,
-    buttonBorderRadius,
+
     minTapTarget,
     textAccessibilityProps,
   } = useTheme();
@@ -55,7 +55,7 @@ export default function Button({
         styles.base,
         {
           minHeight: height,
-          borderRadius: buttonBorderRadius,
+          borderRadius: 999,
           backgroundColor: isPrimary ? colors.primary : 'transparent',
           borderWidth: isSecondary ? 1 : 0,
           borderColor: isSecondary ? colors.brand : undefined,

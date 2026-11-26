@@ -31,7 +31,7 @@ export function ScreenHeader({ eyebrow, title, subtitle, action }: ScreenHeaderP
         <Text
           style={[
             typography.displayLarge,
-            { color: colors.brand, marginTop: eyebrow ? spacing.xs : 0 },
+            { color: colors.textPrimary, marginTop: eyebrow ? spacing.xs : 0 },
           ]}
         >
           {title}

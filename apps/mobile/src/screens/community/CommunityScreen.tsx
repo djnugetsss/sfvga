@@ -77,20 +77,25 @@ function OpenLink({ label, url }: { label: string; url: string }) {
 
 export default function CommunityHubScreen() {
   const navigation = useNavigation<CommunityNav>();
+  return <CommunityMenu onTopic={topic => navigation.navigate('CommunityDetail', { topic })} />;
+}
+
+export function CommunityMenu({ onTopic, actions }: { onTopic: (topic: Topic) => void; actions?: React.ReactNode }) {
   const { colors, typography, spacing, page, content } = useCommunityStyles();
   return (
     <ScrollView style={page} contentContainerStyle={content}>
       <ScreenHeader
         eyebrow="San Fernando Valley Gujarati Association"
-        title="Our community"
+        title={actions ? "More" : "Our community"}
         subtitle="Meet the people behind SFVGA and find the information you need."
       />
+      {actions}
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
         {topics.map(topic => (
           <TouchableOpacity
             key={topic.key}
             accessibilityRole="button"
-            onPress={() => navigation.navigate('CommunityDetail', { topic: topic.key })}
+            onPress={() => onTopic(topic.key)}
             style={{ width: '48%', alignItems: 'center', padding: spacing.sm, marginBottom: spacing.md }}
           >
             <View style={{ width: 58, height: 58, borderRadius: 29, borderWidth: 1, borderColor: colors.accentStrong, alignItems: 'center', justifyContent: 'center' }}>
@@ -106,15 +111,19 @@ export default function CommunityHubScreen() {
 
 export function CommunityDetailScreen() {
   const route = useRoute<RouteProp<ProfileStackParamList, 'CommunityDetail'>>();
+  return <CommunityTopic topicKey={route.params.topic} />;
+}
+
+export function CommunityTopic({ topicKey }: { topicKey: Topic }) {
   const { colors, typography, spacing, page, content } = useCommunityStyles();
   const [expandedRole, setExpandedRole] = useState<string | null>(null);
   const [expandedFaq, setExpandedFaq] = useState<string | null>(null);
   const [selectedPhoto, setSelectedPhoto] = useState<number | null>(null);
-  const topic = topics.find((item) => item.key === route.params.topic) ?? topics[0];
+  const topic = topics.find((item) => item.key === topicKey) ?? topics[0];
 
   return (
     <ScrollView style={page} contentContainerStyle={content}>
-      <ScreenHeader eyebrow="About SFVGA" title={topic.title} subtitle={topic.description} />
+      <ScreenHeader eyebrow={topicKey === 'board' ? 'Leadership' : topicKey === 'youth' ? 'Next generation' : 'Association'} title={topicKey === 'board' ? 'The Board' : topicKey === 'youth' ? 'Youth' : topic.title} subtitle={topic.description} />
 
       {topic.key === 'about' ? (
         <>

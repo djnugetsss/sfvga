@@ -10,6 +10,7 @@ interface EventCardProps {
   dateLabel?: string;
   locationLabel?: string;
   bannerUrl?: string;
+  photo?: number;
   /** One-line countdown shown on the large ("What's Next") variant, e.g. "in 5 days". */
   countdownLabel?: string;
   variant?: 'large' | 'medium';
@@ -29,6 +30,7 @@ export const EventCard = React.memo(function EventCard({
   dateLabel,
   locationLabel,
   bannerUrl,
+  photo,
   countdownLabel,
   variant = 'medium',
   onPress,
@@ -45,134 +47,25 @@ export const EventCard = React.memo(function EventCard({
   };
   const hasSeparateCta = isLarge && Boolean(ctaLabel && onCtaPress);
 
-  const largeBanner = bannerUrl ? (
-    <Image
-      accessible={false}
-      source={{ uri: bannerUrl }}
-      resizeMode="cover"
-      style={[{ width: '100%', height: bannerHeight }, bannerRadius]}
-    />
-  ) : (
-    <View
-      accessible={false}
-      style={[
-        styles.largePlaceholder,
-        { width: '100%', height: bannerHeight, backgroundColor: colors.surfaceMuted },
-        bannerRadius,
-      ]}
-    >
-      <Text style={[typography.headingLarge, { color: colors.brand }]}>SFVGA</Text>
-    </View>
-  );
-
+  const source = bannerUrl ? { uri: bannerUrl } : photo;
+  const initials = title.trim().split(/\s+/).slice(0, 2).map(word => word[0]).join('');
   const largeBody = (
     <>
-      {largeBanner}
-      <View style={{ paddingHorizontal: spacing.md, paddingTop: spacing.md, paddingBottom: spacing.sm }}>
-        {isLarge && countdownLabel ? (
-          <View style={styles.countdownRow}>
-            <AppIcon name="time-outline" size={16} color={colors.accentStrong} />
-            <Text style={[typography.label, { color: colors.accentStrong }]}>{countdownLabel}</Text>
-          </View>
-        ) : null}
-
-        <Text
-          numberOfLines={2}
-          style={[
-            typography.headingLarge,
-            { color: colors.textPrimary, marginTop: countdownLabel ? spacing.sm : 0 },
-          ]}
-        >
-          {title}
-        </Text>
-
-        {dateLabel ? (
-          <View style={[styles.metaRow, { marginTop: spacing.md }]}>
-            <AppIcon name="calendar-outline" size={16} color={colors.accentStrong} />
-            <Text
-              numberOfLines={1}
-              style={[typography.bodyMedium, { color: colors.textSecondary, flex: 1 }]}
-            >
-              {dateLabel}
-            </Text>
-          </View>
-        ) : null}
-
-        {locationLabel ? (
-          <View style={[styles.metaRow, { marginTop: spacing.sm }]}>
-            <AppIcon name="location-outline" size={16} color={colors.textSecondary} />
-            <Text
-              numberOfLines={1}
-              style={[typography.bodyMedium, { color: colors.textSecondary, flex: 1 }]}
-            >
-              {locationLabel}
-            </Text>
-          </View>
-        ) : null}
+      {source ? (
+        <Image accessible={false} source={source} resizeMode="cover" style={[{ width: '100%', height: bannerHeight }, bannerRadius]} />
+      ) : (
+        <View style={[styles.largePlaceholder, bannerRadius, { height: bannerHeight, backgroundColor: colors.surfaceMuted }]}>
+          <Text style={[typography.headingLarge, { color: colors.brand }]}>{initials}</Text>
+        </View>
+      )}
+      <View style={{ padding: spacing.md, gap: spacing.xs }}>
+        {dateLabel && <Text style={[typography.eyebrow, { textTransform: 'uppercase', color: colors.textSecondary }]}>{dateLabel}</Text>}
+        <Text style={[isLarge ? typography.headingLarge : typography.headingMedium, { color: colors.textPrimary }]}>{title}</Text>
+        {countdownLabel && <Text style={[typography.label, { color: colors.accentStrong }]}>{countdownLabel}</Text>}
+        {locationLabel && <Text style={[typography.caption, { color: colors.textSecondary }]}>{locationLabel}</Text>}
       </View>
     </>
   );
-
-  if (!isLarge) {
-    const thumbnail = bannerUrl ? (
-      <Image
-        source={{ uri: bannerUrl }}
-        resizeMode="cover"
-        style={styles.thumbnail}
-        accessible={false}
-      />
-    ) : (
-      <View
-        style={[styles.thumbnail, styles.placeholder, { backgroundColor: colors.surfaceMuted }]}
-      >
-        <Text style={[typography.headingMedium, { color: colors.accentStrong }]}>SFVGA</Text>
-      </View>
-    );
-    return (
-      <MotionPressable
-        onPress={onPress}
-        accessibilityRole="button"
-        accessibilityLabel={accessibilityLabel ?? title}
-        disabled={!onPress}
-        pressedScale={0.985}
-      >
-        <View style={[styles.mediumCard, { marginBottom: spacing.sm, borderColor: colors.border, backgroundColor: colors.surface }]}>
-          {thumbnail}
-          <View style={styles.mediumCopy}>
-            <Text
-              numberOfLines={2}
-              style={[typography.headingLarge, { color: colors.textPrimary, fontSize: 21, lineHeight: 27 }]}
-            >
-              {title}
-            </Text>
-            {dateLabel ? (
-              <View style={[styles.compactMeta, { marginTop: spacing.sm }]}>
-                <AppIcon name="calendar-outline" size={16} color={colors.accentStrong} />
-                <Text
-                  numberOfLines={1}
-                  style={[typography.caption, { color: colors.textSecondary, flex: 1 }]}
-                >
-                  {dateLabel}
-                </Text>
-              </View>
-            ) : null}
-            {locationLabel ? (
-              <View style={[styles.compactMeta, { marginTop: 5 }]}>
-                <AppIcon name="location-outline" size={15} color={colors.textSecondary} />
-                <Text
-                  numberOfLines={1}
-                  style={[typography.caption, { color: colors.textSecondary, flex: 1 }]}
-                >
-                  {locationLabel}
-                </Text>
-              </View>
-            ) : null}
-          </View>
-          <AppIcon name="chevron-forward" size={20} color={colors.accentStrong} />
-        </View>
-      </MotionPressable>
-    );
-  }
 
   if (hasSeparateCta) {
     return (

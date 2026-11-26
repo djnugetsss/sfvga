@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import type { BottomTabBarButtonProps } from '@react-navigation/bottom-tabs';
 import type { NavigatorScreenParams } from '@react-navigation/native';
 import { StackActions } from '@react-navigation/native';
-import { Platform, StyleSheet } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Animated, {
   useAnimatedStyle,
@@ -12,6 +12,9 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { useEffect } from 'react';
+import { CommunityMenu, CommunityTopic } from '@/screens/community/CommunityScreen';
+import Button from '@/components/ui/Button';
+import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import HomeScreen from '@/screens/home/HomeScreen';
 import { EventStack, type EventStackParamList } from './EventStack';
 import TicketWalletScreen from '@/screens/tickets/TicketWalletScreen';
@@ -23,6 +26,9 @@ import { MotionPressable } from '@/components/ui/MotionPressable';
 
 export type MainTabParamList = {
   Home: undefined;
+  Board: undefined;
+  Youth: undefined;
+  More: undefined;
   // NavigatorScreenParams lets other tabs deep-link into a stack
   // (e.g. Home's "What's Next" card → EventDetail, or Registration → FamilyMembers).
   Events: NavigatorScreenParams<EventStackParamList>;
@@ -34,6 +40,19 @@ export type MainTabParamList = {
 };
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
+
+function BoardTab() { return <CommunityTopic topicKey="board" />; }
+function YouthTab() { return <CommunityTopic topicKey="youth" />; }
+function MoreTab({ navigation }: BottomTabScreenProps<MainTabParamList, 'More'>) {
+  return <CommunityMenu
+    onTopic={topic => navigation.navigate('Profile', { screen: 'CommunityDetail', params: { topic } })}
+    actions={<View style={{ gap: 8 }}>
+      <Button title="My tickets" icon="ticket-outline" onPress={() => navigation.navigate('Tickets')} />
+      <Button variant="secondary" title="Messages" icon="chatbubbles-outline" onPress={() => navigation.navigate('Messages')} />
+      <Button variant="secondary" title="My profile" icon="person-outline" onPress={() => navigation.navigate('Profile', { screen: 'ProfileMain' })} />
+    </View>}
+  />;
+}
 
 function TabButton({ children, style, ...props }: BottomTabBarButtonProps) {
   return (
@@ -69,7 +88,7 @@ function AnimatedTabIcon({
     <Animated.View
       style={[
         styles.iconBubble,
-        { backgroundColor: focused ? colors.brandSoft : 'transparent' },
+        { backgroundColor: focused ? colors.accentSoft : 'transparent' },
         animatedStyle,
       ]}
     >
@@ -83,6 +102,9 @@ export function MainTabs() {
   const insets = useSafeAreaInsets();
 
   const tabIcons: Record<keyof MainTabParamList, { active: AppIconName; inactive: AppIconName }> = {
+    Board: { active: 'people', inactive: 'people-outline' },
+    Youth: { active: 'sparkles', inactive: 'sparkles-outline' },
+    More: { active: 'ellipsis-horizontal', inactive: 'ellipsis-horizontal' },
     Home: { active: 'home', inactive: 'home-outline' },
     Events: { active: 'calendar', inactive: 'calendar-outline' },
     Messages: { active: 'chatbubbles', inactive: 'chatbubbles-outline' },
@@ -93,11 +115,12 @@ export function MainTabs() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarActiveTintColor: colors.brand,
+        tabBarActiveTintColor: colors.accentStrong,
         tabBarInactiveTintColor: colors.textSecondary,
         tabBarLabelPosition: 'below-icon',
         tabBarLabelStyle: {
           fontSize: 13,
+          textTransform: 'uppercase',
           fontWeight: '600',
           marginBottom: 4,
         },
@@ -110,14 +133,14 @@ export function MainTabs() {
           />
         ),
         tabBarButton: (props) => <TabButton {...props} />,
-        tabBarItemStyle: { marginVertical: 0 },
+        tabBarItemStyle: ['Profile', 'Messages', 'Tickets'].includes(route.name) ? { display: 'none' } : { marginVertical: 0 },
         tabBarStyle: {
           position: 'relative',
           height: 76 + insets.bottom,
           paddingBottom: insets.bottom,
           paddingHorizontal: 4,
           paddingTop: 7,
-          backgroundColor: colors.surface,
+          backgroundColor: colors.background,
           borderTopWidth: StyleSheet.hairlineWidth,
           borderWidth: 0,
           borderColor: colors.border,
@@ -157,6 +180,9 @@ export function MainTabs() {
           },
         })}
       />
+      <Tab.Screen name="Board" component={BoardTab} options={{ headerShown: false }} />
+      <Tab.Screen name="Youth" component={YouthTab} options={{ headerShown: false }} />
+      <Tab.Screen name="More" component={MoreTab} options={{ headerShown: false }} />
       <Tab.Screen
         name="Messages"
         component={MessagesScreen}

@@ -11,6 +11,7 @@ import { InlineRetryBanner } from '@/components/ui/InlineRetryBanner';
 import { SegmentedControl } from '@/components/ui/SegmentedControl';
 import { ScreenHeader } from '@/components/ui/ScreenHeader';
 import { formatEventDate } from '@/utils/dateFormat';
+import { photos } from '@/content/community/photos';
 import { mergeSeason } from '@/content/community/season';
 import type { EventStackParamList } from '@/navigation/EventStack';
 
@@ -76,6 +77,7 @@ export default function EventListScreen() {
                   key={event.id}
                   variant="medium"
                   bannerUrl={event.image}
+                  photo={event.program ? photos[event.id]?.[0] : undefined}
                   title={event.title}
                   dateLabel={dateLabel}
                   locationLabel={locationLabel}
@@ -95,5 +97,5 @@ export default function EventListScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  content: { width: '100%', maxWidth: 940, alignSelf: 'center' },
+  content: { width: '100%', maxWidth: 740, alignSelf: 'center' },
 });

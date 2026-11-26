@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 html {
-  background: #faf7ef;
+  background: #faf6ef;
 }
 
 body {
@@ -15,9 +15,16 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-h1,
+@font-face {
+  font-family: Fraunces;
+  src: url('/fonts/Fraunces_600SemiBold.ttf') format('truetype');
+  font-weight: 600 800;
+  font-display: swap;
+}
+
+h1, h2,
 .font-editorial {
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: Fraunces, Georgia, 'Times New Roman', serif;
 }
 
 button,
@@ -45,14 +52,14 @@ a:active {
 }
 
 :focus-visible {
-  outline: 2px solid #74363c;
+  outline: 2px solid #76551b;
   outline-offset: 2px;
 }
 
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
-  outline: 2px solid #74363c;
+  outline: 2px solid #76551b;
   outline-offset: 2px;
 }
 

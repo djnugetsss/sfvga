@@ -268,7 +268,7 @@ export default function HomeScreen() {
               ) : null}
             </MotionPressable>
           </View>
-          <Text style={[typography.displayLarge, { color: colors.brand, marginTop: spacing.md, fontSize: 32, lineHeight: 40 }]}>
+          <Text style={[typography.displayLarge, { color: colors.textPrimary, marginTop: spacing.md }]}>
             Welcome home, {firstName}.
           </Text>
           <Text style={[typography.bodyMedium, { color: colors.textSecondary, marginTop: spacing.xs, maxWidth: 520 }]}>
@@ -344,41 +344,7 @@ export default function HomeScreen() {
           <View style={{ marginTop: spacing.sm }}>{renderAnnouncements()}</View>
         </AnimatedScreen>
 
-        <AnimatedScreen delay={220} style={{ marginTop: spacing.lg }}>
-          <Text style={[typography.eyebrow, { color: colors.accentStrong, textTransform: 'uppercase', letterSpacing: 1.2 }]}>Our community</Text>
-          <Text style={[typography.headingLarge, { color: colors.textPrimary, marginTop: spacing.xs, marginBottom: spacing.sm }]}>Explore SFVGA</Text>
-          <View style={[styles.exploreList, { borderColor: colors.border }]}>
-            {([
-              { topic: 'board', title: 'Meet the board', subtitle: 'The volunteers leading SFVGA', icon: 'people-outline' },
-              { topic: 'youth', title: 'Our next generation', subtitle: 'Youth programs and volunteer hours', icon: 'sparkles-outline' },
-              { topic: 'resources', title: 'More about SFVGA', subtitle: 'Membership, giving, and resources', icon: 'heart-outline' },
-            ] as const).map((item, index) => (
-              <MotionPressable
-                key={item.topic}
-                onPress={() => navigation.navigate('Profile', { screen: 'CommunityDetail', params: { topic: item.topic } })}
-                accessibilityRole="button"
-                accessibilityLabel={item.title}
-                style={[styles.exploreRow, { borderTopWidth: index ? 1 : 0, borderColor: colors.border }]}
-              >
-                <View style={[styles.exploreIcon, { backgroundColor: colors.accentSoft }]}><AppIcon name={item.icon} color={colors.accentStrong} size={23} /></View>
-                <View style={{ flex: 1 }}>
-                  <Text style={[typography.headingLarge, { color: colors.textPrimary, fontSize: 20, lineHeight: 26 }]}>{item.title}</Text>
-                  <Text style={[typography.caption, { color: colors.textSecondary }]}>{item.subtitle}</Text>
-                </View>
-                <AppIcon name="arrow-forward" color={colors.brand} size={20} />
-              </MotionPressable>
-            ))}
-          </View>
-          <MotionPressable
-            onPress={() => navigation.navigate('Profile', { screen: 'CommunityHub' })}
-            accessibilityRole="button"
-            accessibilityLabel="View all community information"
-            style={styles.allCommunityLink}
-          >
-            <Text style={[typography.label, { color: colors.brand }]}>All community information</Text>
-            <AppIcon name="arrow-forward" color={colors.brand} size={18} />
-          </MotionPressable>
-        </AnimatedScreen>
+
       </ScrollView>
     </SafeAreaView>
   );
@@ -386,7 +352,7 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  content: { width: '100%', maxWidth: 940, alignSelf: 'center' },
+  content: { width: '100%', maxWidth: 740, alignSelf: 'center' },
   intro: { paddingTop: 4 },
   heroTopRow: {
     flexDirection: 'row',

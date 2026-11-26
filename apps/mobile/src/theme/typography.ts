@@ -13,9 +13,11 @@ const editorialFont = 'Fraunces-SemiBold';
 
 export const typography = {
   ...tokenTypography,
-  displayLarge: { ...tokenTypography.displayLarge, fontFamily: editorialFont, fontWeight: '400' as const },
-  headingLarge: { ...tokenTypography.headingLarge, fontFamily: editorialFont, fontWeight: '400' as const },
-  headingMedium: { ...tokenTypography.headingMedium },
+  displayLarge: { ...tokenTypography.displayLarge, fontSize: 40, lineHeight: 46, fontFamily: editorialFont, fontWeight: '400' as const },
+  headingLarge: { ...tokenTypography.headingLarge, fontSize: 28, lineHeight: 35, fontFamily: editorialFont, fontWeight: '400' as const },
+  headingMedium: { ...tokenTypography.headingMedium, fontFamily: 'Fraunces-Regular', fontWeight: '400' as const },
+  bodyMedium: { ...tokenTypography.bodyMedium, fontFamily: fontFamily.regular },
+  bodyLarge: { ...tokenTypography.bodyLarge, fontFamily: fontFamily.regular },
 };
 export { fontFamily, minTapTarget, primaryButtonHeight, cardBorderRadius, buttonBorderRadius };
 

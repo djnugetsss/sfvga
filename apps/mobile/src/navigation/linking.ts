@@ -23,6 +23,9 @@ export const linking: LinkingOptions<RootStackParamList> = {
       Main: {
         screens: {
           Home: 'home',
+          Board: 'board',
+          Youth: 'youth',
+          More: 'more',
           Events: {
             screens: {
               EventList: 'events',
