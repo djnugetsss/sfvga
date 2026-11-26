@@ -227,10 +227,6 @@ export function CommunityTopic({ topicKey }: { topicKey: Topic }) {
             <SectionHeader title="Volunteer hours" />
             <OpenLink label="View volunteer hours" url={resources.find((item) => item.id === 'youth-hours')?.url ?? 'https://sfvga.org'} />
           </Card>
-          <Card>
-            <SectionHeader title="CPR training" />
-            <OpenLink label="View CPR training photos" url={resources.find((item) => item.id === 'youth-cpr')?.url ?? 'https://sfvga.org'} />
-          </Card>
         </>
       ) : null}
 
