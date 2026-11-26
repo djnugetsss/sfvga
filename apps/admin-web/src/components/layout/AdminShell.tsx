@@ -108,7 +108,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex min-w-0 flex-1 flex-col">
-      <header className="sticky top-0 z-20 flex min-h-[72px] items-center justify-between border-b border-border bg-surface/95 px-4 backdrop-blur md:px-8">
+      <header className="sticky top-0 z-20 flex min-h-[72px] items-center justify-between border-b border-border bg-canvas/95 px-4 backdrop-blur md:px-8">
         <div className="flex min-w-0 items-center gap-3">
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand text-sm font-bold text-white">
             SF
@@ -134,12 +134,12 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
         </div>
       </header>
 
-      <main className="mx-auto w-full max-w-[1440px] flex-1 px-4 pb-[calc(6rem+env(safe-area-inset-bottom))] pt-5 sm:px-6 lg:px-10 lg:pt-7">
+      <main className="mx-auto w-full max-w-[1120px] flex-1 px-4 pb-[calc(6rem+env(safe-area-inset-bottom))] pt-4 sm:px-6 lg:px-8 lg:pt-4">
         {children}
       </main>
 
       <nav
-        className="fixed inset-x-0 bottom-0 z-30 flex min-h-[74px] items-center justify-around border-t border-border bg-surface/95 px-1 pb-[env(safe-area-inset-bottom)] shadow-[0_-2px_8px_rgba(68,48,38,0.035)] backdrop-blur"
+        className="fixed inset-x-0 bottom-0 z-30 flex min-h-[74px] items-center justify-around border-t border-border bg-canvas/95 px-1 pb-[env(safe-area-inset-bottom)] shadow-[0_-2px_8px_rgba(68,48,38,0.035)] backdrop-blur"
         aria-label="Admin navigation"
       >
         {visibleItems.map((item) => {
@@ -150,11 +150,11 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
               href={item.href}
               aria-current={active ? 'page' : undefined}
               aria-label={item.label}
-              className={`flex min-h-[74px] min-w-0 flex-1 flex-col items-center justify-center gap-1 rounded-2xl px-0.5 text-xs font-semibold ${
-                active ? 'text-brand' : 'text-muted'
+              className={`flex min-h-[74px] min-w-0 flex-1 flex-col items-center justify-center gap-1 rounded-2xl px-0.5 text-[13px] font-semibold ${
+                active ? 'text-accentStrong' : 'text-muted'
               }`}
             >
-              <span className={active ? 'rounded-full bg-brandSoft px-4 py-1.5' : 'px-4 py-1.5'}>
+              <span className={active ? 'rounded-full bg-accentSoft px-4 py-1.5' : 'px-4 py-1.5'}>
                 <NavIcon name={item.icon} />
               </span>
               {item.shortLabel ? (

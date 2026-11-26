@@ -36,7 +36,7 @@ export function Button({
     <button
       disabled={disabled || loading}
       aria-busy={loading}
-      className={`inline-flex max-w-full items-center justify-center gap-2 rounded-xl text-center font-medium leading-snug focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand disabled:cursor-not-allowed ${VARIANTS[variant]} ${SIZES[size]} ${className}`}
+      className={`inline-flex max-w-full items-center justify-center gap-2 rounded-full text-center font-medium leading-snug focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand disabled:cursor-not-allowed ${VARIANTS[variant]} ${SIZES[size]} ${className}`}
       {...props}
     >
       {loading ? 'Working…' : children}

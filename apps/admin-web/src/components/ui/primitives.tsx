@@ -8,7 +8,7 @@ export function Card({
   className?: string;
 }) {
   return (
-    <div className={`rounded-xl border border-border bg-surface p-4 sm:p-5 ${className}`}>
+    <div className={`rounded-[14px] border border-border bg-surface p-4 ${className}`}>
       {children}
     </div>
   );
@@ -24,9 +24,11 @@ export function PageHeader({
   actions?: React.ReactNode;
 }) {
   return (
-    <div className="mb-5 flex flex-wrap items-end justify-between gap-3 border-b border-border pb-4">
+    <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
       <div>
-        <h1 className="font-editorial text-[29px] font-bold tracking-[-0.025em] text-brand sm:text-[32px]">
+        <p className="mb-2 text-xs font-semibold uppercase leading-[18px] tracking-[1.5px] text-muted">SFVGA Administration</p>
+        <div aria-hidden="true" className="mb-3 h-0.5 w-[34px] bg-accent" />
+        <h1 className="font-editorial text-[40px] font-semibold leading-[46px] tracking-[-0.5px] text-ink">
           {title}
         </h1>
         {description ? (

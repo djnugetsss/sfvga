@@ -8,6 +8,9 @@ html {
 
 body {
   @apply bg-canvas text-ink;
+  font-family: Inter, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
   font-feature-settings:
     'ss01' on,
     'cv02' on;
@@ -82,4 +85,22 @@ select:focus-visible {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
   }
+}
+
+@font-face {
+  font-family: Inter;
+  src: url('/fonts/Inter-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: Inter;
+  src: url('/fonts/Inter-SemiBold.ttf') format('truetype');
+  font-weight: 500 800;
+  font-display: swap;
+}
+h2 {
+  font-size: 20px;
+  line-height: 27px;
+  font-weight: 600;
 }
