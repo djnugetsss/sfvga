@@ -1,0 +1,82 @@
+[
+  {
+    "id": "rammat-gammat",
+    "title": "Rammat-Gammat",
+    "startDate": "2026-02-07",
+    "category": "social",
+    "sourceUrl": "https://sfvga.org/events2026/uttrayan2026",
+    "isFeatured": false
+  },
+  {
+    "id": "sangeet-saanjh",
+    "title": "Sangeet Saanjh",
+    "startDate": "2026-03-22",
+    "category": "social",
+    "sourceUrl": "https://sfvga.org/events2026/valentine",
+    "isFeatured": false
+  },
+  {
+    "id": "swasthya-divas",
+    "title": "Swasthya Divas",
+    "startDate": "2026-05-17",
+    "category": "wellness",
+    "sourceUrl": "https://sfvga.org/events2026/yoga",
+    "isFeatured": false
+  },
+  {
+    "id": "chalo-manek-chowk",
+    "title": "Chalo Manek Chowk",
+    "startDate": "2026-06-14",
+    "category": "social",
+    "sourceUrl": "https://sfvga.org/events2026/manek",
+    "isFeatured": false
+  },
+  {
+    "id": "saagar-kinare-kalrav",
+    "title": "Saagar Kinare Kalrav",
+    "startDate": "2026-07-19",
+    "category": "social",
+    "sourceUrl": "https://sfvga.org/events2026/beachday",
+    "isFeatured": false
+  },
+  {
+    "id": "sanskruti-startup",
+    "title": "Sanskruti thi Startup Sudhi",
+    "startDate": "2026-08-23",
+    "category": "youth",
+    "sourceUrl": "https://sfvga.org/events2026/kidsfair",
+    "isFeatured": false
+  },
+  {
+    "id": "sanskriti-divas",
+    "title": "Sanskriti Divas",
+    "startDate": "2026-09-13",
+    "category": "cultural",
+    "sourceUrl": "https://sfvga.org/events2026/cultural",
+    "isFeatured": true
+  },
+  {
+    "id": "navratri",
+    "title": "Navratri",
+    "startDate": "2026-10-18",
+    "category": "religious",
+    "sourceUrl": "https://sfvga.org/events2026/navratri",
+    "isFeatured": false
+  },
+  {
+    "id": "dipotsav-mahotsav",
+    "title": "Dipotsav Mahotsav",
+    "startDate": "2026-11-21",
+    "category": "religious",
+    "sourceUrl": "https://sfvga.org/events2026/diwali",
+    "isFeatured": false
+  },
+  {
+    "id": "varshik-mahasabha",
+    "title": "Varshik Mahasabha",
+    "startDate": "2026-12-13",
+    "category": "governance",
+    "sourceUrl": "https://sfvga.org/events2026/agm",
+    "isFeatured": false
+  }
+]

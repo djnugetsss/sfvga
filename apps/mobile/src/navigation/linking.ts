@@ -25,6 +25,8 @@ export const linking: LinkingOptions<RootStackParamList> = {
           Home: 'home',
           Events: {
             screens: {
+              EventList: 'events',
+              SeasonDetail: 'events/program/:eventId',
               EventDetail: 'events/:eventId',
               Registration: 'events/:eventId/register',
             },

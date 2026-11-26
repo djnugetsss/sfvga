@@ -2,6 +2,7 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import EventListScreen from '@/screens/events/EventListScreen';
 import EventDetailScreen from '@/screens/events/EventDetailScreen';
+import SeasonDetail from '@/screens/events/SeasonDetail';
 import RegistrationScreen from '@/screens/events/RegistrationScreen';
 import { useTheme } from '@/providers/ThemeProvider';
 import { NavigationBackButton } from '@/components/ui/NavigationBackButton';
@@ -9,6 +10,7 @@ import { NavigationBackButton } from '@/components/ui/NavigationBackButton';
 export type EventStackParamList = {
   EventList: undefined;
   EventDetail: { eventId: string };
+  SeasonDetail: { eventId: string };
   Registration: { eventId: string };
 };
 
@@ -47,6 +49,7 @@ export function EventStack() {
           ),
         })}
       />
+      <Stack.Screen name="SeasonDetail" component={SeasonDetail} options={{ title: 'Community event' }} />
       <Stack.Screen
         name="Registration"
         component={RegistrationScreen}

@@ -85,26 +85,21 @@ export default function CommunityHubScreen() {
         title="Our community"
         subtitle="Meet the people behind SFVGA and find the information you need."
       />
-      {topics.map((topic) => (
-        <TouchableOpacity
-          key={topic.key}
-          accessibilityRole="button"
-          accessibilityLabel={topic.title}
-          onPress={() => navigation.navigate('CommunityDetail', { topic: topic.key })}
-          activeOpacity={0.75}
-        >
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.md, minHeight: 82, paddingVertical: spacing.sm, borderBottomWidth: 1, borderBottomColor: colors.border }}>
-            <View style={{ width: 44, height: 44, borderRadius: 22, backgroundColor: colors.accentSoft, alignItems: 'center', justifyContent: 'center' }}>
-              <AppIcon name={topic.icon} color={colors.brand} size={22} />
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+        {topics.map(topic => (
+          <TouchableOpacity
+            key={topic.key}
+            accessibilityRole="button"
+            onPress={() => navigation.navigate('CommunityDetail', { topic: topic.key })}
+            style={{ width: '48%', alignItems: 'center', padding: spacing.sm, marginBottom: spacing.md }}
+          >
+            <View style={{ width: 58, height: 58, borderRadius: 29, borderWidth: 1, borderColor: colors.accentStrong, alignItems: 'center', justifyContent: 'center' }}>
+              <AppIcon name={topic.icon} size={24} color={colors.accentStrong} />
             </View>
-            <View style={{ flex: 1 }}>
-              <Text style={[typography.bodyMedium, { color: colors.textPrimary, fontWeight: '700' }]}>{topic.title}</Text>
-              <Text style={[typography.caption, { color: colors.textSecondary, marginTop: 3 }]}>{topic.description}</Text>
-            </View>
-            <AppIcon name="chevron-forward" color={colors.textSecondary} size={20} />
-          </View>
-        </TouchableOpacity>
-      ))}
+            <Text style={[typography.label, { textAlign: 'center', marginTop: spacing.sm, color: colors.textPrimary }]}>{topic.title}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
     </ScrollView>
   );
 }

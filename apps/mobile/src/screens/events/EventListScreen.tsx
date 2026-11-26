@@ -10,7 +10,8 @@ import { EventCardSkeleton } from '@/components/ui/ContentSkeletons';
 import { InlineRetryBanner } from '@/components/ui/InlineRetryBanner';
 import { SegmentedControl } from '@/components/ui/SegmentedControl';
 import { ScreenHeader } from '@/components/ui/ScreenHeader';
-import { toDate, formatEventDate } from '@/utils/dateFormat';
+import { formatEventDate } from '@/utils/dateFormat';
+import { mergeSeason } from '@/content/community/season';
 import type { EventStackParamList } from '@/navigation/EventStack';
 
 const EMPTY_MESSAGES: Record<EventFilter, string> = {
@@ -24,7 +25,7 @@ export default function EventListScreen() {
   const [filter, setFilter] = useState<EventFilter>('upcoming');
   const { data: events, isLoading, isError, isRefetching, refetch } = useEventList(filter);
 
-  const list = events ?? [];
+  const list = mergeSeason(events ?? [], filter);
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
@@ -66,22 +67,22 @@ export default function EventListScreen() {
           <EmptyState message={EMPTY_MESSAGES[filter]} />
         ) : !list.length ? null : (
           list.map((event) => {
-            const start = toDate(event.startAt);
+            const start = new Date(event.day + 'T12:00:00');
             const dateLabel = start ? formatEventDate(start) : undefined;
-            const locationLabel = event.location?.name;
+            const locationLabel = event.location;
             return (
-              <View key={event.id}>
+              <View key={String(event.program) + event.id}>
                 <EventCard
                   key={event.id}
                   variant="medium"
-                  bannerUrl={event.bannerUrl}
+                  bannerUrl={event.image}
                   title={event.title}
                   dateLabel={dateLabel}
                   locationLabel={locationLabel}
                   accessibilityLabel={[event.title, dateLabel, locationLabel]
                     .filter(Boolean)
                     .join(', ')}
-                  onPress={() => navigation.navigate('EventDetail', { eventId: event.id })}
+                  onPress={() => navigation.navigate(event.program ? 'SeasonDetail' : 'EventDetail', { eventId: event.id })}
                 />
               </View>
             );
