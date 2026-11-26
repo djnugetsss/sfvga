@@ -14,7 +14,7 @@ import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTheme } from '@/providers/ThemeProvider';
 import { useAuthContext } from '@/providers/AuthProvider';
-import { mergeSeason, season } from '@/content/community/season';
+import { mergeSeason } from '@/content/community/season';
 import { useEventList } from '@/hooks/useEventList';
 import { useMyRegistrations } from '@/hooks/useMyRegistrations';
 import { useActiveStaffRoles } from '@/hooks/useActiveStaffRoles';
@@ -31,7 +31,6 @@ import { AnnouncementRowSkeleton, EventCardSkeleton } from '@/components/ui/Cont
 import { InlineRetryBanner } from '@/components/ui/InlineRetryBanner';
 import { SectionHeader } from '@/components/ui/SectionHeader';
 import { AnimatedScreen } from '@/components/ui/AnimatedScreen';
-import { MotionPressable } from '@/components/ui/MotionPressable';
 import { toDate, formatEventDate, eventCountdownLabel, formatRelative } from '@/utils/dateFormat';
 import type { MainTabParamList } from '@/navigation/MainTabs';
 import type { RootStackParamList } from '@/navigation/RootNavigator';
@@ -81,7 +80,6 @@ export default function HomeScreen() {
     ? adminAccessQuery.data.superAdminRoleName || 'Super Admin'
     : (adminAccessQuery.data?.organizationRole?.name ?? 'Organization admin');
   const announcements = announcementsQuery.data ?? [];
-  const featured = season.find(event => event.isFeatured);
 
   const hasError =
     eventsQuery.isError ||
@@ -261,20 +259,6 @@ export default function HomeScreen() {
           <View style={{ marginTop: spacing.sm }}>{renderWhatsNext()}</View>
         </AnimatedScreen>
 
-        {featured && (
-          <MotionPressable
-            accessibilityRole="button"
-            onPress={() => navigation.navigate('Events', { screen: 'SeasonDetail', params: { eventId: featured.id } })}
-            style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingVertical: spacing.md, borderBottomWidth: 1, borderColor: colors.border }}
-          >
-            <Image source={require('../../../assets/partner/dance4.jpg')} style={{ width: 84, height: 76, borderRadius: 10 }} />
-            <View style={{ flex: 1 }}>
-              <Text style={[typography.eyebrow, { color: colors.textSecondary }]}>CULTURAL SPOTLIGHT</Text>
-              <Text style={[typography.headingLarge, { color: colors.textPrimary }]}>{featured.title}</Text>
-              <Text style={[typography.caption, { color: colors.brand }]}>View celebration photos</Text>
-            </View>
-          </MotionPressable>
-        )}
         {staffRoles.length ? (
           <AnimatedScreen delay={140} style={{ marginTop: spacing.md }}>
             {staffRoles.map((role) => (
