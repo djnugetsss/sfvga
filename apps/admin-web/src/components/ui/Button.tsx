@@ -13,7 +13,7 @@ const VARIANTS: Record<Variant, string> = {
   primary:
     'border border-primary bg-primary text-onPrimary hover:border-primaryHover hover:bg-primaryHover disabled:opacity-60',
   secondary:
-    'border border-brand/35 bg-transparent text-brand hover:border-brand hover:bg-brandSoft disabled:opacity-60',
+    'border border-border bg-surface text-brand hover:border-brand hover:bg-brandSoft disabled:opacity-60',
   danger: 'border border-error bg-error text-white hover:bg-error/90 disabled:opacity-60',
   ghost: 'border border-transparent text-brand hover:bg-brandSoft disabled:opacity-60',
 };
@@ -36,7 +36,7 @@ export function Button({
     <button
       disabled={disabled || loading}
       aria-busy={loading}
-      className={`inline-flex max-w-full items-center justify-center gap-2 rounded-xl text-center font-semibold leading-snug focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand disabled:cursor-not-allowed ${VARIANTS[variant]} ${SIZES[size]} ${className}`}
+      className={`inline-flex max-w-full items-center justify-center gap-2 rounded-xl text-center font-medium leading-snug focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand disabled:cursor-not-allowed ${VARIANTS[variant]} ${SIZES[size]} ${className}`}
       {...props}
     >
       {loading ? 'Working…' : children}
