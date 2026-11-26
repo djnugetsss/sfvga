@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import {
   View,
-  Text,
   ScrollView,
   StyleSheet,
   SafeAreaView,
@@ -46,7 +45,7 @@ type HomeNavigationProp = CompositeNavigationProp<
 const ANNOUNCEMENT_PREVIEW_COUNT = 3;
 
 export default function HomeScreen() {
-  const { colors, typography, spacing } = useTheme();
+  const { colors, spacing } = useTheme();
   const navigation = useNavigation<HomeNavigationProp>();
   const { userProfile } = useAuthContext();
 
