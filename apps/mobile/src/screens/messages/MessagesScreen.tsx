@@ -61,7 +61,7 @@ export default function MessagesScreen() {
       <View
         style={{
           width: '100%',
-          maxWidth: 940,
+          maxWidth: 740,
           alignSelf: 'center',
           paddingHorizontal: spacing.md,
           paddingTop: spacing.md,
@@ -69,6 +69,7 @@ export default function MessagesScreen() {
       >
         <AnimatedScreen>
           <ScreenHeader
+            eyebrow={active ? 'Messages' : 'Your inbox'}
             title={active ? (eventNames.get(active.eventId) ?? 'Conversation') : 'Messages'}
             subtitle={
               active
@@ -82,7 +83,7 @@ export default function MessagesScreen() {
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={{
           width: '100%',
-          maxWidth: 940,
+          maxWidth: 740,
           alignSelf: 'center',
           padding: spacing.md,
           paddingBottom: spacing.xl,
@@ -101,7 +102,7 @@ export default function MessagesScreen() {
               showIntro={false}
             />
             <Button
-              title={active.totalAmount > 0 ? 'View registration & payment' : 'View registration'}
+            title={active.totalAmount > 0 ? 'View registration & payment' : 'View registration'}
               variant="secondary"
               onPress={() =>
                 navigation.navigate('Events', {

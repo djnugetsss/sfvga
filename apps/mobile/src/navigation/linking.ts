@@ -25,7 +25,7 @@ export const linking: LinkingOptions<RootStackParamList> = {
           Home: 'home',
           Board: 'board',
           Youth: 'youth',
-          More: 'more',
+          More: { path: 'more', screens: { CommunityHub: '', CommunityDetail: ':topic' } },
           Events: {
             screens: {
               EventList: 'events',

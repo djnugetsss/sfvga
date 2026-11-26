@@ -239,5 +239,5 @@ export default function TicketWalletScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  content: { width: '100%', maxWidth: 940, alignSelf: 'center' },
+  content: { width: '100%', maxWidth: 740, alignSelf: 'center' },
 });

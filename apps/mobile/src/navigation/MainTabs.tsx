@@ -12,8 +12,8 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { useEffect } from 'react';
-import { CommunityMenu, CommunityTopic } from '@/screens/community/CommunityScreen';
-import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import CommunityHub, { CommunityDetailScreen, CommunityTopic } from '@/screens/community/CommunityScreen';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from '@/screens/home/HomeScreen';
 import { EventStack, type EventStackParamList } from './EventStack';
 import TicketWalletScreen from '@/screens/tickets/TicketWalletScreen';
@@ -27,7 +27,7 @@ export type MainTabParamList = {
   Home: undefined;
   Board: undefined;
   Youth: undefined;
-  More: undefined;
+  More: NavigatorScreenParams<Pick<ProfileStackParamList, 'CommunityHub' | 'CommunityDetail'>>;
   // NavigatorScreenParams lets other tabs deep-link into a stack
   // (e.g. Home's "What's Next" card → EventDetail, or Registration → FamilyMembers).
   Events: NavigatorScreenParams<EventStackParamList>;
@@ -42,10 +42,16 @@ const Tab = createBottomTabNavigator<MainTabParamList>();
 
 function BoardTab() { return <CommunityTopic topicKey="board" />; }
 function YouthTab() { return <CommunityTopic topicKey="youth" />; }
-function MoreTab({ navigation }: BottomTabScreenProps<MainTabParamList, 'More'>) {
-  return <CommunityMenu
-    onTopic={topic => navigation.navigate('Profile', { screen: 'CommunityDetail', params: { topic } })}
-  />;
+const CommunityStack = createNativeStackNavigator<Pick<ProfileStackParamList, 'CommunityHub' | 'CommunityDetail'>>();
+
+function MoreTab() {
+  const { colors } = useTheme();
+  return (
+    <CommunityStack.Navigator screenOptions={{ headerStyle: { backgroundColor: colors.background }, headerTintColor: colors.textPrimary, headerShadowVisible: false }}>
+      <CommunityStack.Screen name="CommunityHub" component={CommunityHub} options={{ title: 'More', headerShown: false }} />
+      <CommunityStack.Screen name="CommunityDetail" component={CommunityDetailScreen} options={{ title: 'Community' }} />
+    </CommunityStack.Navigator>
+  );
 }
 
 function TabButton({ children, style, ...props }: BottomTabBarButtonProps) {
@@ -126,7 +132,7 @@ export function MainTabs() {
           />
         ),
         tabBarButton: (props) => <TabButton {...props} />,
-        tabBarItemStyle: ['Board', 'Youth', 'More'].includes(route.name) ? { display: 'none' } : { marginVertical: 0 },
+        tabBarItemStyle: ['Board', 'Youth'].includes(route.name) ? { display: 'none' } : { marginVertical: 0 },
         tabBarStyle: {
           position: 'relative',
           height: 76 + insets.bottom,
@@ -175,7 +181,6 @@ export function MainTabs() {
       />
       <Tab.Screen name="Board" component={BoardTab} options={{ headerShown: false }} />
       <Tab.Screen name="Youth" component={YouthTab} options={{ headerShown: false }} />
-      <Tab.Screen name="More" component={MoreTab} options={{ headerShown: false }} />
       <Tab.Screen
         name="Messages"
         component={MessagesScreen}
@@ -191,6 +196,7 @@ export function MainTabs() {
         component={ProfileStack}
         options={{ headerShown: false, title: 'Profile' }}
       />
+      <Tab.Screen name="More" component={MoreTab} options={{ headerShown: false }} />
     </Tab.Navigator>
   );
 }
@@ -198,7 +204,7 @@ export function MainTabs() {
 const styles = StyleSheet.create({
   tabButton: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   iconBubble: {
-    width: 52,
+    width: 44,
     height: 30,
     borderRadius: 15,
     alignItems: 'center',

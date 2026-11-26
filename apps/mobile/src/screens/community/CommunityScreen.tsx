@@ -50,10 +50,10 @@ function useCommunityStyles() {
     },
     content: {
       width: '100%' as const,
-      maxWidth: 720,
+      maxWidth: 740,
       alignSelf: 'center' as const,
       paddingHorizontal: theme.spacing.md,
-      paddingTop: theme.spacing.lg,
+      paddingTop: theme.spacing.md,
       paddingBottom: theme.spacing.xl,
       gap: theme.spacing.md,
     },
@@ -86,8 +86,8 @@ export function CommunityMenu({ onTopic }: { onTopic: (topic: Topic) => void }) 
     <ScrollView style={page} contentContainerStyle={content}>
       <ScreenHeader
         eyebrow="San Fernando Valley Gujarati Association"
-        title="Explore SFVGA"
-        subtitle="Meet the people behind SFVGA and find the information you need."
+        title="More"
+        subtitle="Board, youth programs, membership, and community resources."
       />
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
         {topics.map(topic => (

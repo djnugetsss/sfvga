@@ -32,12 +32,11 @@ import { InlineRetryBanner } from '@/components/ui/InlineRetryBanner';
 import { SectionHeader } from '@/components/ui/SectionHeader';
 import { AnimatedScreen } from '@/components/ui/AnimatedScreen';
 import { MotionPressable } from '@/components/ui/MotionPressable';
-import { AppIcon } from '@/components/ui/AppIcon';
 import { toDate, formatEventDate, eventCountdownLabel, formatRelative } from '@/utils/dateFormat';
 import type { MainTabParamList } from '@/navigation/MainTabs';
 import type { RootStackParamList } from '@/navigation/RootNavigator';
 import { scannerPath } from '@/navigation/linking';
-import { formatUnreadBadge } from '@/utils/notifications';
+import { ScreenHeader } from '@/components/ui/ScreenHeader';
 import { canShowEventScanAction, hasPermanentScannerAccess } from '@/utils/scannerAccess';
 
 type HomeNavigationProp = CompositeNavigationProp<
@@ -48,7 +47,7 @@ type HomeNavigationProp = CompositeNavigationProp<
 const ANNOUNCEMENT_PREVIEW_COUNT = 3;
 
 export default function HomeScreen() {
-  const { colors, typography, spacing, minTapTarget } = useTheme();
+  const { colors, typography, spacing } = useTheme();
   const navigation = useNavigation<HomeNavigationProp>();
   const { userProfile } = useAuthContext();
 
@@ -60,7 +59,6 @@ export default function HomeScreen() {
   const { unreadCount } = useNotifications();
   const showEventSkeleton = useDelayedSkeleton(eventsQuery.isLoading, 450);
   const showNotesSkeleton = useDelayedSkeleton(announcementsQuery.isLoading, 450);
-  const unreadBadge = formatUnreadBadge(unreadCount);
 
   const firstName = userProfile?.displayName?.trim().split(' ')[0] || 'there';
 
@@ -236,45 +234,13 @@ export default function HomeScreen() {
           />
         }
       >
-        <AnimatedScreen style={styles.intro}>
-          <View style={styles.heroTopRow}>
-            <View style={styles.organizationName}>
-              <Text style={[typography.eyebrow, { color: colors.textSecondary }]}>
-                San Fernando Valley Gujarati Association
-              </Text>
-            </View>
-            <MotionPressable
-              onPress={() => navigation.navigate('Notifications')}
-              accessibilityRole="button"
-              accessibilityLabel={
-                unreadCount ? `Notifications, ${unreadCount} unread` : 'Notifications'
-              }
-              style={[
-                styles.notificationButton,
-                { width: minTapTarget, height: minTapTarget, borderColor: colors.border },
-              ]}
-            >
-              <AppIcon
-                name={unreadCount ? 'notifications' : 'notifications-outline'}
-                size={21}
-                color={colors.textPrimary}
-              />
-              {unreadBadge ? (
-                <View style={[styles.notificationBadge, { backgroundColor: colors.brand }]}>
-                  <Text style={[styles.notificationBadgeText, { color: colors.white }]}>
-                    {unreadBadge}
-                  </Text>
-                </View>
-              ) : null}
-            </MotionPressable>
-          </View>
-          <Text style={[typography.displayLarge, { color: colors.textPrimary, marginTop: spacing.md }]}>
-            Welcome home, {firstName}.
-          </Text>
-          <Text style={[typography.bodyMedium, { color: colors.textSecondary, marginTop: spacing.xs, maxWidth: 520 }]}>
-            A place for the gatherings, people, and traditions that bring our community together.
-          </Text>
-          <View style={[styles.goldRule, { backgroundColor: colors.accent }]} />
+        <AnimatedScreen>
+          <ScreenHeader
+            eyebrow="San Fernando Valley Gujarati Association"
+            title={`Welcome home, ${firstName}.`}
+            subtitle="A place for the gatherings, people, and traditions that bring our community together."
+            action={{ label: 'Notifications', icon: 'notifications-outline', badge: unreadCount, onPress: () => navigation.navigate('Notifications') }}
+          />
         </AnimatedScreen>
 
         <Image
@@ -283,18 +249,6 @@ export default function HomeScreen() {
           accessibilityLabel="SFVGA community gathering"
           style={[styles.communityBanner, { backgroundColor: colors.surfaceMuted }]}
         />
-
-        <MotionPressable
-          accessibilityRole="button"
-          onPress={() => navigation.navigate('Profile', { screen: 'CommunityHub', initial: false })}
-          style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.md, minHeight: 64, paddingVertical: spacing.sm, borderBottomWidth: StyleSheet.hairlineWidth, borderColor: colors.border }}
-        >
-          <View style={{ flex: 1 }}>
-            <Text style={[typography.headingMedium, { color: colors.textPrimary }]}>Explore SFVGA</Text>
-            <Text style={[typography.caption, { color: colors.textSecondary }]}>Board, youth, membership and more</Text>
-          </View>
-          <AppIcon name="chevron-forward" size={20} color={colors.accentStrong} />
-        </MotionPressable>
 
         {hasError ? (
           <View style={{ marginTop: spacing.md }}>

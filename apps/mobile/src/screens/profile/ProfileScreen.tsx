@@ -253,7 +253,7 @@ export default function ProfileScreen() {
         contentContainerStyle={[styles.content, { padding: spacing.md, paddingBottom: spacing.xl }]}
       >
         <AnimatedScreen>
-          <ScreenHeader eyebrow="Your account" title="Profile" subtitle="Manage your details, family, and SFVGA information." />
+          <ScreenHeader eyebrow="Your account" title="Profile" subtitle="Manage your details, family, and notification preferences." />
         </AnimatedScreen>
 
         <AnimatedScreen delay={70}>
@@ -343,27 +343,6 @@ export default function ProfileScreen() {
                 </TouchableOpacity>
               </>
             ) : null}
-          </Card>
-        </AnimatedScreen>
-
-        <AnimatedScreen delay={145} style={{ marginTop: spacing.lg }}>
-          <SectionHeader title="Our community" />
-          <Card style={{ marginTop: spacing.sm, padding: 0 }}>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('CommunityHub')}
-              accessibilityRole="button"
-              accessibilityLabel="Explore SFVGA information"
-              style={[styles.rowButton, { minHeight: 76, paddingHorizontal: spacing.md }]}
-            >
-              <View style={[styles.rowIcon, { backgroundColor: colors.brandSoft }]}>
-                <AppIcon name="heart-outline" size={20} color={colors.deepBlue} />
-              </View>
-              <View style={styles.rowCopy}>
-                <Text style={[typography.bodyMedium, { color: colors.textPrimary, fontWeight: '700' }]}>About SFVGA</Text>
-                <Text style={[typography.caption, { color: colors.textSecondary }]}>Board, membership, youth, and resources</Text>
-              </View>
-              <AppIcon name="chevron-forward" size={18} color={colors.textSecondary} />
-            </TouchableOpacity>
           </Card>
         </AnimatedScreen>
 
@@ -781,7 +760,7 @@ export default function ProfileScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  content: { width: '100%', maxWidth: 820, alignSelf: 'center' },
+  content: { width: '100%', maxWidth: 740, alignSelf: 'center' },
   identityCard: { flexDirection: 'row', alignItems: 'center', padding: 20 },
   identityCopy: { flex: 1, minWidth: 0, marginLeft: 16 },
   editButton: {
