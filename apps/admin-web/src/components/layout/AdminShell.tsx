@@ -29,6 +29,7 @@ const NAV_ITEMS: NavItem[] = [
     icon: 'megaphone',
   },
   { href: '/members', label: 'Members', capability: 'members', icon: 'members' },
+  { href: '/roles', label: 'Access', capability: 'roles', icon: 'roles' },
 ];
 
 function NavIcon({ name }: { name: NavItem['icon'] }) {
