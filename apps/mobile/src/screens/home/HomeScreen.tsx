@@ -242,7 +242,7 @@ export default function HomeScreen() {
 
         <Image
           source={require('../../../assets/partner/sfvgabanner.jpg')}
-          resizeMode="contain"
+          resizeMode="cover"
           accessibilityLabel="SFVGA community gathering"
           style={[styles.communityBanner, { backgroundColor: colors.surfaceMuted }]}
         />
@@ -329,7 +329,7 @@ const styles = StyleSheet.create({
   },
   notificationBadgeText: { fontSize: 10, fontWeight: '800' },
   goldRule: { width: 42, height: 2, marginTop: 18 },
-  communityBanner: { width: '100%', aspectRatio: 516 / 387, borderRadius: 16, marginTop: 22 },
+  communityBanner: { width: '100%', aspectRatio: 1.9, maxHeight: 250, borderRadius: 16, marginTop: 16 },
   exploreList: { borderWidth: 1, borderRadius: 16, overflow: 'hidden' },
   exploreRow: { minHeight: 90, flexDirection: 'row', alignItems: 'center', gap: 13, paddingHorizontal: 14, paddingVertical: 12 },
   exploreIcon: { width: 48, height: 48, borderRadius: 24, alignItems: 'center', justifyContent: 'center' },
