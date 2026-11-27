@@ -40,6 +40,15 @@ const boardPhotos: Record<string, number> = {
   'bhakti-desai': require('../../../assets/community/board/bhakti-desai.jpg'),
 };
 
+const leadershipPhotos: Record<string, number> = {
+  'ansh-mehta': require('../../../assets/community/leadership/ansh-mehta.jpg'),
+  'maahi-desai': require('../../../assets/community/leadership/maahi-desai.jpg'),
+  'mike-taylor': require('../../../assets/community/leadership/mike-taylor.jpg'),
+  'rahil-shah': require('../../../assets/community/leadership/rahil-shah.jpg'),
+  'vaishali-mehta': require('../../../assets/community/leadership/vaishali-mehta.jpg'),
+  'namrata-shah': require('../../../assets/community/leadership/namrata-shah.jpg'),
+};
+
 function useCommunityStyles() {
   const theme = useTheme();
   return {
@@ -115,7 +124,6 @@ export function CommunityDetailScreen() {
 
 export function CommunityTopic({ topicKey }: { topicKey: Topic }) {
   const { colors, typography, spacing, page, content } = useCommunityStyles();
-  const [expandedRole, setExpandedRole] = useState<string | null>(null);
   const [expandedFaq, setExpandedFaq] = useState<string | null>(null);
   const [selectedPhoto, setSelectedPhoto] = useState<number | null>(null);
   const topic = topics.find((item) => item.key === topicKey) ?? topics[0];
@@ -150,7 +158,7 @@ export function CommunityTopic({ topicKey }: { topicKey: Topic }) {
             SFVGA is guided by volunteers who serve the association and its members.
           </Text>
           <View style={{ borderTopWidth: 1, borderTopColor: colors.border }}>
-            {board.map((person) => (
+            {board.slice().sort((a, b) => a.roleOrder - b.roleOrder).map((person) => (
               <View key={person.id} style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingVertical: spacing.md, borderBottomWidth: 1, borderBottomColor: colors.border }}>
                 <Image source={boardPhotos[person.id]} accessibilityLabel={person.name} style={{ width: 58, height: 58, borderRadius: 29 }} />
                 <View style={{ flex: 1 }}>
@@ -160,31 +168,36 @@ export function CommunityTopic({ topicKey }: { topicKey: Topic }) {
               </View>
             ))}
           </View>
-          <Card>
+          <View style={{ marginTop: spacing.lg, gap: spacing.md }}>
             <SectionHeader title="Extended leadership" />
-            {leadership.map((person) => (
-              <Text key={person.id} style={[typography.bodyMedium, { color: colors.textPrimary, marginTop: spacing.sm }]}>{person.name} · {person.role}</Text>
-            ))}
-          </Card>
-          <Card>
-            <SectionHeader title="Board responsibilities" subtitle="Tap a role to read more" />
-            {roles.filter((role) => role.scope === 'board').map((role) => (
-              <View key={role.id}>
-                <TouchableOpacity
-                  accessibilityRole="button"
-                  accessibilityState={{ expanded: expandedRole === role.id }}
-                  onPress={() => setExpandedRole(expandedRole === role.id ? null : role.id)}
-                  style={{ minHeight: 52, flexDirection: 'row', alignItems: 'center', gap: spacing.sm }}
-                >
-                  <Text style={[typography.bodyMedium, { color: colors.brand, flex: 1, fontWeight: '600' }]}>{role.title}</Text>
-                  <AppIcon name={expandedRole === role.id ? 'chevron-up' : 'chevron-down'} color={colors.brand} size={18} />
-                </TouchableOpacity>
-                {expandedRole === role.id ? role.responsibilities.map((line, index) => (
-                  <Text key={`${role.id}-${index}`} style={[typography.bodyMedium, { color: colors.textSecondary, marginBottom: spacing.sm }]}>• {line}</Text>
-                )) : null}
+            {['Webmaster', 'Honorary CPA', 'App Developer'].map(role => (
+              <View key={role}>
+                <Text style={[typography.label, { color: colors.textSecondary, marginBottom: spacing.sm }]}>{role}</Text>
+                {leadership.filter(person => person.role === role).sort((a, b) => a.roleOrder - b.roleOrder).map(person => (
+                  <View key={person.id} style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingVertical: spacing.md, borderBottomWidth: 1, borderBottomColor: colors.border }}>
+                    <Image source={leadershipPhotos[person.id]} accessibilityLabel={person.name} style={{ width: 58, height: 58, borderRadius: 29 }} />
+                    <Text style={[typography.headingMedium, { flex: 1, color: colors.textPrimary }]}>{person.name}</Text>
+                  </View>
+                ))}
               </View>
             ))}
-          </Card>
+          </View>
+          {(['board', 'committee'] as const).map(scope => (
+            <View key={scope} style={{ marginTop: spacing.lg, gap: spacing.md }}>
+              <SectionHeader title={scope === 'board' ? 'Board roles and responsibilities' : 'Event committee roles'} />
+              {roles.filter(role => role.scope === scope).sort((a, b) => a.order - b.order).map(role => (
+                <Card key={role.id}>
+                  <Text style={[typography.headingMedium, { color: colors.textPrimary, marginBottom: spacing.sm }]}>{role.title}</Text>
+                  {role.responsibilities.map(line => (
+                    <View key={line} style={{ flexDirection: 'row', gap: spacing.sm, marginBottom: spacing.sm }}>
+                      <Text style={[typography.bodyMedium, { color: colors.textSecondary }]}>•</Text>
+                      <Text style={[typography.bodyMedium, { flex: 1, color: colors.textSecondary }]}>{line}</Text>
+                    </View>
+                  ))}
+                </Card>
+              ))}
+            </View>
+          ))}
         </>
       ) : null}
 

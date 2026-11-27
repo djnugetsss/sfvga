@@ -1,3 +1,4 @@
+import { compareAdminRoles } from '@/lib/roleOrder';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { AdminRoleCreateInput, AdminRoleUpdateInput } from '@sfvga/shared-validation';
 import type { AdminRoleDefinition } from '@sfvga/shared-types';
@@ -11,7 +12,7 @@ export async function fetchAdminRoles(): Promise<AdminRoleDefinition[]> {
   const snap = await getDocs(
     query(collection(getFirestoreDb(), 'adminRoleDefinitions'), orderBy('name')),
   );
-  return snap.docs.map((entry) => ({ ...entry.data(), id: entry.id }) as AdminRoleDefinition);
+  return snap.docs.map((entry) => ({ ...entry.data(), id: entry.id }) as AdminRoleDefinition).sort(compareAdminRoles);
 }
 
 export function useAdminRoles() {
@@ -38,7 +39,7 @@ export function useAdminRoleMutations() {
             ? [
                 ...current,
                 { ...input, id: roleId, active: true, system: false } as AdminRoleDefinition,
-              ].sort((a, b) => a.name.localeCompare(b.name))
+              ].sort(compareAdminRoles)
             : current,
         );
         refresh();
@@ -51,7 +52,7 @@ export function useAdminRoleMutations() {
         queryClient.setQueryData<AdminRoleDefinition[]>(queryKey, (current) =>
           current
             ?.map((role) => (role.id === roleId ? { ...role, ...patch } : role))
-            .sort((a, b) => a.name.localeCompare(b.name)),
+            .sort(compareAdminRoles),
         );
         refresh();
       },
