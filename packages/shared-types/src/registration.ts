@@ -87,7 +87,8 @@ export interface MemberNotification {
     | 'registration_message'
     | 'registration_confirmed'
     | 'admin_registration_message'
-    | 'event_published';
+    | 'event_published'
+    | 'role_assigned';
   createdAt: FirestoreTimestamp;
 }
 

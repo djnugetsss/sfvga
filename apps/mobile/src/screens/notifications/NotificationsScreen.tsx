@@ -55,6 +55,10 @@ export default function NotificationsScreen() {
   const onItemPress = useCallback(
     (item: NotificationItem) => {
       markRead(item.id);
+      if (item.type === 'role_assigned' && !item.eventId) {
+        navigation.navigate('Main', { screen: 'Profile', params: { screen: 'ProfileMain' } });
+        return;
+      }
       if (item.type === 'admin_registration_message') {
         navigation.navigate('AdminDashboard');
         return;

@@ -18,6 +18,7 @@ interface NotificationListItemProps {
 }
 
 const TYPE_LABEL: Record<NotificationType, string> = {
+  role_assigned: 'Access update',
   announcement: 'Announcement',
   reminder: 'Event reminder',
   payment: 'Payment update',
@@ -28,6 +29,7 @@ const TYPE_LABEL: Record<NotificationType, string> = {
 };
 
 const TYPE_ICON: Record<NotificationType, AppIconName> = {
+  role_assigned: 'shield-checkmark-outline',
   announcement: 'megaphone-outline',
   reminder: 'alarm-outline',
   payment: 'ticket-outline',
@@ -38,6 +40,7 @@ const TYPE_ICON: Record<NotificationType, AppIconName> = {
 };
 
 const TYPE_ACTION: Record<NotificationType, string> = {
+  role_assigned: 'View access',
   announcement: 'View announcement',
   reminder: 'View event',
   payment: 'Open registration',

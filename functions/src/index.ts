@@ -97,3 +97,5 @@ export { documents_delete } from './documents/delete';
 
 // backups
 export { backups_dailyExport } from './backups/dailyExport';
+
+export { notifications_eventRoleAssigned, notifications_organizationRoleAssigned, notifications_presidentAssigned } from './notifications/roleAssigned';

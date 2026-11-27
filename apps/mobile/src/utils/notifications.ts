@@ -8,7 +8,8 @@ export type NotificationType =
   | 'registration_message'
   | 'registration_confirmed'
   | 'admin_registration_message'
-  | 'event_published';
+  | 'event_published'
+  | 'role_assigned';
 
 /**
  * A row in the Notifications Center: durable private notices, announcements, or event

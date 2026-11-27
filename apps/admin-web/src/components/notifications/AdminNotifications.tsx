@@ -215,8 +215,7 @@ export function AdminNotifications() {
                         >
                           {item.type === 'admin_registration_message' ? 'New message' : item.type === 'admin_photo_album_reminder' ? 'Add event photos' : item.title}
                         </span>
-                        <span className="mt-1 block text-base text-muted">{item.eventTitle}</span>
-                        <span className="mt-1 block text-base leading-6 text-muted">{item.type === 'admin_registration_message' ? 'A member sent you a message.' : item.type === 'admin_photo_album_reminder' ? 'Add the photo link for this event.' : item.title === 'Payment needs follow-up' ? 'Resolve this payment issue.' : 'Review the member’s payment.'}</span>
+                        <span className="mt-1 block text-base leading-6 text-muted">{item.type === 'admin_registration_message' ? `A member sent you a message about ${item.eventTitle}.` : item.type === 'admin_photo_album_reminder' ? `Add the photo link for ${item.eventTitle}.` : item.title === 'Payment needs follow-up' ? `Resolve the payment issue for ${item.eventTitle}.` : `Review the member’s payment for ${item.eventTitle}.`}</span>
                         <span className="mt-1 block text-sm leading-5 text-muted">{toDate(item.createdAt) ? formatNotificationDateTime(toDate(item.createdAt)!) : ''}</span>
                         <span className="mt-2 block text-base font-semibold text-brand">
                           {item.type === 'admin_photo_album_reminder'

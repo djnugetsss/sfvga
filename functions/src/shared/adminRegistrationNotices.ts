@@ -42,7 +42,11 @@ async function notifyAdmins(
         if ((await tx.get(ref)).exists) return;
         tx.create(ref, {
           title: input.title,
-          body: input.body,
+          body: input.type === 'admin_registration_message'
+            ? `A member sent you a message about ${String(event.get('title'))}.`
+            : input.type === 'admin_photo_album_reminder'
+              ? `Add the photo link for ${String(event.get('title'))}.`
+              : `${input.title} for ${String(event.get('title'))}.`,
           type: input.type,
           eventId: input.eventId,
           eventTitle: String(event.get('title') || 'Event'),
