@@ -64,6 +64,10 @@ export const NotificationListItem = React.memo(function NotificationListItem({
 }: NotificationListItemProps) {
   const { colors } = useTheme();
   const tag = TYPE_LABEL[type];
+  const summary = type === 'registration_message' || type === 'admin_registration_message'
+    ? 'You have a new message.'
+    : type === 'payment' ? 'There’s an issue with your payment.'
+    : body.trim().length > 100 ? body.trim().slice(0, 97).trimEnd() + '…' : body.trim();
   const touchStart = useRef<{ x: number; y: number } | null>(null);
   const swiped = useRef(false);
 
@@ -97,7 +101,7 @@ export const NotificationListItem = React.memo(function NotificationListItem({
           onPress?.();
         }}
         accessibilityRole={onPress ? 'button' : 'text'}
-        accessibilityLabel={`${read ? '' : 'Unread. '}${tag}. ${title}. ${eventTitle ? `${eventTitle}. ` : ''}${body}. ${TYPE_ACTION[type]}`}
+        accessibilityLabel={`${read ? '' : 'Unread. '}${tag}. ${title}. ${eventTitle ? `${eventTitle}. ` : ''}${summary}. ${TYPE_ACTION[type]}`}
         accessibilityHint={
           onDismiss ? 'Swipe left to dismiss, or use the Dismiss button.' : undefined
         }
@@ -125,18 +129,6 @@ export const NotificationListItem = React.memo(function NotificationListItem({
             />
           </View>
           <View style={{ flex: 1 }}>
-            <View style={styles.headerRow}>
-              <Text
-                style={[styles.meta, { color: colors.textSecondary, fontWeight: '700' }]}
-              >
-                {tag}
-              </Text>
-              {timeLabel ? (
-                <Text style={[styles.meta, { color: colors.textSecondary }]}>
-                  {timeLabel}
-                </Text>
-              ) : null}
-            </View>
             <Text
               style={[
                 styles.title,
@@ -164,8 +156,9 @@ export const NotificationListItem = React.memo(function NotificationListItem({
                 { color: colors.textSecondary },
               ]}
             >
-              {body}
+              {summary}
             </Text>
+            {timeLabel ? <Text style={[styles.meta, { color: colors.textSecondary, marginTop: 6 }]}>{timeLabel}</Text> : null}
             {onPress ? (
               <Text
                 style={[
@@ -213,10 +206,10 @@ export const NotificationListItem = React.memo(function NotificationListItem({
 const styles = StyleSheet.create({
   meta: { fontSize: 14, lineHeight: 20 },
   title: { fontSize: 16, lineHeight: 24, marginTop: 4 },
-  eventTitle: { fontSize: 14, lineHeight: 20, marginTop: 4 },
-  body: { fontSize: 14, lineHeight: 24, marginTop: 8 },
-  actionLabel: { fontSize: 14, lineHeight: 20, marginTop: 8, fontWeight: '700' },
-  actionText: { fontSize: 14, lineHeight: 20, fontWeight: '700' },
+  eventTitle: { fontSize: 16, lineHeight: 20, marginTop: 4 },
+  body: { fontSize: 16, lineHeight: 24, marginTop: 4 },
+  actionLabel: { fontSize: 16, lineHeight: 20, marginTop: 8, fontWeight: '700' },
+  actionText: { fontSize: 16, lineHeight: 20, fontWeight: '700' },
   row: {
     flexDirection: 'row',
     gap: 12,

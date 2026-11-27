@@ -54,9 +54,10 @@ describe('admin notification center', () => {
     render(<AdminNotifications />);
     fireEvent.click(screen.getByRole('button', { name: 'Admin notifications, 1 unread' }));
     expect(screen.getByRole('dialog').getAttribute('open')).toBe('');
-    expect(screen.getByText('Registration update')).toBeTruthy();
+    expect(screen.getByText('Payment updated')).toBeTruthy();
+    expect(screen.getByText('New message')).toBeTruthy();
     fireEvent.click(screen.getByRole('button', { name: 'Unread', exact: true }));
-    expect(screen.queryByText('New registration message')).toBeNull();
+    expect(screen.queryByText('New message')).toBeNull();
     fireEvent.click(screen.getByRole('button', { name: 'Close' }));
     expect(screen.queryByRole('dialog')).toBeNull();
   });

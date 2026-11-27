@@ -164,9 +164,6 @@ export default function NotificationsScreen() {
           <Text style={[styles.heading, { color: colors.textPrimary }]}>
             Notifications
           </Text>
-          <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
-            Community updates, new events, and private registration notices.
-          </Text>
         </View>
         <Pressable
           accessibilityRole="button"
@@ -254,7 +251,7 @@ const styles = StyleSheet.create({
   headerText: { flex: 1 },
   heading: { fontSize: 20, lineHeight: 28, fontWeight: '600' },
   subtitle: { fontSize: 14, lineHeight: 20, marginTop: 4 },
-  smallText: { fontSize: 14, lineHeight: 20 },
+  smallText: { fontSize: 16, lineHeight: 20 },
   closeButton: {
     minHeight: 48,
     minWidth: 72,
@@ -269,7 +266,7 @@ const styles = StyleSheet.create({
   filter: {
     minHeight: 48,
     paddingHorizontal: 16,
-    borderRadius: 12,
+    borderRadius: 24,
     borderWidth: 1,
     justifyContent: 'center',
   },

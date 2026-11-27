@@ -8,12 +8,6 @@ import { useAdminAuth } from '@/hooks/useAdminAuth';
 import { canReceiveAdminNotifications } from '@/lib/adminNotifications';
 import type { AdminRegistrationNotification } from '@sfvga/shared-types';
 
-const notificationLabel: Record<AdminRegistrationNotification['type'], string> = {
-  admin_registration_message: 'Member message',
-  admin_registration_attention: 'Registration update',
-  admin_photo_album_reminder: 'Event reminder',
-};
-
 function NotificationIcon({ type }: { type: AdminRegistrationNotification['type'] }) {
   return (
     <svg
@@ -106,17 +100,14 @@ export function AdminNotifications() {
         <div className="flex h-full max-h-[100dvh] flex-col sm:h-auto sm:max-h-[85dvh]">
           <header className="flex items-start justify-between gap-4 border-b border-border p-5">
             <div>
-              <h2 id="admin-notifications-title" className="text-xl font-semibold">
+              <h2 id="admin-notifications-title" className="font-sans text-xl font-semibold">
                 Admin notifications
               </h2>
-              <p className="mt-1 text-sm text-muted">
-                Registration updates and event photo reminders.
-              </p>
             </div>
             <button
               type="button"
               autoFocus
-              className="min-h-12 min-w-12 shrink-0 rounded-full border border-border text-sm"
+              className="min-h-12 min-w-12 shrink-0 rounded-full border border-border text-base"
               onClick={() => dialog.current?.close()}
             >
               Close
@@ -129,7 +120,7 @@ export function AdminNotifications() {
                   key={String(value)}
                   type="button"
                   aria-pressed={unreadOnly === value}
-                  className={`min-h-12 rounded-xl border px-4 text-sm ${unreadOnly === value ? 'border-brand/40 bg-brandSoft font-semibold text-brand' : 'border-border text-muted'}`}
+                  className={`min-h-12 rounded-full border px-4 text-base ${unreadOnly === value ? 'border-brand/40 bg-brandSoft font-semibold text-brand' : 'border-border text-muted'}`}
                   onClick={() => setUnreadOnly(value)}
                 >
                   {value ? 'Unread' : 'All'}
@@ -139,7 +130,7 @@ export function AdminNotifications() {
             <button
               type="button"
               disabled={busy || !feed.unreadCount}
-              className="min-h-12 text-sm underline underline-offset-4 disabled:opacity-50"
+              className="min-h-12 text-base underline underline-offset-4 disabled:opacity-50"
               onClick={() =>
                 void markRead(feed.items.filter((item) => !item.readAt).map((item) => item.id))
               }
@@ -148,7 +139,7 @@ export function AdminNotifications() {
             </button>
           </div>
           {error ? (
-            <p role="alert" className="px-5 py-2 text-sm text-error">
+            <p role="alert" className="px-5 py-2 text-base text-error">
               {error}
             </p>
           ) : null}
@@ -193,8 +184,8 @@ export function AdminNotifications() {
                 </h3>
                 <p className="mt-2 max-w-sm text-base leading-6 text-muted">
                   {unreadOnly
-                    ? 'You’re all caught up. New updates will appear here.'
-                    : 'Registration and member-message updates for events you manage will appear here.'}
+                    ? 'You’re all caught up.'
+                    : 'Updates for events you manage will appear here.'}
                 </p>
               </div>
             ) : (
@@ -219,22 +210,15 @@ export function AdminNotifications() {
                         <NotificationIcon type={item.type} />
                       </span>
                       <span className="min-w-0 flex-1">
-                        <span className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 text-sm font-semibold text-muted">
-                          <span>{notificationLabel[item.type]}</span>
-                          <span className="font-normal">
-                            {toDate(item.createdAt)
-                              ? formatNotificationDateTime(toDate(item.createdAt)!)
-                              : ''}
-                          </span>
-                        </span>
                         <span
                           className={`mt-1 block text-base text-ink ${item.readAt ? 'font-semibold' : 'font-bold'}`}
                         >
-                          {item.title}
+                          {item.type === 'admin_registration_message' ? 'New message' : item.type === 'admin_photo_album_reminder' ? 'Add event photos' : item.title}
                         </span>
-                        <span className="mt-1 block text-sm text-muted">{item.eventTitle}</span>
-                        <span className="mt-2 block text-sm leading-6 text-muted">{item.body}</span>
-                        <span className="mt-2 block text-sm font-semibold text-brand">
+                        <span className="mt-1 block text-base text-muted">{item.eventTitle}</span>
+                        <span className="mt-1 block text-base leading-6 text-muted">{item.type === 'admin_registration_message' ? 'A member sent you a message.' : item.type === 'admin_photo_album_reminder' ? 'Add the photo link for this event.' : item.title === 'Payment needs follow-up' ? 'Resolve this payment issue.' : 'Review the member’s payment.'}</span>
+                        <span className="mt-1 block text-sm leading-5 text-muted">{toDate(item.createdAt) ? formatNotificationDateTime(toDate(item.createdAt)!) : ''}</span>
+                        <span className="mt-2 block text-base font-semibold text-brand">
                           {item.type === 'admin_photo_album_reminder'
                             ? 'Edit event'
                             : item.type === 'admin_registration_message'
@@ -255,7 +239,7 @@ export function AdminNotifications() {
                         <button
                           type="button"
                           disabled={busy}
-                          className="min-h-12 rounded-lg px-3 text-sm font-semibold text-brand hover:bg-brandSoft disabled:opacity-50"
+                          className="min-h-12 rounded-lg px-3 text-base font-semibold text-brand hover:bg-brandSoft disabled:opacity-50"
                           onClick={() => void markRead([item.id])}
                         >
                           Mark read
@@ -264,8 +248,8 @@ export function AdminNotifications() {
                       <button
                         type="button"
                         disabled={busy}
-                        className="min-h-12 rounded-lg px-3 text-sm font-semibold text-brand hover:bg-brandSoft disabled:opacity-50"
-                        aria-label={`Dismiss ${item.title} notification`}
+                        className="min-h-12 rounded-lg px-3 text-base font-semibold text-brand hover:bg-brandSoft disabled:opacity-50"
+                        aria-label={`Dismiss ${item.type === 'admin_registration_message' ? 'New message' : item.type === 'admin_photo_album_reminder' ? 'Add event photos' : item.title} notification`}
                         onClick={() => void dismiss(item.id)}
                       >
                         Dismiss

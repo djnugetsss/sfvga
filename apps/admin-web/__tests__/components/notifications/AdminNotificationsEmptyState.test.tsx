@@ -25,7 +25,7 @@ it('explains the empty admin inbox without implying that an update was sent', ()
   render(<AdminNotifications />);
   fireEvent.click(screen.getByRole('button', { name: 'Admin notifications' }));
   expect(screen.getByText('No admin notifications yet')).toBeTruthy();
-  expect(screen.getByText(/Registration and member-message updates/)).toBeTruthy();
+  expect(screen.getByText(/Updates for events you manage/)).toBeTruthy();
   fireEvent.click(screen.getByRole('button', { name: 'Unread', exact: true }));
   expect(screen.getByText('No unread notifications')).toBeTruthy();
 });
