@@ -124,6 +124,7 @@ export function CommunityDetailScreen() {
 
 export function CommunityTopic({ topicKey }: { topicKey: Topic }) {
   const { colors, typography, spacing, page, content } = useCommunityStyles();
+  const [expandedRole, setExpandedRole] = useState<string | null>(null);
   const [expandedFaq, setExpandedFaq] = useState<string | null>(null);
   const [selectedPhoto, setSelectedPhoto] = useState<number | null>(null);
   const topic = topics.find((item) => item.key === topicKey) ?? topics[0];
@@ -187,13 +188,22 @@ export function CommunityTopic({ topicKey }: { topicKey: Topic }) {
               <SectionHeader title={scope === 'board' ? 'Board roles and responsibilities' : 'Event committee roles'} />
               {roles.filter(role => role.scope === scope).sort((a, b) => a.order - b.order).map(role => (
                 <Card key={role.id}>
-                  <Text style={[typography.headingMedium, { color: colors.textPrimary, marginBottom: spacing.sm }]}>{role.title}</Text>
-                  {role.responsibilities.map(line => (
-                    <View key={line} style={{ flexDirection: 'row', gap: spacing.sm, marginBottom: spacing.sm }}>
+                  <TouchableOpacity
+                    accessibilityRole="button"
+                    accessibilityLabel={role.title}
+                    accessibilityState={{ expanded: expandedRole === role.id }}
+                    onPress={() => setExpandedRole(expandedRole === role.id ? null : role.id)}
+                    style={{ minHeight: 48, flexDirection: 'row', alignItems: 'center', gap: spacing.sm }}
+                  >
+                    <Text style={[typography.headingMedium, { flex: 1, color: colors.textPrimary }]}>{role.title}</Text>
+                    <AppIcon name={expandedRole === role.id ? 'chevron-up' : 'chevron-down'} color={colors.brand} size={20} />
+                  </TouchableOpacity>
+                  {expandedRole === role.id ? role.responsibilities.map(line => (
+                    <View key={line} style={{ flexDirection: 'row', gap: spacing.sm, marginTop: spacing.sm }}>
                       <Text style={[typography.bodyMedium, { color: colors.textSecondary }]}>•</Text>
                       <Text style={[typography.bodyMedium, { flex: 1, color: colors.textSecondary }]}>{line}</Text>
                     </View>
-                  ))}
+                  )) : null}
                 </Card>
               ))}
             </View>
