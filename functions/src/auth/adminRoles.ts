@@ -1,3 +1,4 @@
+import leadershipRoles from './leadershipRoles.json';
 import { onCall } from 'firebase-functions/v2/https';
 import { getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { getAuth } from 'firebase-admin/auth';
@@ -11,7 +12,7 @@ import {
 import { ADMIN_PERMISSIONS, type AdminPermission } from '@sfvga/shared-types';
 import { errors } from '../shared/errors';
 import { requireAuth } from '../shared/requireAuth';
-import { requireSuperAdmin, resolveAdminAccess } from '../shared/adminAccess';
+import { requireSuperAdmin, requireOrganizationPermission, resolveAdminAccess } from '../shared/adminAccess';
 import { writeAdminAudit } from '../shared/adminAudit';
 
 const DEFAULT_ROLES: Array<{
@@ -22,7 +23,7 @@ const DEFAULT_ROLES: Array<{
 }> = [
   {
     id: 'super-admin',
-    name: 'Super Admin',
+    name: 'President',
     description: 'Protected system role with complete administrative access.',
     permissions: [...ADMIN_PERMISSIONS],
   },
@@ -75,6 +76,8 @@ const DEFAULT_ROLES: Array<{
   },
 ];
 
+DEFAULT_ROLES.push(...leadershipRoles.filter(role => role.id !== 'super-admin').map(role => ({ ...role, permissions: role.permissions as AdminPermission[] })));
+
 export async function seedDefaultAdminRoles(uid: string): Promise<number> {
   const db = getFirestore();
   const refs = DEFAULT_ROLES.map((role) => db.doc(`adminRoleDefinitions/${role.id}`));
@@ -116,9 +119,25 @@ export const adminRoles_seedDefaults = onCall(async (request) => {
   return { success: true };
 });
 
+
+async function requireRoleManager(request: Parameters<typeof requireAuth>[0]) {
+  const { uid, access } = await requireOrganizationPermission(request, 'roles.manage');
+  return { uid, president: access.isSuperAdmin };
+}
+export function protectPresident(president: boolean, system: boolean) {
+  if (system && !president) throw errors.permissionDenied('Only Presidents can change President access.');
+}
+async function protectPresidentMember(president: boolean, targetUid: string) {
+  if (president) return;
+  const target = await getAuth().getUser(targetUid);
+  const claims = target.customClaims ?? {};
+  protectPresident(false, claims.superAdmin === true || (claims.role === 'admin' && claims.adminLevel === 'super'));
+}
+
 export const adminRoles_create = onCall(async (request) => {
-  const uid = await requireSuperAdmin(request);
+  const { uid, president } = await requireRoleManager(request);
   const input = adminRoleCreateSchema.parse(request.data);
+  if (!president && input.permissions.includes('roles.manage')) throw errors.permissionDenied('Only Presidents can delegate role management.');
   const now = Timestamp.now();
   const ref = getFirestore().collection('adminRoleDefinitions').doc();
   await ref.set({
@@ -134,25 +153,28 @@ export const adminRoles_create = onCall(async (request) => {
 });
 
 export const adminRoles_update = onCall(async (request) => {
-  const uid = await requireSuperAdmin(request);
+  const { uid, president } = await requireRoleManager(request);
   const { roleId, ...patch } = adminRoleUpdateSchema.parse(request.data);
   const ref = getFirestore().doc(`adminRoleDefinitions/${roleId}`);
   const snap = await ref.get();
   if (!snap.exists) throw errors.notFound('Admin role not found.');
+  protectPresident(president, snap.data()?.system === true);
   if (snap.data()?.system !== true && patch.permissions?.length === 0)
     throw errors.invalidArgument('Select at least one permission for this role.');
+  if (!president && patch.permissions?.includes('roles.manage') && !snap.data()?.permissions?.includes('roles.manage')) throw errors.permissionDenied('Only Presidents can delegate role management.');
   await ref.update({ ...patch, updatedAt: Timestamp.now() });
   await writeAdminAudit(uid, 'adminRoles.update', { roleId, fields: Object.keys(patch) });
   return { success: true };
 });
 
 export const adminRoles_delete = onCall(async (request) => {
-  const uid = await requireSuperAdmin(request);
+  const { uid, president } = await requireRoleManager(request);
   const { roleId } = adminRoleDeleteSchema.parse(request.data);
   const db = getFirestore();
   const ref = db.doc(`adminRoleDefinitions/${roleId}`);
   const snap = await ref.get();
   if (!snap.exists) throw errors.notFound('Admin role not found.');
+  protectPresident(president, snap.data()?.system === true);
   if (snap.data()?.system === true)
     throw errors.permissionDenied('The Super Admin role cannot be deleted.');
 
@@ -169,8 +191,9 @@ export const adminRoles_delete = onCall(async (request) => {
 });
 
 export const adminRoles_assign = onCall(async (request) => {
-  const uid = await requireSuperAdmin(request);
+  const { uid, president } = await requireRoleManager(request);
   const { targetUid, roleId } = adminRoleAssignSchema.parse(request.data);
+  await protectPresidentMember(president, targetUid);
   const db = getFirestore();
   const role = await db.doc(`adminRoleDefinitions/${roleId}`).get();
   if (!role.exists || role.data()?.active !== true || role.data()?.deletedAt) {
@@ -178,6 +201,7 @@ export const adminRoles_assign = onCall(async (request) => {
   }
   if (role.data()?.system === true)
     throw errors.failedPrecondition('Use the protected Super Admin action for this role.');
+  if (!president && role.data()?.permissions?.includes('roles.manage')) throw errors.permissionDenied('Only Presidents can appoint role managers.');
   const now = Timestamp.now();
   await db.doc(`organizationAdminGrants/${targetUid}`).set({
     userId: targetUid,
@@ -191,8 +215,9 @@ export const adminRoles_assign = onCall(async (request) => {
 });
 
 export const adminRoles_revoke = onCall(async (request) => {
-  const uid = await requireSuperAdmin(request);
+  const { uid, president } = await requireRoleManager(request);
   const { targetUid } = adminRoleRevokeSchema.parse(request.data);
+  await protectPresidentMember(president, targetUid);
   await getFirestore().doc(`organizationAdminGrants/${targetUid}`).delete();
   await writeAdminAudit(uid, 'adminRoles.revoke', { targetUid });
   return { success: true };

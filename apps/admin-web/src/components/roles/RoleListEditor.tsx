@@ -1,5 +1,6 @@
 'use client';
 
+import { useAdminAuth } from '@/hooks/useAdminAuth';
 import { useState } from 'react';
 import Link from 'next/link';
 import type { AdminPermission, AdminRoleDefinition } from '@sfvga/shared-types';
@@ -20,6 +21,7 @@ export const PERMISSION_GROUPS: Array<{
   label: string;
   permissions: Array<{ value: AdminPermission; label: string }>;
 }> = [
+  { label: 'Access management', permissions: [{ value: 'roles.manage', label: 'Manage organization roles and access' }] },
   { label: 'Dashboard', permissions: [{ value: 'dashboard.view', label: 'View dashboard' }] },
   {
     label: 'Events',
@@ -128,6 +130,7 @@ export function PermissionPicker({
 }
 
 function RoleForm({ role, onDone }: { role?: AdminRoleDefinition; onDone: () => void }) {
+  const { access } = useAdminAuth();
   const { createRole, updateRole } = useAdminRoleMutations();
   const [name, setName] = useState(role?.name ?? '');
   const [description, setDescription] = useState(role?.description ?? '');
@@ -196,24 +199,24 @@ function RoleForm({ role, onDone }: { role?: AdminRoleDefinition; onDone: () => 
       </div>
       {role?.system ? (
         <p className="mt-5 rounded-xl border border-accent/25 bg-accentSoft p-4 text-sm leading-6 text-ink">
-          Super Admin always has full access. This editable list describes the role but never limits
-          what a Super Admin can do.
+          President always has full access. This editable list describes the role but never limits
+          what a President can do.
         </p>
       ) : null}
       <div className="mt-5">
-        <PermissionPicker value={permissions} onChange={setPermissions} />
+        <PermissionPicker value={permissions} onChange={next => setPermissions(!access?.isSuperAdmin && permissions.includes('roles.manage') ? [...next, 'roles.manage'] : next)} allowed={PERMISSION_GROUPS.flatMap(group => group.permissions.map(item => item.value)).filter(value => access?.isSuperAdmin || value !== 'roles.manage')} />
       </div>
       {role?.system ? (
         <div className="mt-5 rounded-xl border border-border bg-surfaceMuted/50 p-4">
-          <h3 className="font-semibold text-ink">Who has Super Admin access?</h3>
+          <h3 className="font-semibold text-ink">Who has President access?</h3>
           <p className="mt-1 text-sm leading-6 text-muted">
-            Add or revoke another member&apos;s Super Admin access from the Members page.
+            Add or revoke another member&apos;s President access from the Members page.
           </p>
           <Link
             href="/members"
             className="mt-3 inline-block text-sm font-semibold text-brand underline"
           >
-            Manage Super Admins
+            Manage Presidents
           </Link>
         </div>
       ) : null}
@@ -227,8 +230,8 @@ function RoleForm({ role, onDone }: { role?: AdminRoleDefinition; onDone: () => 
       </div>
       <ConfirmDialog
         open={confirmSave}
-        title="Save Super Admin role changes?"
-        description="The name, description, and displayed permission list will change. Every Super Admin will still have full access, including permissions you unchecked."
+        title="Save President role changes?"
+        description="The name, description, and displayed permission list will change. Every President will still have full access, including permissions you unchecked."
         confirmLabel="Confirm changes"
         loading={busy}
         onConfirm={() => void save()}
@@ -239,6 +242,7 @@ function RoleForm({ role, onDone }: { role?: AdminRoleDefinition; onDone: () => 
 }
 
 export function RoleListEditor() {
+  const { access } = useAdminAuth();
   const rolesQuery = useAdminRoles();
   const { seedDefaults, deleteRole } = useAdminRoleMutations();
   const [editing, setEditing] = useState<AdminRoleDefinition | 'new' | null>(null);
@@ -293,7 +297,7 @@ export function RoleListEditor() {
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <h2 className="font-semibold text-deepBlue">{role.name}</h2>
-                  <p className="mt-1 text-sm text-warmGray400">
+                  <p className="mt-1 whitespace-pre-line text-sm text-warmGray400">
                     {role.description || 'No description'}
                   </p>
                 </div>
@@ -307,7 +311,7 @@ export function RoleListEditor() {
                   : `${role.permissions.length} permissions`}
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
-                <Button size="sm" variant="secondary" onClick={() => setEditing(role)}>
+                <Button size="sm" variant="secondary" disabled={role.system && !access?.isSuperAdmin} onClick={() => setEditing(role)}>
                   Edit
                 </Button>
                 <Link

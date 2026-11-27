@@ -1,3 +1,5 @@
+const mockAccess = { isSuperAdmin: true };
+jest.mock('@/hooks/useAdminAuth', () => ({ useAdminAuth: () => ({ access: mockAccess }) }));
 import React from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { GrantAdminControl } from '@/components/members/GrantAdminControl';
@@ -37,24 +39,25 @@ const roles = [
 ];
 
 beforeEach(() => {
+  mockAccess.isSuperAdmin = true;
   jest.clearAllMocks();
 });
 
-it('offers Super Admin in the same role dropdown and confirms the grant', async () => {
+it('offers President in the same role dropdown and confirms the grant', async () => {
   render(
     <GrantAdminControl uid="member-1" currentRoleId={null} roles={roles} isSuperAdmin={false} />,
   );
-  expect(screen.queryByRole('button', { name: 'Make Super Admin' })).toBeNull();
+  expect(screen.queryByRole('button', { name: 'Make President' })).toBeNull();
   fireEvent.change(screen.getByRole('combobox', { name: 'Admin role' }), {
     target: { value: '__super_admin__' },
   });
   fireEvent.click(screen.getByRole('button', { name: 'Grant' }));
   expect(mockGrantSuper).not.toHaveBeenCalled();
-  fireEvent.click(screen.getByRole('button', { name: 'Grant Super Admin' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Grant President' }));
   await waitFor(() => expect(mockGrantSuper).toHaveBeenCalledWith('member-1'));
 });
 
-it('can change Super Admin to a regular role without leaving elevated access behind', async () => {
+it('can change President to a regular role without leaving elevated access behind', async () => {
   render(<GrantAdminControl uid="member-2" currentRoleId={null} roles={roles} isSuperAdmin />);
   expect((screen.getByRole('combobox', { name: 'Admin role' }) as HTMLSelectElement).value).toBe(
     '__super_admin__',
@@ -72,7 +75,7 @@ it('can change Super Admin to a regular role without leaving elevated access beh
   );
 });
 
-it('confirms revoking another member’s Super Admin access', async () => {
+it('confirms revoking another member’s President access', async () => {
   render(
     <GrantAdminControl
       uid="member-2"
@@ -88,7 +91,7 @@ it('confirms revoking another member’s Super Admin access', async () => {
   await waitFor(() => expect(mockRevokeSuper).toHaveBeenCalledWith('member-2'));
 });
 
-it('does not let a Super Admin remove their own access', () => {
+it('does not let a President remove their own access', () => {
   render(
     <GrantAdminControl
       uid="owner"
@@ -100,5 +103,7 @@ it('does not let a Super Admin remove their own access', () => {
   );
   expect((screen.getByRole('button', { name: 'Revoke' }) as HTMLButtonElement).disabled).toBe(true);
   expect((screen.getByRole('button', { name: 'Change' }) as HTMLButtonElement).disabled).toBe(true);
-  expect(screen.getByText(/Another Super Admin must change your access/)).toBeTruthy();
+  expect(screen.getByText(/Another President must change your access/)).toBeTruthy();
 });
+
+it('locks a President member for a delegated manager', () => { mockAccess.isSuperAdmin = false; render(<GrantAdminControl uid="president" currentRoleId={null} roles={roles} isSuperAdmin />); expect((screen.getByRole('combobox') as HTMLSelectElement).disabled).toBe(true); expect((screen.getByRole('button', {name: 'Revoke'}) as HTMLButtonElement).disabled).toBe(true); });

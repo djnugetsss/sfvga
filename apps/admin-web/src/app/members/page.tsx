@@ -26,7 +26,7 @@ export default function MembersPage() {
   );
   const superAdminName =
     rolesQuery.data?.find((role) => role.system && role.active && !role.deletedAt)?.name ??
-    'Super Admin';
+    'President';
   const [search, setSearch] = useState('');
 
   const filtered = useMemo(() => {

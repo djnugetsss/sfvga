@@ -64,7 +64,7 @@ export function hasEventPermission(
 
 export function hasCapability(access: AdminAccessSummary | null, capability: Capability): boolean {
   if (access?.isSuperAdmin) return true;
-  if (capability === 'roles' || capability === 'grantAdmin') return false;
+  if (capability === 'roles' || capability === 'grantAdmin') return hasOrganizationPermission(access, 'roles.manage');
   const permissions = effectivePermissions(access);
   return (CAPABILITY_PERMISSIONS[capability] ?? []).some((permission) =>
     permissions.includes(permission),

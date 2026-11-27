@@ -1,3 +1,5 @@
+const mockAccess = { isSuperAdmin: true };
+jest.mock('@/hooks/useAdminAuth', () => ({ useAdminAuth: () => ({ access: mockAccess }) }));
 import React from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { RoleListEditor } from '@/components/roles/RoleListEditor';
@@ -11,12 +13,13 @@ jest.mock('@/hooks/useAdminRoles', () => ({
 const mockUpdate = jest.fn().mockResolvedValue({ success: true });
 
 beforeEach(() => {
+  mockAccess.isSuperAdmin = true;
   mockUpdate.mockClear();
   (useAdminRoles as jest.Mock).mockReturnValue({
     data: [
       {
         id: 'super-admin',
-        name: 'Super Admin',
+        name: 'President',
         description: 'Full access',
         system: true,
         active: true,
@@ -44,7 +47,7 @@ it('confirms edits to the protected role name and displayed permissions without 
   fireEvent.click(edit);
   expect(screen.getAllByRole('checkbox').length).toBeGreaterThan(0);
   expect(screen.getByText(/always has full access/)).toBeTruthy();
-  expect(screen.getByRole('link', { name: 'Manage Super Admins' })).toBeTruthy();
+  expect(screen.getByRole('link', { name: 'Manage Presidents' })).toBeTruthy();
   fireEvent.change(screen.getByRole('textbox', { name: 'Role name' }), {
     target: { value: 'Community Lead' },
   });
@@ -69,7 +72,7 @@ it('links every role to the member access controls', () => {
     data: [
       {
         id: 'super-admin',
-        name: 'Super Admin',
+        name: 'President',
         description: 'Full access',
         system: true,
         active: true,
@@ -93,3 +96,5 @@ it('links every role to the member access controls', () => {
   expect(links).toHaveLength(2);
   links.forEach((link) => expect(link.getAttribute('href')).toBe('/members'));
 });
+
+it('locks President editing for delegated managers', () => { mockAccess.isSuperAdmin = false; render(<RoleListEditor />); expect((screen.getByRole('button', {name: 'Edit'}) as HTMLButtonElement).disabled).toBe(true); });

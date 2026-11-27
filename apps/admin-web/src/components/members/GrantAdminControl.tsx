@@ -1,5 +1,6 @@
 'use client';
 
+import { useAdminAuth } from '@/hooks/useAdminAuth';
 import { useEffect, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import type { AdminRoleDefinition } from '@sfvga/shared-types';
@@ -15,7 +16,7 @@ export function GrantAdminControl({
   currentRoleId,
   roles,
   isSuperAdmin,
-  superAdminName = 'Super Admin',
+  superAdminName = 'President',
   viewerUid,
 }: {
   uid: string;
@@ -25,6 +26,8 @@ export function GrantAdminControl({
   superAdminName?: string;
   viewerUid?: string;
 }) {
+  const { access } = useAdminAuth();
+  const presidentLocked = isSuperAdmin && !access?.isSuperAdmin;
   const queryClient = useQueryClient();
   const firstRoleId = roles[0]?.id ?? '';
   const [roleId, setRoleId] = useState(
@@ -88,7 +91,7 @@ export function GrantAdminControl({
       await functionsClient.adminRoles.grantSuperAdmin(uid);
       if (currentRoleId) await functionsClient.adminRoles.revoke(uid);
       setConfirmSuper(false);
-      setMessage('Super Admin access granted');
+      setMessage('President access granted');
       await refresh();
     } catch {
       setError('Could not finish changing access. Check the current role and try again.');
@@ -106,10 +109,10 @@ export function GrantAdminControl({
       if (currentRoleId) await functionsClient.adminRoles.revoke(uid);
       await functionsClient.adminRoles.revokeSuperAdmin(uid);
       setConfirmRevokeSuper(false);
-      setMessage('Super Admin access revoked');
+      setMessage('President access revoked');
       await refresh();
     } catch {
-      setError('Failed to revoke Super Admin access');
+      setError('Failed to revoke President access');
       await refresh();
     } finally {
       setBusy(false);
@@ -124,14 +127,14 @@ export function GrantAdminControl({
             aria-label="Admin role"
             value={roleId}
             onChange={(event) => setRoleId(event.target.value)}
-            disabled={busy || isOwnSuperAdminAccess}
+            disabled={busy || presidentLocked || isOwnSuperAdminAccess}
           >
             {roles.map((role) => (
               <option key={role.id} value={role.id}>
                 {role.name}
               </option>
             ))}
-            <option value={SUPER_ADMIN_OPTION}>{superAdminName}</option>
+            {access?.isSuperAdmin || isSuperAdmin ? <option value={SUPER_ADMIN_OPTION}>{superAdminName}</option> : null}
           </Select>
         </div>
         <Button
@@ -145,7 +148,7 @@ export function GrantAdminControl({
           loading={busy}
           disabled={
             !roleId ||
-            isOwnSuperAdminAccess ||
+            presidentLocked || isOwnSuperAdminAccess ||
             (isSuperAdmin && roleId === SUPER_ADMIN_OPTION) ||
             (!isSuperAdmin && roleId === currentRoleId)
           }
@@ -157,14 +160,14 @@ export function GrantAdminControl({
             size="sm"
             variant="danger"
             onClick={() => (isSuperAdmin ? setConfirmRevokeSuper(true) : setConfirmRevoke(true))}
-            disabled={busy || isOwnSuperAdminAccess}
+            disabled={busy || presidentLocked || isOwnSuperAdminAccess}
           >
             Revoke
           </Button>
         ) : null}
       </div>
       {isOwnSuperAdminAccess ? (
-        <p className="mt-1 text-sm text-muted">Another Super Admin must change your access.</p>
+        <p className="mt-1 text-sm text-muted">Another President must change your access.</p>
       ) : null}
       {message ? <p className="mt-1 text-sm text-success">{message}</p> : null}
       {error ? <p className="mt-1 text-sm text-error">{error}</p> : null}
@@ -180,17 +183,17 @@ export function GrantAdminControl({
       />
       <ConfirmDialog
         open={confirmSuper}
-        title="Grant protected Super Admin access?"
+        title="Grant protected President access?"
         description="This gives the member every permission, including the ability to create roles and grant admin access to others."
-        confirmLabel="Grant Super Admin"
+        confirmLabel="Grant President"
         loading={busy}
         onConfirm={() => void grantSuper()}
         onCancel={() => setConfirmSuper(false)}
       />
       <ConfirmDialog
         open={confirmChangeSuper}
-        title="Change Super Admin access?"
-        description="This member will lose Super Admin permissions and receive the selected admin role."
+        title="Change President access?"
+        description="This member will lose President permissions and receive the selected admin role."
         confirmLabel="Change role"
         loading={busy}
         onConfirm={() => void apply()}
@@ -198,7 +201,7 @@ export function GrantAdminControl({
       />
       <ConfirmDialog
         open={confirmRevokeSuper}
-        title="Revoke Super Admin access?"
+        title="Revoke President access?"
         description="This member will immediately lose admin access. Their member account is not affected."
         confirmLabel="Revoke access"
         tone="danger"

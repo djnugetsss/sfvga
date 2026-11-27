@@ -6,7 +6,7 @@ export const eventAdminPermissionSchema = z.enum(EVENT_ADMIN_PERMISSIONS);
 
 export const adminRoleCreateSchema = z.object({
   name: z.string().trim().min(1).max(80),
-  description: z.string().trim().max(240).optional(),
+  description: z.string().trim().max(4000).optional(),
   permissions: z.array(adminPermissionSchema).min(1),
 });
 
@@ -28,7 +28,7 @@ export const adminRoleRevokeSchema = z.object({ targetUid: z.string().min(1) });
 export const eventAdminRoleCreateSchema = z.object({
   eventId: z.string().min(1),
   name: z.string().trim().min(1).max(80),
-  description: z.string().trim().max(240).optional(),
+  description: z.string().trim().max(4000).optional(),
   permissions: z.array(eventAdminPermissionSchema).min(1),
 });
 

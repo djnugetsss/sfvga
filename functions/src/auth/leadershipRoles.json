@@ -1,0 +1,287 @@
+[
+  {
+    "id": "super-admin",
+    "name": "President",
+    "description": "Sets annual goals, ensuring events align with the mission.\nOversees board effectiveness and resolves escalated issues.\nServes as external representative and final decision authority.\nLeads strategic planning sessions and long-term vision development.\nFacilitates board meetings and ensures productive decision-making.\nConducts annual performance review of board and committee outcomes.",
+    "permissions": [
+      "roles.manage",
+      "dashboard.view",
+      "events.view",
+      "staff.view",
+      "events.create",
+      "events.edit",
+      "events.publish",
+      "staff.assign",
+      "staff.revoke",
+      "registrations.view",
+      "registrations.manage",
+      "members.view",
+      "announcements.view",
+      "announcements.create",
+      "announcements.edit",
+      "gallery.view",
+      "gallery.manage",
+      "events.delete",
+      "tickets.scan",
+      "tickets.revoke",
+      "payments.view",
+      "payments.refund",
+      "announcements.delete"
+    ]
+  },
+  {
+    "id": "board-vice-president",
+    "name": "Vice President",
+    "description": "Assumes duties of President when the President is unavailable.\nHandles disciplinary actions for non-conformance of bylaws.\nSends post-event feedback and handles retrospectives as needed.\nSupports strategic planning and long-term organizational goals.\nMentors new board members and committee leads.\nFacilitates collaboration across committees to ensure smooth operations.",
+    "permissions": [
+      "roles.manage",
+      "dashboard.view",
+      "events.view",
+      "staff.view",
+      "events.create",
+      "events.edit",
+      "events.publish",
+      "staff.assign",
+      "staff.revoke",
+      "registrations.view",
+      "registrations.manage",
+      "members.view",
+      "announcements.view",
+      "announcements.create",
+      "announcements.edit",
+      "gallery.view",
+      "gallery.manage",
+      "tickets.scan",
+      "payments.view"
+    ]
+  },
+  {
+    "id": "board-secretary",
+    "name": "Secretary",
+    "description": "Creates a yearly calendar of in-person and virtual meetings.\nMaintains official meeting minutes and governance documentation.\nHandles member communication for events from event chair/co-chair.\nMaintains and updates the organization's official records and archives.\nAssists in drafting official correspondence and announcements.\nCoordinates scheduling conflicts and ensures quorum for meetings.",
+    "permissions": [
+      "dashboard.view",
+      "events.view",
+      "staff.view",
+      "announcements.view",
+      "announcements.create",
+      "announcements.edit",
+      "gallery.view",
+      "gallery.manage",
+      "members.view"
+    ]
+  },
+  {
+    "id": "board-treasurer",
+    "name": "Treasurer",
+    "description": "Oversees organizational budget, financial controls, and reporting.\nApproves event budgets and monitors financial health in AGM.\nEnsures compliance with non-profit financial regulations.\nPrepares monthly and quarterly financial statements for the board.\nMonitors cash flow and investment activities to ensure sustainability.\nConducts periodic audits to ensure transparency and accountability.",
+    "permissions": [
+      "dashboard.view",
+      "events.view",
+      "staff.view",
+      "registrations.view",
+      "registrations.manage",
+      "payments.view",
+      "payments.refund",
+      "members.view"
+    ]
+  },
+  {
+    "id": "board-youth-champion",
+    "name": "Youth Champion",
+    "description": "Represents youth interests in planning and programming.\nCreates youth engagement with age-appropriate activities.\nEncourages youth participation and leadership development.\nIdentifies trends and interests among youth to inform programs.\nBuilds partnerships with schools and youth organizations.\nDevelops mentorship opportunities connecting youth with senior members.\nAdvocates for youth voices in board-level discussions and decisions.",
+    "permissions": [
+      "dashboard.view",
+      "events.view",
+      "staff.view",
+      "events.create",
+      "events.edit",
+      "events.publish",
+      "staff.assign",
+      "staff.revoke",
+      "registrations.view",
+      "registrations.manage",
+      "members.view",
+      "announcements.view",
+      "announcements.create",
+      "announcements.edit",
+      "gallery.view",
+      "gallery.manage"
+    ]
+  },
+  {
+    "id": "board-innovation-catalyst",
+    "name": "Innovation Catalyst",
+    "description": "Streamlines manual processes, brings tech-driven innovation.\nEnsures consistent technology standards across events.\nCreates automation opportunities for optimal member experience.\nEvaluates emerging technologies for potential organizational adoption.\nTrains staff and volunteers on new digital tools and platforms.\nCollects and analyzes digital engagement metrics to improve processes.",
+    "permissions": [
+      "dashboard.view",
+      "events.view",
+      "staff.view",
+      "announcements.view",
+      "announcements.create",
+      "announcements.edit",
+      "gallery.view",
+      "gallery.manage"
+    ]
+  },
+  {
+    "id": "board-senior-champion",
+    "name": "Senior Champion",
+    "description": "Represents senior members' needs and considerations.\nCreates senior events that are budget and time friendly.\nBrings in insights and concerns, prevents mission drift.\nDevelops wellness and educational programs for senior members.\nFosters intergenerational activities to build community cohesion.\nAdvocates for accessibility and inclusivity in all events.\nMonitors satisfaction and gathers feedback from senior participants regularly.",
+    "permissions": [
+      "dashboard.view",
+      "events.view",
+      "staff.view",
+      "events.create",
+      "events.edit",
+      "events.publish",
+      "staff.assign",
+      "staff.revoke",
+      "registrations.view",
+      "registrations.manage",
+      "members.view",
+      "announcements.view",
+      "announcements.create",
+      "announcements.edit",
+      "gallery.view",
+      "gallery.manage"
+    ]
+  },
+  {
+    "id": "board-liaison",
+    "name": "Liaison",
+    "description": "Serves as the connection between the committee and the Board.\nEnsures event alignment with board policies and goals.\nEscalates risks, approvals, and decisions to the Board.\nFacilitates regular communication between committees and the Board.\nTracks action items from board meetings and ensures follow-up.\nSupports conflict resolution between committee members or departments.\nAssists in translating board directives into actionable plans for committees.",
+    "permissions": [
+      "dashboard.view",
+      "events.view",
+      "staff.view",
+      "registrations.view",
+      "announcements.view"
+    ]
+  },
+  {
+    "id": "committee-chair",
+    "name": "Chair",
+    "description": "Coordinates all event planning, execution, timelines, and tasks.\nWorks with the full committee to define goals, scope, and timelines by consensus.\nSchedules and runs regular meetings to track progress and stay on course.\nActs as the primary point of contact while promoting shared ownership.\nEnsures transparency through timely updates and open communication.",
+    "permissions": [
+      "dashboard.view",
+      "events.view",
+      "staff.view",
+      "events.create",
+      "events.edit",
+      "events.publish",
+      "staff.assign",
+      "staff.revoke",
+      "registrations.view",
+      "registrations.manage",
+      "members.view",
+      "announcements.view",
+      "announcements.create",
+      "announcements.edit",
+      "gallery.view",
+      "gallery.manage"
+    ]
+  },
+  {
+    "id": "committee-co-chair",
+    "name": "Co-Chair",
+    "description": "Supports the event chair and fills in as needed.\nManages specific work streams (logistics, vendors, volunteers).\nHelps track progress and resolve operational issues.\nAssists in creating contingency plans for potential event challenges.\nTakes similar responsibility as chair and supports in case chair is unavailable.",
+    "permissions": [
+      "dashboard.view",
+      "events.view",
+      "staff.view",
+      "events.create",
+      "events.edit",
+      "events.publish",
+      "staff.assign",
+      "staff.revoke",
+      "registrations.view",
+      "registrations.manage",
+      "members.view",
+      "announcements.view",
+      "announcements.create",
+      "announcements.edit",
+      "gallery.view",
+      "gallery.manage"
+    ]
+  },
+  {
+    "id": "committee-committee-member",
+    "name": "Committee Member",
+    "description": "Executes assigned tasks (logistics, registration, setup, communications).\nEngages members and volunteers to support participation.\nProvides feedback and lessons learned after the event.",
+    "permissions": [
+      "dashboard.view",
+      "events.view",
+      "staff.view",
+      "registrations.view",
+      "tickets.scan"
+    ]
+  },
+  {
+    "id": "committee-event-treasurer",
+    "name": "Event Treasurer",
+    "description": "Creates and manages the event budget and expense tracking.\nHandles payments, reimbursements, and financial reporting.\nEnsures expenses stay within approved limits.",
+    "permissions": [
+      "dashboard.view",
+      "events.view",
+      "staff.view",
+      "registrations.view",
+      "registrations.manage",
+      "payments.view",
+      "members.view"
+    ]
+  },
+  {
+    "id": "director",
+    "name": "Director",
+    "description": "Supports board planning and oversight.",
+    "permissions": [
+      "dashboard.view",
+      "events.view",
+      "staff.view",
+      "announcements.view"
+    ]
+  },
+  {
+    "id": "webmaster",
+    "name": "Webmaster",
+    "description": "Maintains community content and photo galleries.",
+    "permissions": [
+      "dashboard.view",
+      "events.view",
+      "staff.view",
+      "announcements.view",
+      "announcements.create",
+      "announcements.edit",
+      "gallery.view",
+      "gallery.manage"
+    ]
+  },
+  {
+    "id": "honorary-cpa",
+    "name": "Honorary CPA",
+    "description": "Reviews financial reporting and payment records.",
+    "permissions": [
+      "dashboard.view",
+      "events.view",
+      "staff.view",
+      "payments.view",
+      "registrations.view"
+    ]
+  },
+  {
+    "id": "app-developer",
+    "name": "App Developer",
+    "description": "Supports app operations and community content.",
+    "permissions": [
+      "dashboard.view",
+      "events.view",
+      "staff.view",
+      "announcements.view",
+      "announcements.create",
+      "announcements.edit",
+      "gallery.view",
+      "gallery.manage"
+    ]
+  }
+]

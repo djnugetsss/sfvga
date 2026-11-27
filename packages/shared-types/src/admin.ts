@@ -1,6 +1,7 @@
 import type { FirestoreTimestamp } from './user';
 
 export const ADMIN_PERMISSIONS = [
+  'roles.manage',
   'dashboard.view',
   'events.view',
   'events.create',
