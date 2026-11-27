@@ -170,17 +170,17 @@ export function CommunityTopic({ topicKey }: { topicKey: Topic }) {
           </View>
           <View style={{ marginTop: spacing.lg, gap: spacing.md }}>
             <SectionHeader title="Extended leadership" />
-            {['Webmaster', 'Honorary CPA', 'App Developer'].map(role => (
-              <View key={role}>
-                <Text style={[typography.label, { color: colors.textSecondary, marginBottom: spacing.sm }]}>{role}</Text>
-                {leadership.filter(person => person.role === role).sort((a, b) => a.roleOrder - b.roleOrder).map(person => (
-                  <View key={person.id} style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingVertical: spacing.md, borderBottomWidth: 1, borderBottomColor: colors.border }}>
-                    <Image source={leadershipPhotos[person.id]} accessibilityLabel={person.name} style={{ width: 58, height: 58, borderRadius: 29 }} />
-                    <Text style={[typography.headingMedium, { flex: 1, color: colors.textPrimary }]}>{person.name}</Text>
+            <View style={{ borderTopWidth: 1, borderTopColor: colors.border }}>
+              {leadership.slice().sort((a, b) => a.roleOrder - b.roleOrder).map(person => (
+                <View key={person.id} style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingVertical: spacing.md, borderBottomWidth: 1, borderBottomColor: colors.border }}>
+                  <Image source={leadershipPhotos[person.id]} accessibilityLabel={person.name} style={{ width: 58, height: 58, borderRadius: 29 }} />
+                  <View style={{ flex: 1 }}>
+                    <Text style={[typography.eyebrow, { color: colors.accentStrong, textTransform: 'uppercase' }]}>{person.role}</Text>
+                    <Text style={[typography.headingLarge, { color: colors.textPrimary, fontSize: 21, lineHeight: 29 }]}>{person.name}</Text>
                   </View>
-                ))}
-              </View>
-            ))}
+                </View>
+              ))}
+            </View>
           </View>
           {(['board', 'committee'] as const).map(scope => (
             <View key={scope} style={{ marginTop: spacing.lg, gap: spacing.md }}>
