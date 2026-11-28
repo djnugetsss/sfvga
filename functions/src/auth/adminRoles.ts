@@ -76,7 +76,7 @@ const DEFAULT_ROLES: Array<{
   },
 ];
 
-DEFAULT_ROLES.push(...leadershipRoles.filter(role => role.id !== 'super-admin').map(role => ({ ...role, permissions: role.permissions as AdminPermission[] })));
+DEFAULT_ROLES.push(...leadershipRoles.filter(role => role.id !== 'super-admin' && !role.id.startsWith('committee-')).map(role => ({ ...role, permissions: role.permissions as AdminPermission[] })));
 
 export async function seedDefaultAdminRoles(uid: string): Promise<number> {
   const db = getFirestore();

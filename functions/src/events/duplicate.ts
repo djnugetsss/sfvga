@@ -4,7 +4,7 @@ import { getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { normalizeEventPricing } from '@sfvga/shared-validation';
 import { safeEventId } from './eventFields';
 import { errors } from '../shared/errors';
-import { ticketScannerRoleData } from '../roles/ticketScannerRole';
+import { ticketScannerRoleData, standardEventRoleData } from '../roles/ticketScannerRole';
 
 /**
  * events_duplicate — copies title/description/schedule/FAQs/pricing from a past event
@@ -51,6 +51,9 @@ export const events_duplicate = onCall(async (request) => {
     ref.collection('roleDefinitions').doc('ticket-scanner'),
     ticketScannerRoleData(ref.id, uid, now),
   );
+  for (const role of standardEventRoleData(ref.id, uid, now)) {
+    batch.set(ref.collection('roleDefinitions').doc(role.id), role);
+  }
   await batch.commit();
   return { eventId: ref.id };
 });

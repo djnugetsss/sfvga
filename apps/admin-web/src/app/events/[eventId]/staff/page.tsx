@@ -1,4 +1,6 @@
 'use client';
+
+import { compareAdminRoles } from '@/lib/roleOrder';
 import { EventNavigation } from '@/components/events/EventNavigation';
 
 import Link from 'next/link';
@@ -134,7 +136,7 @@ export default function EventStaffPage() {
   const canAssign = isEventCreator || hasEventPermission(access, eventId, 'staff.assign');
   const canRevoke = isEventCreator || hasEventPermission(access, eventId, 'staff.revoke');
   const canManageDefinitions = hasOrganizationPermission(access, 'staff.assign') || isEventCreator;
-  const roles = (rolesQuery.data?.roles ?? []).filter((role) => role.active && !role.deletedAt);
+  const roles = (rolesQuery.data?.roles ?? []).filter((role) => role.active && !role.deletedAt).sort(compareAdminRoles);
   const ownEventPermissions =
     access?.eventAccess.find((entry) => entry.eventId === eventId)?.permissions ?? [];
   const assignableRoles = canManageDefinitions

@@ -3,7 +3,7 @@ import { requireOrganizationPermission } from '../shared/adminAccess';
 import { getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { eventCreateSchema } from '@sfvga/shared-validation';
 import { eventFields, validateEventPublication } from './eventFields';
-import { ticketScannerRoleData } from '../roles/ticketScannerRole';
+import { ticketScannerRoleData, standardEventRoleData } from '../roles/ticketScannerRole';
 
 /**
  * events_create — creates a new event document in status "draft".
@@ -32,6 +32,9 @@ export const events_create = onCall(async (request) => {
     ref.collection('roleDefinitions').doc('ticket-scanner'),
     ticketScannerRoleData(ref.id, uid, now),
   );
+  for (const role of standardEventRoleData(ref.id, uid, now)) {
+    batch.set(ref.collection('roleDefinitions').doc(role.id), role);
+  }
   await batch.commit();
   return { eventId: ref.id };
 });

@@ -125,7 +125,6 @@ export function EventList({
           );
         })}
       </ul>
-  return (
     <div className="hidden overflow-x-auto rounded-xl border border-border bg-surface md:block">
       <table className="w-full text-left text-sm">
         <thead className="border-b border-border bg-surfaceMuted/55 text-muted">
