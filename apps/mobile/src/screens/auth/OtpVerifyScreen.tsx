@@ -29,6 +29,8 @@ export default function OtpVerifyScreen() {
 
   const recaptchaRef = useRef<RecaptchaVerifierHandle>(null);
   const verifyingRef = useRef(false);
+  const resendingRef = useRef(false);
+  const [resending, setResending] = useState(false);
   const [digits, setDigits] = useState<string[]>(Array(6).fill(''));
   const [error, setError] = useState<string | undefined>();
   const [verifying, setVerifying] = useState(false);
@@ -43,7 +45,7 @@ export default function OtpVerifyScreen() {
   }, [secondsLeft]);
 
   const handleVerify = async (code: string) => {
-    if (verifyingRef.current) return;
+    if (verifyingRef.current || resendingRef.current) return;
     verifyingRef.current = true;
     setVerifying(true);
     setError(undefined);
@@ -65,7 +67,9 @@ export default function OtpVerifyScreen() {
   };
 
   const handleResend = async () => {
-    if (secondsLeft > 0 || !recaptchaRef.current || verifyingRef.current) return;
+    if (secondsLeft > 0 || !recaptchaRef.current || verifyingRef.current || resendingRef.current) return;
+    resendingRef.current = true;
+    setResending(true);
     setError(undefined);
     try {
       await sendPhoneOtp(e164, recaptchaRef.current);
@@ -73,6 +77,9 @@ export default function OtpVerifyScreen() {
       setDigits(Array(6).fill(''));
     } catch (err) {
       setError(getPhoneAuthErrorMessage(err, "We couldn't resend the code — please try again"));
+    } finally {
+      resendingRef.current = false;
+      setResending(false);
     }
   };
 
@@ -93,7 +100,7 @@ export default function OtpVerifyScreen() {
           onChange={handleChange}
           onComplete={(code) => void handleVerify(code)}
           error={error}
-          disabled={verifying}
+          disabled={verifying || resending}
         />
 
         {verifying ? (
@@ -107,14 +114,14 @@ export default function OtpVerifyScreen() {
         <TouchableOpacity
           style={{ marginTop: spacing.md }}
           onPress={handleResend}
-          disabled={secondsLeft > 0}
+          disabled={secondsLeft > 0 || verifying || resending}
           accessibilityRole="button"
           accessibilityLabel={
             secondsLeft > 0
               ? `Resend code available in ${secondsLeft} seconds`
               : "Didn't get a code? Resend"
           }
-          accessibilityState={{ disabled: secondsLeft > 0 }}
+          accessibilityState={{ disabled: secondsLeft > 0 || verifying || resending, busy: resending }}
         >
           <View style={styles.linkRow}>
             <AppIcon
@@ -128,12 +135,13 @@ export default function OtpVerifyScreen() {
                 { color: secondsLeft > 0 ? colors.textSecondary : colors.deepBlue },
               ]}
             >
-              {secondsLeft > 0 ? `Resend code in ${secondsLeft}s` : "Didn't get a code? Resend"}
+              {resending ? 'Sending a new code…' : secondsLeft > 0 ? `Resend code in ${secondsLeft}s` : "Didn't get a code? Resend"}
             </Text>
           </View>
         </TouchableOpacity>
 
         <TouchableOpacity
+          disabled={verifying || resending}
           onPress={handleGoBack}
           style={{ marginTop: spacing.sm }}
           accessibilityRole="button"

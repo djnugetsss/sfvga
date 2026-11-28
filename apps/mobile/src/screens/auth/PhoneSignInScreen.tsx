@@ -26,11 +26,13 @@ export default function PhoneSignInScreen() {
   const { sendPhoneOtp, isValidUsPhone, toE164UsPhone } = useAuth();
 
   const recaptchaRef = useRef<RecaptchaVerifierHandle>(null);
+  const sendingRef = useRef(false);
   const [phone, setPhone] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | undefined>();
 
   const handleContinue = async () => {
+    if (sendingRef.current) return;
     setError(undefined);
 
     if (!isValidUsPhone(phone)) {
@@ -42,6 +44,7 @@ export default function PhoneSignInScreen() {
       return;
     }
 
+    sendingRef.current = true;
     setLoading(true);
     try {
       const e164 = toE164UsPhone(phone);
@@ -51,6 +54,7 @@ export default function PhoneSignInScreen() {
       console.error('Phone OTP send failed', err);
       setError(getPhoneAuthErrorMessage(err));
     } finally {
+      sendingRef.current = false;
       setLoading(false);
     }
   };
