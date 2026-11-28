@@ -33,11 +33,6 @@ export default function DashboardPage() {
         <PageHeader
           title="Dashboard"
           description="Your events, registrations, and the work that needs attention."
-          actions={hasCapability(access, 'roles') ? (
-            <Link href="/roles" className="inline-flex min-h-12 items-center rounded-xl border border-border bg-surface px-4 text-base font-semibold text-brand hover:bg-brandSoft">
-              Manage access
-            </Link>
-          ) : undefined}
         />
 
         {eventsQuery.isError ? (

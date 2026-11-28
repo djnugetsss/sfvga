@@ -15,6 +15,7 @@ import {
   Input,
   Spinner,
   Textarea,
+  PageHeader,
 } from '@/components/ui/primitives';
 
 export const PERMISSION_GROUPS: Array<{
@@ -269,8 +270,8 @@ export function RoleListEditor() {
           onRetry={() => void rolesQuery.refetch()}
         />
       ) : null}
+      <PageHeader title="Organization roles" actions={<Button onClick={() => setEditing('new')}>Create role</Button>} />
       <div className="mb-5 flex flex-wrap gap-3">
-        <Button onClick={() => setEditing('new')}>Create role</Button>
         {activeRoles.length === 0 ? (
           <Button
             variant="secondary"
