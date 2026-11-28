@@ -6,7 +6,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   slug: 'sfvga-combined',
   version: '0.1.0',
   orientation: 'portrait',
-  icon: './assets/images/icons/icon.png',
+  icon: './assets/images/logo.png',
   userInterfaceStyle: 'light',
   scheme: 'sfvga-combined',
   splash: {
@@ -20,12 +20,13 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   android: {
     googleServicesFile: './google-services.json',
     adaptiveIcon: {
-      foregroundImage: './assets/images/icons/adaptive-icon.png',
+      foregroundImage: './assets/images/logo.png',
       backgroundColor: '#F7F5F2',
     },
     package: 'org.sfvga.app.merge',
   },
   web: {
+    favicon: './assets/images/logo.png',
     bundler: 'metro',
     name: 'SFVGA',
     shortName: 'SFVGA',

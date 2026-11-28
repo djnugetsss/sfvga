@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -111,9 +112,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
     <div className="flex min-w-0 flex-1 flex-col">
       <header className="sticky top-0 z-20 flex min-h-[72px] items-center justify-between border-b border-border bg-canvas/95 px-4 backdrop-blur md:px-8">
         <div className="flex min-w-0 items-center gap-3">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand text-sm font-bold text-white">
-            SF
-          </div>
+          <Image src="/logo.png" alt="SFVGA logo" width={48} height={48} className="shrink-0 object-contain" />
           <div>
             <p className="font-editorial text-base font-bold text-ink sm:text-lg">
               SFVGA Administration
