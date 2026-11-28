@@ -44,7 +44,7 @@ export function getPhoneAuthErrorMessage(
     case 'auth/missing-phone-number':
       return 'Enter your phone number to continue';
     case 'auth/too-many-requests':
-      return 'Too many attempts — please wait a few minutes and try again';
+      return 'Code requests are temporarily limited. If a code arrived, enter it. Otherwise, wait before trying again.';
     case 'auth/captcha-check-failed':
     case 'auth/invalid-app-credential':
       return "We couldn't verify you're human — please try again";
@@ -65,6 +65,7 @@ export function getPhoneAuthErrorMessage(
     case 'auth/missing-verification-code':
       return 'Enter the 6-digit code we texted you';
     default:
+      if (error instanceof Error && /reCAPTCHA client element has been removed/i.test(error.message)) return 'Verification was interrupted. Refresh this page and try again.';
       return getErrorMessage(error, fallback);
   }
 }

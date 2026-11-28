@@ -9,13 +9,12 @@ import {
 } from '@/components/auth/RecaptchaVerifierModal';
 import { useTheme } from '@/providers/ThemeProvider';
 import { useAuth } from '@/hooks/useAuth';
-import { clearPendingOtp } from '@/services/authService';
+import { otpResendSeconds } from '@/services/authService';
 import { getPhoneAuthErrorMessage } from '@/utils/errors';
 import type { AuthStackParamList } from '@/navigation/AuthStack';
 import { AuthShell } from '@/components/auth/AuthShell';
 import { AppIcon } from '@/components/ui/AppIcon';
 
-const RESEND_COOLDOWN_SECONDS = 30;
 
 /**
  * OTP Verify (UI spec §2). The six-digit code submits when complete;
@@ -34,15 +33,14 @@ export default function OtpVerifyScreen() {
   const [digits, setDigits] = useState<string[]>(Array(6).fill(''));
   const [error, setError] = useState<string | undefined>();
   const [verifying, setVerifying] = useState(false);
-  const [secondsLeft, setSecondsLeft] = useState(RESEND_COOLDOWN_SECONDS);
+  const [secondsLeft, setSecondsLeft] = useState(() => otpResendSeconds(route.params.e164));
 
   const { phoneNumber, e164 } = route.params;
 
   useEffect(() => {
-    if (secondsLeft <= 0) return;
-    const timer = setTimeout(() => setSecondsLeft((s) => s - 1), 1000);
-    return () => clearTimeout(timer);
-  }, [secondsLeft]);
+    const timer = setInterval(() => setSecondsLeft(otpResendSeconds(e164)), 1000);
+    return () => clearInterval(timer);
+  }, [e164]);
 
   const handleVerify = async (code: string) => {
     if (verifyingRef.current || resendingRef.current) return;
@@ -72,19 +70,19 @@ export default function OtpVerifyScreen() {
     setResending(true);
     setError(undefined);
     try {
-      await sendPhoneOtp(e164, recaptchaRef.current);
-      setSecondsLeft(RESEND_COOLDOWN_SECONDS);
+      await sendPhoneOtp(e164, recaptchaRef.current, true);
+      setSecondsLeft(otpResendSeconds(e164));
       setDigits(Array(6).fill(''));
     } catch (err) {
       setError(getPhoneAuthErrorMessage(err, "We couldn't resend the code — please try again"));
     } finally {
+      setSecondsLeft(otpResendSeconds(e164));
       resendingRef.current = false;
       setResending(false);
     }
   };
 
   const handleGoBack = () => {
-    clearPendingOtp();
     navigation.goBack();
   };
 

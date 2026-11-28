@@ -20,13 +20,43 @@ export { isValidUsPhone, toE164UsPhone };
  */
 let pendingConfirmation: ConfirmationResult | null = null;
 
-/** Send an SMS OTP. `verifier` is the reCAPTCHA app verifier (RecaptchaVerifierModal). */
-export async function sendPhoneOtp(
-  e164PhoneNumber: string,
-  verifier: ApplicationVerifier,
-): Promise<void> {
-  const auth = getFirebaseAuth();
-  pendingConfirmation = await signInWithPhoneNumber(auth, e164PhoneNumber, verifier);
+let pendingPhone: string | null = null;
+let sentAt = 0;
+let inFlight: { phone: string; promise: Promise<void> } | null = null;
+const blockedUntil = new Map<string, number>();
+
+export function otpResendSeconds(phone: string): number {
+  const until = Math.max(blockedUntil.get(phone) ?? 0, pendingPhone === phone ? sentAt + 30_000 : 0);
+  return Math.max(0, Math.ceil((until - Date.now()) / 1000));
+}
+
+/** Reuse the code session when returning to the same number. Only Resend requests another SMS. */
+export function sendPhoneOtp(phone: string, verifier: ApplicationVerifier, resend = false): Promise<void> {
+  if (inFlight) {
+    if (inFlight.phone === phone) return inFlight.promise;
+    return Promise.reject(new Error('Please wait for the current code request to finish.'));
+  }
+  if (!resend && pendingConfirmation && pendingPhone === phone && Date.now() - sentAt < 10 * 60_000) return Promise.resolve();
+  if (otpResendSeconds(phone) > 0) {
+    return Promise.reject(new Error('Please wait before requesting another code. If a code arrived, you can still enter it.'));
+  }
+  const promise = (async () => {
+    try {
+      const confirmation = await signInWithPhoneNumber(getFirebaseAuth(), phone, verifier);
+      pendingConfirmation = confirmation;
+      pendingPhone = phone;
+      sentAt = Date.now();
+    } catch (error) {
+      if ((error as { code?: string })?.code === 'auth/too-many-requests') {
+        blockedUntil.set(phone, Date.now() + 60_000);
+      }
+      throw error;
+    } finally {
+      inFlight = null;
+    }
+  })();
+  inFlight = { phone, promise };
+  return promise;
 }
 
 /** Confirm the 6-digit code. On success, onAuthStateChanged flips the app to signed-in. */

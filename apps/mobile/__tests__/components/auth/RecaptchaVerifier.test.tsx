@@ -13,7 +13,7 @@ jest.mock('firebase/auth', () => ({ RecaptchaVerifier: jest.fn().mockImplementat
   return { verify: mockVerify, clear: mockClear, _reset: jest.fn() };
 }) }));
 
-it('isolates OTP resend from phone entry and leaves phone verification usable after going back', async () => {
+it('keeps one attached verifier usable across resend and back navigation', async () => {
   const previous = Object.getOwnPropertyDescriptor(globalThis, 'document');
   Object.defineProperty(globalThis, 'document', { configurable: true, value: {
     getElementById: (id: string) => mockContainers.get(id),
@@ -26,7 +26,7 @@ it('isolates OTP resend from phone entry and leaves phone verification usable af
   const otpScreen = render(<WebRecaptchaVerifier ref={otp} />);
   try {
     await act(async () => { await phone.current!.verify(); await otp.current!.verify(); });
-    expect(new Set(mockIds).size).toBe(2);
+    expect(new Set(mockIds).size).toBe(1);
     act(() => otp.current!._reset());
     await act(async () => { await otp.current!.verify(); });
     otpScreen.unmount();

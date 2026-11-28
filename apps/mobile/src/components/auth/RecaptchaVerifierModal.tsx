@@ -1,4 +1,4 @@
-import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import {
   Modal,
   View,
@@ -39,7 +39,8 @@ export interface RecaptchaVerifierHandle extends ApplicationVerifier {
   _reset(): void;
 }
 
-let nextWebVerifierId = 0;
+const WEB_CONTAINER_ID = 'sfvga-phone-verification';
+let sharedWebVerifier: RecaptchaVerifierWithReset | null = null;
 
 type RecaptchaVerifierWithReset = RecaptchaVerifier & { _reset?: () => void };
 
@@ -75,69 +76,22 @@ function ensureWebRecaptchaHost(containerId: string): void {
   doc.body.appendChild(el);
 }
 
-function removeWebRecaptchaHost(containerId: string): void {
-  const doc = getDomDocument();
-  doc?.getElementById(containerId)?.remove();
-}
-
-/** Web verifier: reuse one invisible RecaptchaVerifier (do not recreate on every attempt). */
+/** Keep one widget attached for the page lifetime, including navigation and resend. */
 export const WebRecaptchaVerifier = forwardRef<RecaptchaVerifierHandle>((_props, ref) => {
-  // Phone entry remains mounted beneath OTP. Each verifier must own its DOM host.
-  const [containerId] = useState(() => `sfvga-recaptcha-${++nextWebVerifierId}`);
-  const verifierRef = useRef<RecaptchaVerifierWithReset | null>(null);
-
-  const disposeVerifier = useCallback(() => {
-    const current = verifierRef.current;
-    verifierRef.current = null;
-    if (current) {
-      try {
-        current.clear();
-      } catch {
-        /* widget already gone */
+  useImperativeHandle(ref, () => ({
+    type: 'recaptcha' as const,
+    verify: async () => {
+      ensureWebRecaptchaHost(WEB_CONTAINER_ID);
+      if (!sharedWebVerifier) {
+        sharedWebVerifier = new RecaptchaVerifier(getFirebaseAuth(), WEB_CONTAINER_ID, { size: 'invisible' });
       }
-    }
-    removeWebRecaptchaHost(containerId);
-  }, [containerId]);
-
-  useEffect(() => {
-    ensureWebRecaptchaHost(containerId);
-    return () => {
-      disposeVerifier();
-    };
-  }, [containerId, disposeVerifier]);
-
-  useImperativeHandle(
-    ref,
-    () => ({
-      type: 'recaptcha' as const,
-      verify: async () => {
-        ensureWebRecaptchaHost(containerId);
-
-        if (!verifierRef.current) {
-          verifierRef.current = new RecaptchaVerifier(getFirebaseAuth(), containerId, {
-            size: 'invisible',
-          });
-        }
-
-        return verifierRef.current.verify();
-      },
-      _reset: () => {
-        // Forward to the SDK widget reset — do NOT clear/recreate or grecaptcha throws
-        // "reCAPTCHA has already been rendered in this element".
-        const current = verifierRef.current;
-        if (current && typeof current._reset === 'function') {
-          current._reset();
-          return;
-        }
-        // Fallback if the private API is unavailable: full dispose, next verify recreates.
-        disposeVerifier();
-        ensureWebRecaptchaHost(containerId);
-      },
-    }),
-    [containerId, disposeVerifier],
-  );
-
-  // DOM host is created in useEffect; nothing to render in the RN tree.
+      return sharedWebVerifier.verify();
+    },
+    _reset: () => {
+      sharedWebVerifier?._reset?.();
+    },
+  }), []);
+  // Do not remove the host on unmount. Google's client retains references to it.
   return null;
 });
 
